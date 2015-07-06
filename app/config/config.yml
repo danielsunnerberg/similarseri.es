@@ -78,3 +78,26 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+tmdb_symfony:
+    api_key: %tmdb_api_key%
+    options:
+        adapter: null
+        secure: true # Set to false to disable https
+        host: "api.themoviedb.org/3/"
+        session_token: null
+        cache:
+            enabled: true
+            handler: tmdb_cache
+        log:
+            enabled: false # Set to true to enable log
+            path: "%kernel.logs_dir%/themoviedb.log"
+            level: DEBUG
+            handler: null
+            subscriber: null
+
+doctrine_cache:
+    providers:
+        tmdb_cache:
+            file_system:
+                directory: %kernel.root_dir%/cache/tmdb

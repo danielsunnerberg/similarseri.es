@@ -1,1 +1,5 @@
-Hello {{ name }}!
+{{ match.originalName }}: <img src="{{ poster_base_url ~ match.posterPath }}" />, which matches:<br /><br />
+
+{% for show in similar %}
+    <img src="{{ poster_base_url ~ show.posterPath }}" />
+{% endfor %}
