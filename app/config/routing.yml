@@ -1,3 +1,7 @@
+sunnerberg_similar_series:
+    resource: "@SunnerbergSimilarSeriesBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
