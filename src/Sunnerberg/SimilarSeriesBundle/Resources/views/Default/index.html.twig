@@ -1,7 +1,7 @@
-<body>
-{{ match.originalName }}: <img src="{{ poster_base_url ~ match.posterPath }}" />, which matches:<br /><br />
-
-{% for show in similar %}
-    <img src="{{ poster_base_url ~ show.posterPath }}" />
-{% endfor %}
-</body>
+{% extends '@SunnerbergSimilarSeries/base.html.twig' %}
+{% block body %}
+<div class="starter-template">
+    <h1>Bootstrap starter template</h1>
+    <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{
+  "name": "similarseri.es",
+  "version": "0.0.0",
+  "authors": [
+    "Daniel Sunnerberg <daniel.sunnerberg@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "requirejs": "~2.1.18",
+    "jquery": "~2.1.4"
+  }
+}

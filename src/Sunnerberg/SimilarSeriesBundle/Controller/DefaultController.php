@@ -4,8 +4,6 @@ namespace Sunnerberg\SimilarSeriesBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Core\Exception\InvalidArgumentException;
-use Tmdb\Model\Search\SearchQuery\TvSearchQuery;
 
 class DefaultController extends Controller
 {
@@ -15,7 +13,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-
+        return $this->render('SunnerbergSimilarSeriesBundle:Default:index.html.twig');
     }
 
 }

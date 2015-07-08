@@ -11,3 +11,4 @@
 /web/bundles/
 /.idea/
 *.php~
+/web/assets/vendor/
