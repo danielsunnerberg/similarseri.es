@@ -1,13 +1,17 @@
 security:
 
+    encoders:
+        Sunnerberg\SimilarSeriesBundle\Entity\User:
+            algorithm: bcrypt
+
     providers:
+        database_provider:
+            entity:
+                class: Sunnerberg\SimilarSeriesBundle\Entity\User
+                property: username
         in_memory:
             memory: ~
 
     firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt|error)|css|images|js)/
-            security: false
-
-        main:
+        default:
             anonymous: ~
