@@ -34,7 +34,6 @@ class DefaultController extends Controller
 
         $tvRepository = $this->get('tmdb.tv_repository');
         $match = $tvRepository->load($match->getId());
-        \Doctrine\Common\Util\Debug::dump($match); die();
         $similar = $match->getSimilar()->getAll();
 
         $data = array(
