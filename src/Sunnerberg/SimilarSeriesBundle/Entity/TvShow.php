@@ -2,6 +2,7 @@
 
 namespace Sunnerberg\SimilarSeriesBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -63,6 +64,17 @@ class TvShow
      */
     private $lastSyncDate;
 
+    /**
+     * @var array
+     *
+     * @ORM\ManyToMany(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\Genre")
+     * @ORM\JoinTable(
+     *     name="tv_shows_genres",
+     *     joinColumns={@ORM\JoinColumn(name="tv_show_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="genre_id", referencedColumnName="id", unique=true)}
+     * )
+     */
+    private $genres;
 
     /**
      * Get id
@@ -210,5 +222,45 @@ class TvShow
     public function getLastSyncDate()
     {
         return $this->lastSyncDate;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->genres = new ArrayCollection();
+    }
+
+    /**
+     * Add genres
+     *
+     * @param Genre $genre
+     * @return TvShow
+     */
+    public function addGenre(Genre $genre)
+    {
+        $this->genres[] = $genre;
+
+        return $this;
+    }
+
+    /**
+     * Remove genres
+     *
+     * @param Genre $genre
+     */
+    public function removeGenre(Genre $genre)
+    {
+        $this->genres->removeElement($genre);
+    }
+
+    /**
+     * Get genres
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGenres()
+    {
+        return $this->genres;
     }
 }
