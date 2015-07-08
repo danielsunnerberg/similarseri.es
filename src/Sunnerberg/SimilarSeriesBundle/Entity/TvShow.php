@@ -2,6 +2,7 @@
 
 namespace Sunnerberg\SimilarSeriesBundle\Entity;
 
+use Date;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -228,6 +229,7 @@ class TvShow
      */
     public function __construct()
     {
+        $this->lastSyncDate = new Date();
         $this->genres = new ArrayCollection();
     }
 

@@ -4,7 +4,6 @@ namespace Sunnerberg\SimilarSeriesBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -153,8 +152,6 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
-            // see section on salt below
-            // $this->salt,
         ));
     }
 
@@ -168,9 +165,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
-            // see section on salt below
-            // $this->salt
-            ) = unserialize($serialized);
+        ) = unserialize($serialized);
     }
 
     public function getRoles()
