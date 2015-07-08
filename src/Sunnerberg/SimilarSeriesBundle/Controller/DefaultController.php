@@ -33,7 +33,9 @@ class DefaultController extends Controller
         $match = reset($matches);
 
         $tvRepository = $this->get('tmdb.tv_repository');
-        $similar = $tvRepository->load($match->getId())->getSimilar()->getAll();
+        $match = $tvRepository->load($match->getId());
+        \Doctrine\Common\Util\Debug::dump($match); die();
+        $similar = $match->getSimilar()->getAll();
 
         $data = array(
             'poster_base_url' => $this->getImageBaseUrl(),
