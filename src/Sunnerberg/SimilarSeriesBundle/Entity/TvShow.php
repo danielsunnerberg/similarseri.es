@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TvShow
  *
- * @ORM\Table()
+ * @ORM\Table(name="tv_shows")
  * @ORM\Entity
  */
 class TvShow

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Genre
  *
- * @ORM\Table()
+ * @ORM\Table(name="genres")
  * @ORM\Entity
  */
 class Genre
