@@ -24,6 +24,13 @@ class TvShow
     private $id;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="tmdbId", type="integer")
+     */
+    private $tmdbId;
+    
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -264,5 +271,28 @@ class TvShow
     public function getGenres()
     {
         return $this->genres;
+    }
+
+    /**
+     * Set tmdbId
+     *
+     * @param integer $tmdbId
+     * @return TvShow
+     */
+    public function setTmdbId($tmdbId)
+    {
+        $this->tmdbId = $tmdbId;
+
+        return $this;
+    }
+
+    /**
+     * Get tmdbId
+     *
+     * @return integer 
+     */
+    public function getTmdbId()
+    {
+        return $this->tmdbId;
     }
 }
