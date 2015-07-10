@@ -22,7 +22,9 @@ class UserShowController extends Controller {
         $doctrine = $this->getDoctrine();
         $tvShow = $doctrine->getRepository('SunnerbergSimilarSeriesBundle:TvShow')->getByTmdbId($tmdbId);
 
-        if (! $tvShow) {
+        if ($tvShow) {
+            $this->syncSimilarShows($tvShow, $this->getTmdbShowById($tvShow->getTmdbId()));
+        } else {
             $tvShow = $this->downloadShow($tmdbId);
         }
 
@@ -38,10 +40,19 @@ class UserShowController extends Controller {
         return new JsonResponse(true);
     }
 
-    private function downloadShow($tmdbId, $processSimilarShows = true)
+    private function getTmdbShowById($tmdbId)
     {
         $tmdbTvRepository = $this->get('tmdb.tv_repository');
-        $tmdbShow = $tmdbTvRepository->load($tmdbId);
+        return $tmdbTvRepository->load($tmdbId);
+    }
+
+    private function syncSimilarShows(TvShow $tvShow, Tv $tmdbShow) {
+        $tvShow->addSimilarTvShows($this->getSimilarShows($tmdbShow));
+    }
+
+    private function downloadShow($tmdbId, $processSimilarShows = true)
+    {
+        $tmdbShow = $this->getTmdbShowById($tmdbId);
         if (! $tmdbShow) {
             throw new NoResultException();
         }
@@ -51,12 +62,11 @@ class UserShowController extends Controller {
         $tvShow = $tvRepository->createFromTmdbShow($tmdbShow);
         foreach ($tmdbShow->getGenres() as $_genre) {
             $genre = $genreRepository->getOrCreateByName($_genre->getName());
-            echo("<br />$tmdbId: Saknar: ". $genre->getName());
             $tvShow->addGenre($genre);
         }
 
         if ($processSimilarShows) {
-            $tvShow->addSimilarTvShows($this->getSimilarShows($tmdbShow));
+            $this->syncSimilarShows($tvShow, $tmdbShow);
         }
 
         $this->getDoctrine()->getManager()->persist($tvShow);
@@ -65,7 +75,6 @@ class UserShowController extends Controller {
 
     private function getSimilarShows(Tv $tmdbShow)
     {
-        $tmdbTvRepository = $this->get('tmdb.tv_repository');
         $tvRepository = $this->getDoctrine()->getRepository('SunnerbergSimilarSeriesBundle:TvShow');
 
         $similar = array();

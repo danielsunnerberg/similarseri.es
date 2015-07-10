@@ -61,7 +61,7 @@ class TvShow
     /**
      * @var string
      *
-     * @ORM\Column(name="posterUrl", type="string", length=255)
+     * @ORM\Column(name="posterUrl", type="string", length=255, nullable=true)
      */
     private $posterUrl;
 
@@ -91,7 +91,7 @@ class TvShow
      * @ORM\JoinTable(
      *      name="similar_tv_shows",
      *      joinColumns={@ORM\JoinColumn(name="show_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="similar_show_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="similar_show_id", referencedColumnName="id")}
      * )
      **/
     private $similarTvShows;

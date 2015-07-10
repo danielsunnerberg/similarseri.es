@@ -42,8 +42,8 @@ requirejs(['/bundles/sunnerbergsimilarseries/js/main.js'], function () {
             );
 
             showSearchInput.on('typeahead:selected', function(evt, item) {
-                $.get('/user/shows/add/' + item.tmdbId, function() {
-                   console.log("Done");
+                $.get('/user/show/add/' + item.tmdbId, function() {
+                    console.log("Done");
                 });
             });
 
