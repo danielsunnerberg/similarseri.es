@@ -4,45 +4,42 @@ namespace Sunnerberg\SimilarSeriesBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Exception\InvalidArgumentException;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Tmdb\Model\Tv\QueryParameter\AppendToResponse;
 use Tmdb\Model\Search\SearchQuery\TvSearchQuery;
 
 class SearchController extends Controller {
 
     /**
-     * @Route("/search/{query}", name="search_route")
+     * @Route("/search/{query}.json", name="search_route")
      */
     public function searchAction($query)
     {
         $searchRepository = $this->get('tmdb.search_repository');
+        $filters = new TvSearchQuery();
+        $response = $searchRepository->searchTv($query, $filters)->getAll();
+        $posterBase = $this->getPosterBaseUrl();
 
-        $filters = new TvSearchQuery(); // @todo should be able to add 'similar' to result here too
-        $matches = $searchRepository->searchTv($query, $filters)->getAll();
-        if (empty($matches)) {
-            throw new InvalidArgumentException("Found no matches.");
+        $matchingShows = array();
+        foreach ($response as $show) {
+            $matchingShows[] = array(
+                'tmdbId' => $show->getId(),
+                'name' => $show->getName(),
+                'airYear' => $show->getFirstAirDate()->format('Y'),
+                'posterUrl' => $posterBase . $show->getPosterPath(),
+            );
         }
-        $match = reset($matches);
 
-        $tvRepository = $this->get('tmdb.tv_repository');
-        $match = $tvRepository->load($match->getId());
-        $similar = $match->getSimilar()->getAll();
-
-        $data = array(
-            'poster_base_url' => $this->getImageBaseUrl(),
-            'match' => $match,
-            'similar' => $similar
-        );
-
-        return $this->render('SunnerbergSimilarSeriesBundle:Default:index.html.twig', $data);
+        return new JsonResponse($matchingShows);
     }
 
-    private function getImageBaseUrl()
+    private function getPosterBaseUrl()
     {
         // @todo cache this
         $configurationRepository = $this->get('tmdb.configuration_repository');
         $tmdbConfig = $configurationRepository->load();
         $imageConfig = $tmdbConfig->getImages();
-        return $imageConfig['secure_base_url'] . $imageConfig['poster_sizes'][2];
+        return $imageConfig['secure_base_url'] . $imageConfig['poster_sizes'][0];
     }
 
 }

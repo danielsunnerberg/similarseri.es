@@ -1,21 +1,52 @@
-requirejs(['./bundles/sunnerbergsimilarseries/js/main.js'], function (common) {
-    require(['jquery', 'bootstrap3-typeahead'], function($) {
+requirejs(['/bundles/sunnerbergsimilarseries/js/main.js'], function () {
+    require(['jquery', 'bloodhound', 'handlebars', 'typeahead'], function($, Bloodhound, Handlebars) {
         $(function() {
 
-            var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-                'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-                'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-                'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-                'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-                'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-                'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-                'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-                'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-            ];
+            var suggestionFormat = [
+                '<div>',
+                    '<img width="40" height="54" src="{{ posterUrl }}" alt="Poster for show: {{ name }}" />',
+                    '{{ name }} <small>({{ airYear }})</small>',
+                '</div>'
+            ].join('\n');
 
-            $('.typeahead').typeahead({
-                source: states
+            var showsSource = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/search/%QUERY.json',
+                    wildcard: '%QUERY'
+                }
             });
+
+            var showSearchInput = $('#show-search');
+            showSearchInput.typeahead(
+                {
+                    hint: true,
+                    highlight: true,
+                    minLength: 1
+                },
+                {
+                    name: 'shows-source',
+                    display: 'name',
+                    source: showsSource,
+                    templates: {
+                        empty: [
+                            '<div class="empty-message">',
+                            'Found no TV-shows under that name.',
+                            '</div>'
+                        ].join('\n'),
+                        suggestion: Handlebars.compile(suggestionFormat)
+                    }
+
+                }
+            );
+
+            showSearchInput.on('typeahead:selected', function(evt, item) {
+                $.get('/user/shows/add/' + item.tmdbId, function() {
+                   console.log("Done");
+                });
+            });
+
         });
     });
 });

@@ -1,10 +1,13 @@
 {% extends '@SunnerbergSimilarSeries/base.html.twig' %}
+
+{% block stylesheets %}
+    {% stylesheets '@SunnerbergSimilarSeriesBundle/Resources/public/css/typeahead.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block body %}
-<div class="starter-template">
-    <h1>Bootstrap starter template</h1>
-    <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-    <input class="typeahead" type="text" placeholder="States of USA">
-</div>
+    <input id="show-search" class="typeahead form-control" type="text" placeholder="Find shows">
 {% endblock %}
 
 {% block javascripts %}
