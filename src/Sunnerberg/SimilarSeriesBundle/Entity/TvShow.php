@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * TvShow
  *
  * @ORM\Table(name="tv_shows")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Sunnerberg\SimilarSeriesBundle\Entity\TvShowRepository")
  */
 class TvShow
 {
@@ -54,7 +54,7 @@ class TvShow
     /**
      * @var string
      *
-     * @ORM\Column(name="imdbId", type="string", length=255)
+     * @ORM\Column(name="imdbId", type="string", length=255, nullable=true)
      */
     private $imdbId;
 
@@ -75,14 +75,26 @@ class TvShow
     /**
      * @var array
      *
-     * @ORM\ManyToMany(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\Genre")
+     * @ORM\ManyToMany(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\Genre", cascade={"persist"})
      * @ORM\JoinTable(
      *     name="tv_shows_genres",
      *     joinColumns={@ORM\JoinColumn(name="tv_show_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="genre_id", referencedColumnName="id", unique=true)}
+     *     inverseJoinColumns={@ORM\JoinColumn(name="genre_id", referencedColumnName="id")}
      * )
      */
     private $genres;
+
+    /**
+     * @var array
+     *
+     * @ORM\ManyToMany(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\TvShow", cascade={"persist"})
+     * @ORM\JoinTable(
+     *      name="similar_tv_shows",
+     *      joinColumns={@ORM\JoinColumn(name="show_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="similar_show_id", referencedColumnName="id", unique=true)}
+     * )
+     **/
+    private $similarTvShows;
 
     /**
      * Get id
@@ -236,7 +248,7 @@ class TvShow
      */
     public function __construct()
     {
-        $this->lastSyncDate = new Date();
+        $this->lastSyncDate = new \DateTime();
         $this->genres = new ArrayCollection();
     }
 
@@ -294,5 +306,50 @@ class TvShow
     public function getTmdbId()
     {
         return $this->tmdbId;
+    }
+
+    /**
+     * Add similarTvShows
+     *
+     * @param \Sunnerberg\SimilarSeriesBundle\Entity\TvShow $similarTvShow
+     * @return TvShow
+     */
+    public function addSimilarTvShow(TvShow $similarTvShow)
+    {
+        $this->similarTvShows[] = $similarTvShow;
+
+        return $this;
+    }
+
+    /**
+     * Remove similarTvShows
+     *
+     * @param \Sunnerberg\SimilarSeriesBundle\Entity\TvShow $similarTvShow
+     */
+    public function removeSimilarTvShow(TvShow $similarTvShow)
+    {
+        $this->similarTvShows->removeElement($similarTvShow);
+    }
+
+    /**
+     * Get similarTvShows
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSimilarTvShows()
+    {
+        return $this->similarTvShows;
+    }
+
+    /**
+     * Add similar tv shows
+     *
+     * @param array $getSimilarShows
+     */
+    public function addSimilarTvShows(array $similarTvShows)
+    {
+        foreach ($similarTvShows as $similarTvShow) {
+            $this->addSimilarTvShow($similarTvShow);
+        }
     }
 }

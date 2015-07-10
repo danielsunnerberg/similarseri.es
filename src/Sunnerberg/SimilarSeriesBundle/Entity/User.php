@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * User
  *
  * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="Sunnerberg\SimilarSeriesBundle\Entity\UserRepository")
+ * @ORM\Entity()
  */
 class User implements UserInterface, \Serializable
 {
@@ -120,6 +120,16 @@ class User implements UserInterface, \Serializable
     public function getTvShows()
     {
         return $this->tvShows;
+    }
+    
+    public function hasTvShow(TvShow $tvShow)
+    {
+        foreach ($this->getTvShows() as $seenShow) {
+            if ($tvShow->getId() === $seenShow->getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

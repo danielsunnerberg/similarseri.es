@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Genre
  *
  * @ORM\Table(name="genres")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Sunnerberg\SimilarSeriesBundle\Entity\GenreRepository")
  */
 class Genre
 {
@@ -28,6 +28,10 @@ class Genre
      */
     private $name;
 
+    function __construct($name)
+    {
+        $this->name = $name;
+    }
 
     /**
      * Get id
