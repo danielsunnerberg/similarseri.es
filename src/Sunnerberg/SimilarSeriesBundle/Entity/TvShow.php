@@ -38,6 +38,20 @@ class TvShow
     private $name;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="airDate", type="datetime")
+     */
+    private $airDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="overview", type="text")
+     */
+    private $overview;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="popularity", type="float")
@@ -359,5 +373,51 @@ class TvShow
         foreach ($similarTvShows as $similarTvShow) {
             $this->addSimilarTvShow($similarTvShow);
         }
+    }
+
+    /**
+     * Set airDate
+     *
+     * @param \DateTime $airDate
+     * @return TvShow
+     */
+    public function setAirDate($airDate)
+    {
+        $this->airDate = $airDate;
+
+        return $this;
+    }
+
+    /**
+     * Get airDate
+     *
+     * @return \DateTime 
+     */
+    public function getAirDate()
+    {
+        return $this->airDate;
+    }
+
+    /**
+     * Set overview
+     *
+     * @param string $overview
+     * @return TvShow
+     */
+    public function setOverview($overview)
+    {
+        $this->overview = $overview;
+
+        return $this;
+    }
+
+    /**
+     * Get overview
+     *
+     * @return string 
+     */
+    public function getOverview()
+    {
+        return $this->overview;
     }
 }
