@@ -1,0 +1,9 @@
+{% extends '@SunnerbergSimilarSeries/base.html.twig' %}
+
+{% block body %}
+    <ol>
+    {% for show in shows %}
+        <li>{{ show.name }}</li>
+    {% endfor %}
+    </ol>
+{% endblock %}

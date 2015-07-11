@@ -9,7 +9,6 @@ use Sunnerberg\SimilarSeriesBundle\Entity\TvShow;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Tmdb\Model\Tv;
-use Tmdb\Model\Tv\QueryParameter\AppendToResponse;
 
 // @todo Inject repos/services
 class UserShowController extends Controller {
