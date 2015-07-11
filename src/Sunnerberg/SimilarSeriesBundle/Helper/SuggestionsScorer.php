@@ -73,15 +73,19 @@ class SuggestionsScorer {
     }
 
     /**
-     * @return array
+     * @param null|integer $limit How many suggestions that will, maximally, be returned
+     * @return array Suggestions ordered by score
      */
-    public function getGradedShows()
+    public function getGradedShows($limit = null)
     {
         $gradedShows = array();
         foreach ($this->gradedShows as $item) {
             $gradedShows[] = $item['show'];
         }
 
+        if (is_integer($limit)) {
+            return array_slice($gradedShows, 0, $limit);
+        }
         return $gradedShows;
     }
 

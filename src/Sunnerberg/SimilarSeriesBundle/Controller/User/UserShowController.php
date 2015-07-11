@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Tmdb\Model\Tv;
 
 // @todo Inject repos/services
+// @todo Extract fetch/create logic: ShowFetcher -> TmdbFetcher or such
+// @todo TMDB-id should likely not be stored directly on the model, but rather joined on
 class UserShowController extends Controller {
 
     /**
