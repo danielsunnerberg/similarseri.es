@@ -8,11 +8,19 @@ use Tmdb\Model\Tv;
 class TvShowRepository extends EntityRepository
 {
 
+    /**
+     * @param Tv $tmdbShow
+     * @return null|TvShow
+     */
     public function getTvShow(Tv $tmdbShow)
     {
         return $this->getByTmdbId($tmdbShow->getId());
     }
 
+    /**
+     * @param $tmdbId
+     * @return null|TvShow
+     */
     public function getByTmdbId($tmdbId)
     {
         return $this->findOneBy(array('tmdbId' => $tmdbId));

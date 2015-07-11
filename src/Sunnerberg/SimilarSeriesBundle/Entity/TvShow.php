@@ -250,6 +250,7 @@ class TvShow
     {
         $this->lastSyncDate = new \DateTime();
         $this->genres = new ArrayCollection();
+        $this->similarTvShows = new ArrayCollection();
     }
 
     /**
@@ -308,6 +309,11 @@ class TvShow
         return $this->tmdbId;
     }
 
+    public function hasSimilarTvShow(TvShow $similarShow)
+    {
+        return $this->similarTvShows->contains($similarShow);
+    }
+
     /**
      * Add similarTvShows
      *
@@ -316,7 +322,9 @@ class TvShow
      */
     public function addSimilarTvShow(TvShow $similarTvShow)
     {
-        $this->similarTvShows[] = $similarTvShow;
+        if (! $this->hasSimilarTvShow($similarTvShow)) {
+            $this->similarTvShows[] = $similarTvShow;
+        }
 
         return $this;
     }

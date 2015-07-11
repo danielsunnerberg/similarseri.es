@@ -22,12 +22,12 @@ class UserShowController extends Controller {
         $tvShow = $doctrine->getRepository('SunnerbergSimilarSeriesBundle:TvShow')->getByTmdbId($tmdbId);
 
         if ($tvShow) {
+            // @todo Refresh related shows, which includes deleting old ones
             $this->syncSimilarShows($tvShow, $this->getTmdbShowById($tvShow->getTmdbId()));
         } else {
             $tvShow = $this->downloadShow($tmdbId);
         }
 
-        // @todo Update/remove related shows
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if (! $user->hasTvShow($tvShow)) {
