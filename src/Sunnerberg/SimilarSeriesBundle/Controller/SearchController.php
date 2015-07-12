@@ -19,7 +19,7 @@ class SearchController extends Controller {
         $filters = new TvSearchQuery();
         $response = $searchRepository->searchTv($query, $filters)->getAll();
         $tmdbPosterHelper = $this->get('sunnerberg_similar_series.helper.tmdb_poster_helper');
-        $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl();
+        $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(0);
 
         $matchingShows = array();
         foreach ($response as $show) {

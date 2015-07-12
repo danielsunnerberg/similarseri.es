@@ -35,6 +35,8 @@ class TvShowRepository extends EntityRepository
         $tvShow->setVoteAverage($tmdbShow->getVoteAverage());
         $tvShow->setImdbId($tmdbShow->getExternalIds()->getImdbId());
         $tvShow->setPosterUrl($tmdbShow->getPosterPath());
+        $tvShow->setAirDate($tmdbShow->getFirstAirDate());
+        $tvShow->setOverview($tmdbShow->getOverview());
 
         return $tvShow;
     }

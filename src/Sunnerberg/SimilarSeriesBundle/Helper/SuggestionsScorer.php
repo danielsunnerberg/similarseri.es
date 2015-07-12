@@ -47,46 +47,51 @@ class SuggestionsScorer {
 
     private function processSimilarShow(TvShow $baseShow, TvShow $similarShow)
     {
+        // @todo Extract array structure to object
         $similarShowId = $similarShow->getId();
         if (in_array($similarShowId, $this->ignoreIds)) {
             return;
         }
 
         $score = self::REFERRAL_SCORE;
+        $motivation = sprintf(
+            'Because you watched %s',
+            $baseShow->getName()
+        );
 
-        // Multiple referals should be promoted
+        // Multiple referrals should be promoted, however the show's popularity etc. should only be
+        // awarded once.
         if (array_key_exists($similarShowId, $this->gradedShows)) {
-            $this->gradedShows[$similarShowId]['score'] += $score;
-            return;
+            $score += $this->gradedShows[$similarShowId]['score'];
+            $motivations = $this->gradedShows[$similarShowId]['motivations'];
+        } else {
+            $score += ($similarShow->getPopularity() * self::POPULARITY_FACTOR);
+            $score += ($similarShow->getVoteAverage() * self::VOTE_AVERAGE_FACTOR);
+            $motivations = [];
         }
+        $motivations[] = $motivation;
 
-        $score += ($similarShow->getPopularity() * self::POPULARITY_FACTOR);
-        $score += ($similarShow->getVoteAverage() * self::VOTE_AVERAGE_FACTOR);
 
         // @todo Should same genre be promoted?
         // @todo Should newer shows be promoted?
 
-        $this->gradedShows[$similarShowId] = array(
+        $this->gradedShows[$similarShowId] = [
             'score' => $score,
-            'show' => $similarShow
-        );
+            'show' => $similarShow,
+            'motivations' => $motivations
+        ];
     }
 
     /**
      * @param null|integer $limit How many suggestions that will, maximally, be returned
      * @return array Suggestions ordered by score
      */
-    public function getGradedShows($limit = null)
+    public function getGradedSuggestions($limit = null)
     {
-        $gradedShows = array();
-        foreach ($this->gradedShows as $item) {
-            $gradedShows[] = $item['show'];
-        }
-
         if (is_integer($limit)) {
-            return array_slice($gradedShows, 0, $limit);
+            return array_slice($this->gradedShows, 0, $limit);
         }
-        return $gradedShows;
+        return $this->gradedShows;
     }
 
     private function sortShowsByScore()

@@ -35,7 +35,7 @@ class SuggestionsController extends Controller {
         return $this->render(
             'SunnerbergSimilarSeriesBundle:User:suggestions.html.twig',
             array(
-                'shows' => $suggestionsScorer->getGradedShows(20),
+                'suggestions' => $suggestionsScorer->getGradedSuggestions(20),
                 'posterBaseUrl' => $posterBaseUrl
             )
         );
