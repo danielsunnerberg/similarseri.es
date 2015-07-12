@@ -399,6 +399,16 @@ class TvShow
     }
 
     /**
+     * The year the show was aired the first time.
+     *
+     * @return integer
+     */
+    public function getAirYear()
+    {
+        return $this->airDate->format('Y');
+    }
+
+    /**
      * Set overview
      *
      * @param string $overview

@@ -12,3 +12,4 @@
 /.idea/
 *.php~
 /web/assets/vendor/
+web/css

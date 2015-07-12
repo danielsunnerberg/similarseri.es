@@ -28,10 +28,16 @@ class SuggestionsController extends Controller {
             );
         }
 
+        $tmdbPosterHelper = $this->get('sunnerberg_similar_series.helper.tmdb_poster_helper');
+        $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(1);
+
         $suggestionsScorer = new SuggestionsScorer($similarShows, $ignoreIds);
         return $this->render(
             'SunnerbergSimilarSeriesBundle:User:suggestions.html.twig',
-            array('shows' => $suggestionsScorer->getGradedShows(20))
+            array(
+                'shows' => $suggestionsScorer->getGradedShows(20),
+                'posterBaseUrl' => $posterBaseUrl
+            )
         );
     }
 

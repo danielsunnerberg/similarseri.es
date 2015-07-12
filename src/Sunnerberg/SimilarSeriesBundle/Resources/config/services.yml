@@ -1,4 +1,4 @@
 services:
-#    sunnerberg_similar_series.example:
-#        class: Sunnerberg\SimilarSeriesBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    sunnerberg_similar_series.helper.tmdb_poster_helper:
+        class: Sunnerberg\SimilarSeriesBundle\Helper\TmdbPosterHelper
+        arguments: ["@tmdb.configuration_repository"]

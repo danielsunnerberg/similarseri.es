@@ -18,7 +18,8 @@ class SearchController extends Controller {
         $searchRepository = $this->get('tmdb.search_repository');
         $filters = new TvSearchQuery();
         $response = $searchRepository->searchTv($query, $filters)->getAll();
-        $posterBase = $this->getPosterBaseUrl();
+        $tmdbPosterHelper = $this->get('sunnerberg_similar_series.helper.tmdb_poster_helper');
+        $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl();
 
         $matchingShows = array();
         foreach ($response as $show) {
@@ -26,20 +27,11 @@ class SearchController extends Controller {
                 'tmdbId' => $show->getId(),
                 'name' => $show->getName(),
                 'airYear' => $show->getFirstAirDate()->format('Y'),
-                'posterUrl' => $posterBase . $show->getPosterPath(),
+                'posterUrl' => $posterBaseUrl . $show->getPosterPath(),
             );
         }
 
         return new JsonResponse($matchingShows);
-    }
-
-    private function getPosterBaseUrl()
-    {
-        // @todo cache this
-        $configurationRepository = $this->get('tmdb.configuration_repository');
-        $tmdbConfig = $configurationRepository->load();
-        $imageConfig = $tmdbConfig->getImages();
-        return $imageConfig['secure_base_url'] . $imageConfig['poster_sizes'][0];
     }
 
 }

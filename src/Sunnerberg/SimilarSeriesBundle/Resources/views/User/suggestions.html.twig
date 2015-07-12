@@ -1,9 +1,27 @@
 {% extends '@SunnerbergSimilarSeries/base.html.twig' %}
 
+{% block stylesheets %}
+    {% stylesheets filter='less' '@SunnerbergSimilarSeriesBundle/Resources/public/css/User/suggestions.less' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block body %}
-    <ol>
     {% for show in shows %}
-        <li>{{ show.name }}</li>
+        <div class="tv-show-item col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row-fluid">
+                        <div class="pull-left">
+                            <img class="poster responsive-image" src="{{ posterBaseUrl ~ show.posterUrl }}" alt="Poster image for{{ show.name }}" />
+                        </div>
+                        <div class="content">
+                            <h3>{{ show.name }} <small>({{ show.airYear }})</small></h3>
+                            <p>{{ show.overview }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endfor %}
-    </ol>
 {% endblock %}
