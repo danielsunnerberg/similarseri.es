@@ -82,13 +82,14 @@ class SuggestionsScorer {
     }
 
     /**
+     * @param null|integer $offset From at which position suggestions should be selected
      * @param null|integer $limit How many suggestions that will, maximally, be returned
      * @return array Suggestions ordered by score
      */
-    public function getGradedSuggestions($limit = null)
+    public function getGradedSuggestions($offset = null, $limit = null)
     {
-        if (is_integer($limit)) {
-            return array_slice($this->gradedShows, 0, $limit);
+        if (is_numeric($offset)) {
+            return array_slice($this->gradedShows, $offset, $limit);
         }
         return $this->gradedShows;
     }

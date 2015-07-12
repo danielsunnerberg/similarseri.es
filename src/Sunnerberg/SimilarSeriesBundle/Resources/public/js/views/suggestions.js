@@ -1,15 +1,26 @@
 define(
-    ['backbone', 'underscore', 'collections/suggestions', 'text!templates/suggestions.html'],
-    function (Backbone, _, SuggestionsCollection, SuggestionsTemplate) {
+    ['jquery', 'backbone', 'underscore', 'collections/suggestions', 'text!templates/suggestions.html'],
+    function ($, Backbone, _, SuggestionsCollection, SuggestionsTemplate) {
         var SuggestionsView = Backbone.View.extend({
             el: '#suggestions',
+
             initialize: function () {
                 this.isLoading = false;
                 this.suggestionsCollection = new SuggestionsCollection();
+                var that = this;
+                $(window).bind('scroll', function() {
+                    that.checkScroll();
+                });
             },
-            render: function() {
+
+            remove: function () {
+                $(window).off('scroll', this.checkScroll);
+            },
+
+            render: function () {
                 this.loadResults();
             },
+
             loadResults: function () {
                 var that = this;
                 this.isLoading = true;
@@ -23,12 +34,20 @@ define(
                         });
                         $(that.el).append(template);
                         that.isLoading = false;
-                        console.log(response);
                     },
                     error: function (model, response, options) {
                         // @todo
                     }
                 })
+            },
+
+            checkScroll: function (that) {
+                var triggerPoint = 200;
+                var element = $(window);
+                if (! this.isLoading && element.scrollTop() + element.height() + triggerPoint > document.body.scrollHeight) {
+                    this.suggestionsCollection.page += 1;
+                    this.loadResults();
+                }
             }
 
         });

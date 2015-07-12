@@ -12,9 +12,9 @@ class SuggestionsController extends Controller {
     /**
      * @todo lazyloading
      * @todo route url
-     * @Route("/user/suggestions/{page}", name="user_get_suggestions")
+     * @Route("/user/suggestions/{offset}/{limit}", name="user_get_suggestions")
      */
-    public function suggestionsAction($page = 1)
+    public function suggestionsAction($offset = 0, $limit = 20)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $userShows = $user->getTvShows();
@@ -35,7 +35,7 @@ class SuggestionsController extends Controller {
         $suggestionsScorer = new SuggestionsScorer($similarShows, $ignoreIds);
 
         return new JsonResponse(array(
-            'suggestions' => $suggestionsScorer->getGradedSuggestions(20),
+            'suggestions' => $suggestionsScorer->getGradedSuggestions($offset, $limit),
             'posterBaseUrl' => $posterBaseUrl
         ));
     }
