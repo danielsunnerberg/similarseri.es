@@ -41,7 +41,7 @@ define(
                 })
             },
 
-            checkScroll: function (that) {
+            checkScroll: function () {
                 var triggerPoint = 200;
                 var element = $(window);
                 if (! this.isLoading && element.scrollTop() + element.height() + triggerPoint > document.body.scrollHeight) {

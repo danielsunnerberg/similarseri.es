@@ -1,5 +1,6 @@
 {
     "name": "daniel/similarseri.es",
+    "description": "Finds matching TV-shows based on what shows the user likes", 
     "license": "proprietary",
     "type": "project",
     "autoload": {
