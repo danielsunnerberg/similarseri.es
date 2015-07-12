@@ -7,7 +7,8 @@ var config = {
         'bootstrap' : ['/maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min', '/assets/vendor/bootstrap/dist/js/bootstrap.min'],
         'typeahead': '/assets/vendor/typeahead.js/dist/typeahead.jquery',
         'bloodhound': '/assets/vendor/typeahead.js/dist/bloodhound.min',
-        'handlebars': '/assets/vendor/handlebars/handlebars.amd.min'
+        'handlebars': '/assets/vendor/handlebars/handlebars.amd.min',
+        backbone: '/assets/vendor/backbone-min'
     }
 };
 requirejs.config(config);
