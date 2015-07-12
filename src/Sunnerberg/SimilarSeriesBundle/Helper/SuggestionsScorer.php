@@ -71,7 +71,6 @@ class SuggestionsScorer {
         }
         $motivations[] = $motivation;
 
-
         // @todo Should same genre be promoted?
         // @todo Should newer shows be promoted?
 

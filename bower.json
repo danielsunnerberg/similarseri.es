@@ -19,6 +19,8 @@
     "jquery": "~2.1.4",
     "handlebars": "~3.0.3",
     "typeahead.js": "~0.11.1",
-    "backbone": "~1.2.1"
+    "backbone": "~1.2.1",
+    "underscore": "~1.8.3",
+    "requirejs-text": "~2.0.14"
   }
 }

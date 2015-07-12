@@ -1,4 +1,5 @@
 var config = {
+    urlArgs: "bust=" + (new Date()).getTime(),
     shim : {
         'bootstrap' : { 'deps' : ['jquery'] }
     },
@@ -8,7 +9,13 @@ var config = {
         'typeahead': '/assets/vendor/typeahead.js/dist/typeahead.jquery',
         'bloodhound': '/assets/vendor/typeahead.js/dist/bloodhound.min',
         'handlebars': '/assets/vendor/handlebars/handlebars.amd.min',
-        backbone: '/assets/vendor/backbone-min'
+        'underscore': '/assets/vendor/underscore/underscore-min',
+        'backbone': '/assets/vendor/backbone/backbone-min',
+        'text': '/assets/vendor/requirejs-text/text'
     }
 };
 requirejs.config(config);
+
+require(['router'], function (Router) {
+    Router.initialize();
+});

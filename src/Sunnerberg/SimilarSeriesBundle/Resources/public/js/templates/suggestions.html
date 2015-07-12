@@ -1,0 +1,17 @@
+<% _.each(suggestions, function (suggestion) { %>
+    <div class="tv-show-item col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row-fluid">
+                    <div class="pull-left">
+                        <img class="poster responsive-image" src="<%= posterBaseUrl + suggestion.show.posterUrl %>" alt="Poster image for<%= suggestion.show.name %>" />
+                    </div>
+                    <div class="content">
+                        <h3><%= suggestion.show.name %> <small>(<%= suggestion.show.airYear %>)</small></h3>
+                        <p><%= (suggestion.show.overview.length > 120) ? suggestion.show.overview.substring(0, 117) + "..." : suggestion.show.overview %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<% }); %>

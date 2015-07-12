@@ -8,8 +8,9 @@
 
 {% block body %}
     <input id="show-search" class="typeahead form-control" type="text" placeholder="Find shows">
+    <div id="suggestions"></div>
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('assets/vendor/requirejs/require.js') }}" data-main="{{ asset('bundles/sunnerbergsimilarseries/js/Default/autocomplete.js') }}"></script>
+    <script src="{{ asset('assets/vendor/requirejs/require.js') }}" data-main="{{ asset('bundles/sunnerbergsimilarseries/js/main.js') }}"></script>
 {% endblock %}
