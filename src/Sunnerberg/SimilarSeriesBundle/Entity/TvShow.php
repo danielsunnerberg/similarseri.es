@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="tv_shows")
  * @ORM\Entity(repositoryClass="Sunnerberg\SimilarSeriesBundle\Entity\TvShowRepository")
  */
-class TvShow
+class TvShow implements \JsonSerializable
 {
     /**
      * @var integer
@@ -429,5 +429,16 @@ class TvShow
     public function getOverview()
     {
         return $this->overview;
+    }
+
+    function jsonSerialize()
+    {
+        return [
+            'name' => $this->getName(),
+            'airYear' => $this->getAirYear(),
+            'overview' => $this->getOverview(),
+            'imdbId' => $this->getTmdbId(),
+            'posterUrl' => $this->getPosterUrl()
+        ];
     }
 }

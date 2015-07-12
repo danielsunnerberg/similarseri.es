@@ -5,15 +5,16 @@ namespace Sunnerberg\SimilarSeriesBundle\Controller\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sunnerberg\SimilarSeriesBundle\Helper\SuggestionsScorer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SuggestionsController extends Controller {
 
     /**
      * @todo lazyloading
      * @todo route url
-     * @Route("/user/suggestions", name="user_get_suggestions")
+     * @Route("/user/suggestions/{page}", name="user_get_suggestions")
      */
-    public function suggestionsAction()
+    public function suggestionsAction($page = 1)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $userShows = $user->getTvShows();
@@ -32,13 +33,11 @@ class SuggestionsController extends Controller {
         $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(1);
 
         $suggestionsScorer = new SuggestionsScorer($similarShows, $ignoreIds);
-        return $this->render(
-            'SunnerbergSimilarSeriesBundle:User:suggestions.html.twig',
-            array(
-                'suggestions' => $suggestionsScorer->getGradedSuggestions(20),
-                'posterBaseUrl' => $posterBaseUrl
-            )
-        );
+
+        return new JsonResponse(array(
+            'suggestions' => $suggestionsScorer->getGradedSuggestions(20),
+            'posterBaseUrl' => $posterBaseUrl
+        ));
     }
 
 }
