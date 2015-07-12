@@ -18,7 +18,7 @@ class SuggestionsScorer {
     /**
      * @var array
      */
-    private $gradedShows = array();
+    private $gradedShows = [];
 
     /**
      * @var

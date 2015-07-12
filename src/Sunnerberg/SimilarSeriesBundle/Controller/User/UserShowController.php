@@ -78,7 +78,7 @@ class UserShowController extends Controller {
     {
         $tvRepository = $this->getDoctrine()->getRepository('SunnerbergSimilarSeriesBundle:TvShow');
 
-        $similar = array();
+        $similar = [];
         foreach ($tmdbShow->getSimilar() as $_similarShow) {
             $similarShow = $tvRepository->getTvShow($_similarShow);
             if (! $similarShow) {

@@ -21,14 +21,14 @@ class SearchController extends Controller {
         $tmdbPosterHelper = $this->get('sunnerberg_similar_series.helper.tmdb_poster_helper');
         $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(0);
 
-        $matchingShows = array();
+        $matchingShows = [];
         foreach ($response as $show) {
-            $matchingShows[] = array(
+            $matchingShows[] = [
                 'tmdbId' => $show->getId(),
                 'name' => $show->getName(),
                 'airYear' => $show->getFirstAirDate()->format('Y'),
                 'posterUrl' => $posterBaseUrl . $show->getPosterPath(),
-            );
+            ];
         }
 
         return new JsonResponse($matchingShows);

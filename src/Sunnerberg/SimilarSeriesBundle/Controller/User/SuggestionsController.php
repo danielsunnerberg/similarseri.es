@@ -18,14 +18,14 @@ class SuggestionsController extends Controller {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $userShows = $user->getTvShows();
 
-        $similarShows = array();
-        $ignoreIds = array();
+        $similarShows = [];
+        $ignoreIds = [];
         foreach ($userShows as $userShow) {
             $ignoreIds[] = $userShow->getId();
-            $similarShows[] = array(
+            $similarShows[] = [
                 'show' => $userShow,
                 'similar' => $userShow->getSimilarTvShows()
-            );
+            ];
         }
 
         $tmdbPosterHelper = $this->get('sunnerberg_similar_series.helper.tmdb_poster_helper');
