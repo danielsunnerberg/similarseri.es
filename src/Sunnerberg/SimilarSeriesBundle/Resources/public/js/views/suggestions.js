@@ -9,9 +9,20 @@ define(
                 this.hasMoreSuggestions = true;
                 this.suggestionsCollection = new SuggestionsCollection();
                 var that = this;
+
+                Handlebars.registerHelper('posterUrl', this.generatePosterUrl);
+                this.template = Handlebars.compile(SuggestionsTemplate);
+
                 $(window).bind('scroll', function() {
                     that.checkScroll();
                 });
+            },
+
+            generatePosterUrl: function (show, posterBaseUrl) {
+                return new Handlebars.SafeString('<img class="poster responsive-image" src="'
+                + posterBaseUrl + show.posterUrl
+                + '" alt="Poster image for ' + show.name
+                + '" />');
             },
 
             remove: function () {
@@ -39,24 +50,18 @@ define(
                         if (suggestions.length == 0) {
                             return;
                         }
-
                         $('#user-suggestions-title').text('Suggestions generated for you');
-                        Handlebars.registerHelper('posterUrl', function (suggestion) {
-                            return new Handlebars.SafeString('<img class="poster responsive-image" src="'
-                                + posterBaseUrl + suggestion.show.posterUrl
-                                + '" alt="Poster image for ' + suggestion.show.name
-                                + '" />');
-                        });
-                        var template = Handlebars.compile(SuggestionsTemplate);
-                        template = template({
-                            suggestions: suggestions
+
+                        var template = that.template({
+                            suggestions: suggestions,
+                            posterBaseUrl: posterBaseUrl
                         });
                         $(that.el).append(template);
 
                     },
                     error: function (model, response, options) {
                         that.isLoading = false;
-                        $('.tv-show-item').empty();
+                        $('.tv-show-item').remove();
                         $('#user-suggestions-title').text('An error occured. Please try again later.');
                     }
                 })
