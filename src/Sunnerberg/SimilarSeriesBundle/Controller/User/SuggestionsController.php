@@ -36,7 +36,8 @@ class SuggestionsController extends Controller {
 
         return new JsonResponse(array(
             'suggestions' => $suggestionsScorer->getGradedSuggestions($offset, $limit),
-            'posterBaseUrl' => $posterBaseUrl
+            'posterBaseUrl' => $posterBaseUrl,
+            'hasMoreSuggestions' => $suggestionsScorer->hasMoreSuggestions($offset, $limit)
         ));
     }
 

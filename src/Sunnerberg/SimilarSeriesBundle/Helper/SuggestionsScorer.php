@@ -81,6 +81,11 @@ class SuggestionsScorer {
         ];
     }
 
+    public function hasMoreSuggestions($offset, $limit)
+    {
+        return count($this->gradedShows) - $offset > $limit;
+    }
+
     /**
      * @param null|integer $offset From at which position suggestions should be selected
      * @param null|integer $limit How many suggestions that will, maximally, be returned

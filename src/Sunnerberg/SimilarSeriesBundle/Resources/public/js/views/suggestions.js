@@ -6,6 +6,7 @@ define(
 
             initialize: function () {
                 this.isLoading = false;
+                this.hasMoreSuggestions = true;
                 this.suggestionsCollection = new SuggestionsCollection();
                 var that = this;
                 $(window).bind('scroll', function() {
@@ -22,11 +23,16 @@ define(
             },
 
             loadResults: function () {
+                if (! this.hasMoreSuggestions) {
+                    return;
+                }
+
                 var that = this;
                 this.isLoading = true;
                 this.suggestionsCollection.fetch({
                     success: function (response) {
                         that.isLoading = false;
+                        this.hasMoreSuggestions = response.models[0].get('hasMoreSuggestions');
                         var suggestions = response.models[0].get('suggestions');
                         var posterBaseUrl = response.models[0].get('posterBaseUrl');
 
@@ -46,8 +52,8 @@ define(
                     },
                     error: function (model, response, options) {
                         that.isLoading = false;
-                        $(that.el).empty();
-                        $('#user-suggestions-title').text('An error occured. Please try again later');
+                        $('.tv-show-item').empty();
+                        $('#user-suggestions-title').text('An error occured. Please try again later.');
                     }
                 })
             },
