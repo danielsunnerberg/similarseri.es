@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ed6e64f4a1591752bed31b9d2110fc42",
+    "hash": "a92d0984ffe4b97fbb8ef5974362eeab",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1196,16 +1196,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.14.0",
+            "version": "1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "b287fbbe1ca27847064beff2bad7fb6920bf08cc"
+                "reference": "dc5150cc608f2334c72c3b6a553ec9668a4156b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/b287fbbe1ca27847064beff2bad7fb6920bf08cc",
-                "reference": "b287fbbe1ca27847064beff2bad7fb6920bf08cc",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/dc5150cc608f2334c72c3b6a553ec9668a4156b0",
+                "reference": "dc5150cc608f2334c72c3b6a553ec9668a4156b0",
                 "shasum": ""
             },
             "require": {
@@ -1242,7 +1242,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.14.x-dev"
+                    "dev-master": "1.15.x-dev"
                 }
             },
             "autoload": {
@@ -1268,20 +1268,20 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2015-06-19 13:29:54"
+            "time": "2015-07-12 13:54:09"
         },
         {
             "name": "php-tmdb/api",
-            "version": "v2.0.8",
+            "version": "v2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-tmdb/api.git",
-                "reference": "c796003e1d7e88b9578338972d5a9d3f8b6daa2c"
+                "reference": "4cb1b4924b29bfdd91bacb3a28c043f4de95cc6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-tmdb/api/zipball/c796003e1d7e88b9578338972d5a9d3f8b6daa2c",
-                "reference": "c796003e1d7e88b9578338972d5a9d3f8b6daa2c",
+                "url": "https://api.github.com/repos/php-tmdb/api/zipball/4cb1b4924b29bfdd91bacb3a28c043f4de95cc6a",
+                "reference": "4cb1b4924b29bfdd91bacb3a28c043f4de95cc6a",
                 "shasum": ""
             },
             "require": {
@@ -1336,20 +1336,20 @@
                 "tvdb",
                 "wrapper"
             ],
-            "time": "2015-06-21 20:38:39"
+            "time": "2015-07-11 20:10:10"
         },
         {
             "name": "php-tmdb/symfony",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-tmdb/symfony.git",
-                "reference": "bb484ea88bb5d8c171547f00d080ad9d149b58ea"
+                "reference": "00d9bcc56cabd8ef6ce0a3c7d8452c6a2a2f219d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-tmdb/symfony/zipball/bb484ea88bb5d8c171547f00d080ad9d149b58ea",
-                "reference": "bb484ea88bb5d8c171547f00d080ad9d149b58ea",
+                "url": "https://api.github.com/repos/php-tmdb/symfony/zipball/00d9bcc56cabd8ef6ce0a3c7d8452c6a2a2f219d",
+                "reference": "00d9bcc56cabd8ef6ce0a3c7d8452c6a2a2f219d",
                 "shasum": ""
             },
             "require": {
@@ -1388,7 +1388,7 @@
                 "tvdb",
                 "wrapper"
             ],
-            "time": "2015-04-05 13:07:03"
+            "time": "2015-07-11 19:57:15"
         },
         {
             "name": "psr/log",
@@ -1868,16 +1868,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.7.1",
+            "version": "v2.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "932b6e7499c670f4db6d0b871477a4a3ca161e74"
+                "reference": "969d709ad428076bf1084e386dc26dd904d9fb84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/932b6e7499c670f4db6d0b871477a4a3ca161e74",
-                "reference": "932b6e7499c670f4db6d0b871477a4a3ca161e74",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/969d709ad428076bf1084e386dc26dd904d9fb84",
+                "reference": "969d709ad428076bf1084e386dc26dd904d9fb84",
                 "shasum": ""
             },
             "require": {
@@ -1986,7 +1986,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-06-11 21:15:28"
+            "time": "2015-07-13 19:27:49"
         },
         {
             "name": "twig/twig",
