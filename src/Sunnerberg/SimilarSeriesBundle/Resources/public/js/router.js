@@ -1,4 +1,4 @@
-define(['backbone', 'views/suggestions'], function (Backbone, SuggestionsView) {
+define(['backbone', 'views/suggestions', 'views/tvShowSearch'], function (Backbone, SuggestionsView, TvShowSearchView) {
     var Router = Backbone.Router.extend({
         routes: {
             '*actions': 'defaultRoute' // @todo
@@ -12,6 +12,7 @@ define(['backbone', 'views/suggestions'], function (Backbone, SuggestionsView) {
         router.on('route:defaultRoute', function (actions) {
             console.log("No matching route found. Using default.", actions);
             new SuggestionsView().render();
+            new TvShowSearchView().render();
         });
 
         Backbone.history.start({ pushState:true });

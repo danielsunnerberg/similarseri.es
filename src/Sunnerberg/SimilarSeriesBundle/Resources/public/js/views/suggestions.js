@@ -26,17 +26,28 @@ define(
                 this.isLoading = true;
                 this.suggestionsCollection.fetch({
                     success: function (response) {
+                        that.isLoading = false;
+                        var suggestions = response.models[0].get('suggestions');
+                        var posterBaseUrl = response.models[0].get('posterBaseUrl');
+
+                        if (suggestions.length == 0) {
+                            return;
+                        }
+
+                        $('#user-suggestions-title').text('Suggestions generated for you');
                         var template = _.template(SuggestionsTemplate);
                         template = template({
-                            suggestions: response.models[0].get('suggestions'),
-                            posterBaseUrl: response.models[0].get('posterBaseUrl'),
+                            suggestions: suggestions,
+                            posterBaseUrl: posterBaseUrl,
                             _: _
                         });
                         $(that.el).append(template);
-                        that.isLoading = false;
+
                     },
                     error: function (model, response, options) {
-                        // @todo
+                        that.isLoading = false;
+                        $(that.el).empty();
+                        $('#user-suggestions-title').text('An error occured. Please try again later');
                     }
                 })
             },

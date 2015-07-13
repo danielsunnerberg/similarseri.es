@@ -7,10 +7,16 @@
 {% endblock %}
 
 {% block body %}
-    <input id="show-search" class="typeahead form-control" type="text" placeholder="Find shows">
+    <div class="panel panel-default">
+        <div class="panel-heading">Add TV-shows that you've enjoyed to get personalised suggestions</div>
+        <div class="panel-body panel-default">
+            <input id="show-search" class="typeahead form-control" type="text" placeholder="Find shows">
+        </div>
+    </div>
 
-    <h2>Suggestions generated for you</h2>
-    <div id="suggestions"></div>
+    <div id="suggestions">
+        <h2 id="user-suggestions-title"></h2>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
