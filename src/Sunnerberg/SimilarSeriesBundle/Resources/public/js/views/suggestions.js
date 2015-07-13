@@ -1,6 +1,6 @@
 define(
-    ['jquery', 'backbone', 'underscore', 'collections/suggestions', 'text!templates/suggestions.html'],
-    function ($, Backbone, _, SuggestionsCollection, SuggestionsTemplate) {
+    ['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handlebars', 'text!templates/suggestions.html', 'handlebarsHelpers/truncate'],
+    function ($, Backbone, _, SuggestionsCollection, Handlebars, SuggestionsTemplate) {
         var SuggestionsView = Backbone.View.extend({
             el: '#suggestions',
 
@@ -41,11 +41,15 @@ define(
                         }
 
                         $('#user-suggestions-title').text('Suggestions generated for you');
-                        var template = _.template(SuggestionsTemplate);
+                        Handlebars.registerHelper('posterUrl', function (suggestion) {
+                            return new Handlebars.SafeString('<img class="poster responsive-image" src="'
+                                + posterBaseUrl + suggestion.show.posterUrl
+                                + '" alt="Poster image for ' + suggestion.show.name
+                                + '" />');
+                        });
+                        var template = Handlebars.compile(SuggestionsTemplate);
                         template = template({
-                            suggestions: suggestions,
-                            posterBaseUrl: posterBaseUrl,
-                            _: _
+                            suggestions: suggestions
                         });
                         $(that.el).append(template);
 
