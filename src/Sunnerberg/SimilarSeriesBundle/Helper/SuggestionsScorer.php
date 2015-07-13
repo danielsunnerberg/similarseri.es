@@ -2,11 +2,12 @@
 
 namespace Sunnerberg\SimilarSeriesBundle\Helper;
 
+use Sunnerberg\SimilarSeriesBundle\Entity\Suggestion;
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShow;
 
 class SuggestionsScorer {
 
-    const REFERRAL_SCORE = 10;
+    const REFERRAL_VALUE = 10;
     const POPULARITY_FACTOR = 1;
     const VOTE_AVERAGE_FACTOR = 1.5;
 
@@ -25,6 +26,10 @@ class SuggestionsScorer {
      */
     private $ignoreIds;
 
+    /**
+     * @param array $similarShows
+     * @param array $ignoreIds Ids of shows which will be excluded from any suggestions
+     */
     function __construct(array $similarShows, array $ignoreIds)
     {
         $this->similarShows = $similarShows;
@@ -39,7 +44,6 @@ class SuggestionsScorer {
             foreach ($item['similar'] as $similarShow) {
                 $this->processSimilarShow($baseShow, $similarShow);
             }
-
         }
 
         $this->sortShowsByScore();
@@ -47,40 +51,43 @@ class SuggestionsScorer {
 
     private function processSimilarShow(TvShow $baseShow, TvShow $similarShow)
     {
-        // @todo Extract array structure to object
         $similarShowId = $similarShow->getId();
         if (in_array($similarShowId, $this->ignoreIds)) {
             return;
         }
 
-        $score = self::REFERRAL_SCORE;
-        $motivation = sprintf(
-            'Because you watched %s',
-            $baseShow->getName()
+        if (array_key_exists($similarShowId, $this->gradedShows)) {
+            $suggestion = $this->gradedShows[$similarShowId];
+        } else {
+            $suggestion = new Suggestion($similarShow);
+        }
+
+        if ($suggestion->addReferral($baseShow)) {
+            $suggestion->addScore(self::REFERRAL_VALUE, sprintf('because you watched %s', $baseShow->getName()));
+        }
+
+        $suggestion->addUniqueScore(
+            'popularity',
+            $similarShow->getPopularity() * self::POPULARITY_FACTOR,
+            sprintf('because of the show\'s popularity (%d)', $similarShow->getPopularity())
         );
 
-        // Multiple referrals should be promoted, however the show's popularity etc. should only be
-        // awarded once.
-        if (array_key_exists($similarShowId, $this->gradedShows)) {
-            $score += $this->gradedShows[$similarShowId]['score'];
-            $motivations = $this->gradedShows[$similarShowId]['motivations'];
-        } else {
-            $score += ($similarShow->getPopularity() * self::POPULARITY_FACTOR);
-            $score += ($similarShow->getVoteAverage() * self::VOTE_AVERAGE_FACTOR);
-            $motivations = [];
-        }
-        $motivations[] = $motivation;
+        $suggestion->addUniqueScore(
+            'vote_average',
+            $similarShow->getVoteAverage() * self::VOTE_AVERAGE_FACTOR,
+            sprintf('because of the show\'s average vote scoring (%d)', $similarShow->getVoteAverage())
+        );
 
-        // @todo Should same genre be promoted?
-        // @todo Should newer shows be promoted?
-
-        $this->gradedShows[$similarShowId] = [
-            'score' => $score,
-            'show' => $similarShow,
-            'motivations' => $motivations
-        ];
+        $this->gradedShows[$similarShowId] = $suggestion;
     }
 
+    /**
+     * Returns whether more suggestions are available.
+     *
+     * @param $offset
+     * @param $limit
+     * @return bool
+     */
     public function hasMoreSuggestions($offset, $limit)
     {
         return count($this->gradedShows) - $offset > $limit;
@@ -101,8 +108,8 @@ class SuggestionsScorer {
 
     private function sortShowsByScore()
     {
-        return usort($this->gradedShows, function ($a, $b) {
-            return $b['score'] - $a['score'];
+        return usort($this->gradedShows, function (Suggestion $a, Suggestion $b) {
+            return $b->getScore() - $a->getScore();
         });
     }
 
