@@ -45,8 +45,12 @@ define(
 
                 element.on('typeahead:selected', function(evt, item) {
                     // @todo Use a more backbone-like way
-                    $.get('/user/show/add/' + item.tmdbId, function() {
-                        that.events.trigger('tv_show.added');
+                    $.ajax({
+                        url: '/user/shows/' + item.tmdbId,
+                        type: 'PUT',
+                        success: function() {
+                            that.events.trigger('tv_show.added');
+                        }
                     });
                 });
             }

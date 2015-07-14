@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class SuggestionsController extends Controller {
 
     /**
-     * @Route("/user/suggestions/{offset}/{limit}", name="user_get_suggestions")
+     * @Route("/user/suggestions/{offset}/{limit}", name="user_get_suggestions", methods={"get"})
      */
     public function suggestionsAction($offset = 0, $limit = 20)
     {

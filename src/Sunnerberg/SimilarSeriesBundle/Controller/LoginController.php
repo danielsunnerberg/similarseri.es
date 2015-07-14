@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class LoginController extends Controller {
 
     /**
-     * @Route("/login", name="login_route")
+     * @Route("/login", name="login_route", methods={"get"})
      */
     public function loginAction()
     {
@@ -26,11 +26,10 @@ class LoginController extends Controller {
     }
 
     /**
-     * @Route("/login/check", name="login_check")
+     * @Route("/login/check", name="login_check", methods="post")
      */
     public function loginCheckAction()
     {
-
     }
 
 }

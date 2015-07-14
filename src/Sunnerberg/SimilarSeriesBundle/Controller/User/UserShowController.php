@@ -16,7 +16,7 @@ use Tmdb\Model\Tv;
 class UserShowController extends Controller {
 
     /**
-     * @Route("/user/show/add/{tmdbId}", name="user_add_show")
+     * @Route("/user/shows/{tmdbId}", name="user_add_show", methods={"put"})
      */
     public function addShowAction($tmdbId)
     {

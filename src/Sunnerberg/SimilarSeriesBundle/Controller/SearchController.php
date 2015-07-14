@@ -11,7 +11,7 @@ use Tmdb\Model\Search\SearchQuery\TvSearchQuery;
 class SearchController extends Controller {
 
     /**
-     * @Route("/search/{query}.json", name="search_route")
+     * @Route("/search/{query}.json", name="search_route", methods={"get"})
      */
     public function searchAction($query)
     {
