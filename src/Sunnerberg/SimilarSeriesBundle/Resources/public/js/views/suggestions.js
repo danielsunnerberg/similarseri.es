@@ -4,18 +4,24 @@ define(
         var SuggestionsView = Backbone.View.extend({
             el: '#suggestions',
 
-            initialize: function () {
-                this.isLoading = false;
-                this.hasMoreSuggestions = true;
-                this.suggestionsCollection = new SuggestionsCollection();
+            initialize: function (options) {
+                this.setDefaultSettings();
                 var that = this;
+                options.events.bind('tv_show.added', function() {
+                    that.refresh();
+                });
+                Handlebars.registerHelper('generatePosterUrl', this.generatePosterUrl);
 
-                Handlebars.registerHelper('posterUrl', this.generatePosterUrl);
                 this.template = Handlebars.compile(SuggestionsTemplate);
-
                 $(window).bind('scroll', function() {
                     that.checkScroll();
                 });
+            },
+
+            setDefaultSettings: function () {
+                this.isLoading = false;
+                this.hasMoreSuggestions = true;
+                this.suggestionsCollection = new SuggestionsCollection();
             },
 
             generatePosterUrl: function (show, posterBaseUrl) {
@@ -31,6 +37,12 @@ define(
 
             render: function () {
                 this.loadResults();
+            },
+
+            refresh: function() {
+                this.setDefaultSettings();
+                $(this.el).empty();
+                this.render();
             },
 
             loadResults: function () {

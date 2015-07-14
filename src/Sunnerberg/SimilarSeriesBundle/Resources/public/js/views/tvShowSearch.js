@@ -5,7 +5,8 @@ define(
         return Backbone.View.extend({
             el: '#show-search',
 
-            initialize: function () {
+            initialize: function (options) {
+                this.events = options.events;
                 this.suggestionTemplate = Handlebars.compile(TvShowTypeaheadTemplate);
                 this.source = new Bloodhound({
                     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
@@ -18,6 +19,7 @@ define(
             },
 
             render: function () {
+                var that = this;
                 var element = $(this.el);
                 element.typeahead(
                     {
@@ -44,7 +46,7 @@ define(
                 element.on('typeahead:selected', function(evt, item) {
                     // @todo Use a more backbone-like way
                     $.get('/user/show/add/' + item.tmdbId, function() {
-                        console.log("Done");
+                        that.events.trigger('tv_show.added');
                     });
                 });
             }
