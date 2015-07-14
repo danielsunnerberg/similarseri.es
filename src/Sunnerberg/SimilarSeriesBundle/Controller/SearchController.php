@@ -16,6 +16,7 @@ class SearchController extends Controller {
     {
         $searchRepository = $this->get('tmdb.search_repository');
         $filters = new TvSearchQuery();
+        $filters->searchType('ngram');
         $response = $searchRepository->searchTv($query, $filters)->getAll();
         $tmdbPosterHelper = $this->get('sunnerberg_similar_series.helper.tmdb_poster_helper');
         $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(0);
