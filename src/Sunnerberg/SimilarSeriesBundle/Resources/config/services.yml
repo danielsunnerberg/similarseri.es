@@ -2,3 +2,21 @@ services:
     sunnerberg_similar_series.helper.tmdb_poster_helper:
         class: Sunnerberg\SimilarSeriesBundle\Helper\TmdbPosterHelper
         arguments: ["@tmdb.configuration_repository"]
+    sunnerberg_similar_series.repository.tv_show:
+        class: Sunnerberg\SimilarSeriesBundle\Entity\TvShowRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - Sunnerberg\SimilarSeriesBundle\Entity\TvShow
+    sunnerberg_similar_series.repository.genre:
+        class: Sunnerberg\SimilarSeriesBundle\Entity\GenreRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - Sunnerberg\SimilarSeriesBundle\Entity\Genre
+    sunnerberg_similar_series.fetcher.tmdb_show_fetcher:
+        class: Sunnerberg\SimilarSeriesBundle\Fetcher\TmdbShowFetcher
+        arguments:
+            tmdbTvRepository: @tmdb.tv_repository
+            tvShowRepository: @sunnerberg_similar_series.repository.tv_show
+            genreRepository: @sunnerberg_similar_series.repository.genre

@@ -55,7 +55,7 @@ define(
                 this.suggestionsCollection.fetch({
                     success: function (response) {
                         that.isLoading = false;
-                        this.hasMoreSuggestions = response.models[0].get('hasMoreSuggestions');
+                        that.hasMoreSuggestions = response.models[0].get('hasMoreSuggestions');
                         var suggestions = response.models[0].get('suggestions');
                         var posterBaseUrl = response.models[0].get('posterBaseUrl');
 
