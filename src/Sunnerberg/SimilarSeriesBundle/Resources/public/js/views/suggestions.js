@@ -1,5 +1,4 @@
-define(
-    ['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handlebars', 'text!templates/suggestions.html', 'handlebarsHelpers/truncate'],
+define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handlebars', 'text!templates/suggestions.html', 'handlebarsHelpers/truncate', 'handlebarsHelpers/groupedEach'],
     function ($, Backbone, _, SuggestionsCollection, Handlebars, SuggestionsTemplate) {
         var SuggestionsView = Backbone.View.extend({
             el: '#suggestions',
