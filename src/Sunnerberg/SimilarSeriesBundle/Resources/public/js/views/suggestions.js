@@ -1,7 +1,8 @@
-define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handlebars', 'text!templates/suggestions.html', 'handlebarsHelpers/truncate', 'handlebarsHelpers/groupedEach'],
-    function ($, Backbone, _, SuggestionsCollection, Handlebars, SuggestionsTemplate) {
+define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handlebars', 'text!templates/suggestions.html', 'views/suggestion','handlebarsHelpers/truncate', 'handlebarsHelpers/groupedEach'],
+    function ($, Backbone, _, SuggestionsCollection, Handlebars, SuggestionsTemplate, SuggestionView) {
         var SuggestionsView = Backbone.View.extend({
             el: '#suggestions',
+            suggestionViews: [],
 
             initialize: function (options) {
                 this.setDefaultSettings();
@@ -21,13 +22,6 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
                 this.isLoading = false;
                 this.hasMoreSuggestions = true;
                 this.suggestionsCollection = new SuggestionsCollection();
-            },
-
-            generatePosterUrl: function (show, posterBaseUrl) {
-                return new Handlebars.SafeString('<img class="poster responsive-image" src="'
-                + posterBaseUrl + show.posterUrl
-                + '" alt="Poster image for ' + show.name
-                + '" />');
             },
 
             remove: function () {
@@ -52,23 +46,10 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
                 var that = this;
                 this.isLoading = true;
                 this.suggestionsCollection.fetch({
-                    success: function (response) {
+                    success: function (suggestions) {
                         that.isLoading = false;
-                        that.hasMoreSuggestions = response.models[0].get('hasMoreSuggestions');
-                        var suggestions = response.models[0].get('suggestions');
-                        var posterBaseUrl = response.models[0].get('posterBaseUrl');
-
-                        if (suggestions.length == 0) {
-                            return;
-                        }
                         $('#user-suggestions-title').text('Suggestions generated for you');
-
-                        var template = that.template({
-                            suggestions: suggestions,
-                            posterBaseUrl: posterBaseUrl
-                        });
-                        $(that.el).append(template);
-
+                        that.insertSuggestions(suggestions.models);
                     },
                     error: function (model, response, options) {
                         that.isLoading = false;
@@ -76,6 +57,20 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
                         $('#user-suggestions-title').text('An error occured. Please try again later.');
                     }
                 })
+            },
+
+            insertSuggestions: function (suggestions) {
+                var renderedSuggestions = [];
+                suggestions.forEach(function (suggestion) {
+                    renderedSuggestions.push(
+                        new SuggestionView({ model: suggestion }).render().el.innerHTML
+                    );
+                });
+
+                var template = this.template({
+                    suggestions: renderedSuggestions
+                });
+                $(this.el).append(template);
             },
 
             checkScroll: function () {

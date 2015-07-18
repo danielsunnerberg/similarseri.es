@@ -236,6 +236,18 @@ class TvShow implements \JsonSerializable
     }
 
     /**
+     * Sets the base URL for the poster.
+     *
+     * @param $baseUrl
+     * @return $this
+     */
+    public function injectPosterBaseUrl($baseUrl)
+    {
+        $this->posterUrl = $baseUrl . $this->posterUrl;
+        return $this;
+    }
+
+    /**
      * Set lastSyncDate
      *
      * @param \DateTime $lastSyncDate
@@ -366,7 +378,7 @@ class TvShow implements \JsonSerializable
     /**
      * Add similar tv shows
      *
-     * @param array $getSimilarShows
+     * @param array $similarTvShows
      */
     public function addSimilarTvShows(array $similarTvShows)
     {
@@ -437,7 +449,7 @@ class TvShow implements \JsonSerializable
             'name' => $this->getName(),
             'airYear' => $this->getAirYear(),
             'overview' => $this->getOverview(),
-            'imdbId' => $this->getTmdbId(),
+            'imdbId' => $this->getImdbId(),
             'posterUrl' => $this->getPosterUrl()
         ];
     }

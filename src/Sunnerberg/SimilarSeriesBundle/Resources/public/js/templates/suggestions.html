@@ -1,18 +1,7 @@
 {{#grouped_each 3 suggestions }}
     <div class="row row-eq-height">
         {{#each this }}
-        <div class="tv-show-item col-sm-4">
-            <div class="row">
-                <div class="col-lg-6">
-                    {{ generatePosterUrl this.show @root.posterBaseUrl }}
-                </div>
-                <div class="details col-lg-6">
-                    <h3>{{ show.name }} <small>({{ show.airYear }})</small></h3>
-                    <p>{{ truncate show.overview 110 }}</p>
-                </div>
-            </div>
-
-        </div>
+            {{{ this }}}
         {{/each }}
     </div>
 {{/grouped_each}}

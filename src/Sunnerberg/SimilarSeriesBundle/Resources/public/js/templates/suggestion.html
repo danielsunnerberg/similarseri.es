@@ -1,0 +1,11 @@
+<div class="tv-show-item col-sm-4">
+    <div class="row">
+        <div class="col-lg-6">
+            <img class="poster responsive-image" src="{{ show.posterUrl }}" alt="Poster image for {{ show.name }}" />
+        </div>
+        <div class="details col-lg-6">
+            <h3>{{ show.name }} <small>({{ show.airYear }})</small></h3>
+            <p>{{ truncate show.overview 110 }}</p>
+        </div>
+    </div>
+</div>

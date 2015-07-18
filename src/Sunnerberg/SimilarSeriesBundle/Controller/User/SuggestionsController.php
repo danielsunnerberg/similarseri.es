@@ -31,10 +31,13 @@ class SuggestionsController extends Controller {
         $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(1);
 
         $suggestionsScorer = new SuggestionsScorer($similarShows, $ignoreIds);
+        $suggestions = $suggestionsScorer->getGradedSuggestions($offset, $limit);
+        foreach ($suggestions as $suggestion) {
+            $suggestion->getShow()->injectPosterBaseUrl($posterBaseUrl);
+        }
 
         return new JsonResponse(array(
-            'suggestions' => $suggestionsScorer->getGradedSuggestions($offset, $limit),
-            'posterBaseUrl' => $posterBaseUrl,
+            'suggestions' => $suggestions,
             'hasMoreSuggestions' => $suggestionsScorer->hasMoreSuggestions($offset, $limit)
         ));
     }

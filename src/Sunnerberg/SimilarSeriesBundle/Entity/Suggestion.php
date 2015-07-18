@@ -61,6 +61,15 @@ class Suggestion implements \JsonSerializable
     }
 
     /**
+     * @return TvShow
+     */
+    public function getShow()
+    {
+        return $this->show;
+    }
+
+
+    /**
      * Adds the score to the total.
      *
      * @param double $score
