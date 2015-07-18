@@ -1,7 +1,8 @@
 var config = {
     urlArgs: "bust=" + (new Date()).getTime(),
     shim : {
-        'bootstrap' : { 'deps' : ['jquery'] }
+        'bootstrap' : { 'deps' : ['jquery'] },
+        'ladda' : { 'deps' : ['spin'] }
     },
     paths: {
         'jquery' : ['//code.jquery.com/jquery-2.1.4.min', '/assets/vendor/jquery/dist/jquery'],
@@ -11,7 +12,9 @@ var config = {
         'handlebars': '/assets/vendor/handlebars/handlebars.amd.min',
         'underscore': '/assets/vendor/underscore/underscore-min',
         'backbone': '/assets/vendor/backbone/backbone-min',
-        'text': '/assets/vendor/requirejs-text/text'
+        'text': '/assets/vendor/requirejs-text/text',
+        'spin': '/assets/vendor/ladda-bootstrap/dist/spin.min',
+        'ladda': '/assets/vendor/ladda-bootstrap/dist/ladda.min'
     }
 };
 requirejs.config(config);

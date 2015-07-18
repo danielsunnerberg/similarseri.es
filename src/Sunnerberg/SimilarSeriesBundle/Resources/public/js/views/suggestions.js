@@ -53,7 +53,7 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
                     error: function () {
                         that.isLoading = false;
                         $('.tv-show-item').remove();
-                        $('#user-suggestions-title').text('An error occured. Please try again later.');
+                        $('#user-suggestions-title').text('An error occurred. Please try again later.');
                     }
                 })
             },

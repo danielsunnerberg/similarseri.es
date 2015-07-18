@@ -1,6 +1,7 @@
 {% extends '@SunnerbergSimilarSeries/base.html.twig' %}
 
 {% block stylesheets %}
+    {{ parent() }}
     {% stylesheets filter='less'
         '@SunnerbergSimilarSeriesBundle/Resources/public/css/Default/typeahead.css'
         '@SunnerbergSimilarSeriesBundle/Resources/public/css/Default/suggestions.less'

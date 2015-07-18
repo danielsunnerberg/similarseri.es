@@ -1,5 +1,5 @@
-define(['jquery', 'backbone', 'underscore', 'handlebars', 'text!templates/suggestion.html', 'handlebarsHelpers/truncate'],
-    function ($, Backbone, _, Handlebars, SuggestionTemplate) {
+define(['jquery', 'backbone', 'underscore', 'handlebars', 'ladda', 'text!templates/suggestion.html', 'handlebarsHelpers/truncate'],
+    function ($, Backbone, _, Handlebars, Ladda, SuggestionTemplate) {
         var SuggestionView = Backbone.View.extend({
             events: {
                 'click .actions .tv-show-seen': 'alreadySeen'
@@ -16,15 +16,21 @@ define(['jquery', 'backbone', 'underscore', 'handlebars', 'text!templates/sugges
                 return this;
             },
 
-            alreadySeen: function () {
+            alreadySeen: function (e) {
                 var that = this;
+
+                var ladda = Ladda.create(e.currentTarget);
+                ladda.start();
+
                 this.model.save(null, {
                     success: function () {
                         that.externalEvents.trigger('tv_show.added');
                     },
                     error : function () {
-                        alert("An error occured. Please try again later.");
+                        alert("An error occurred. Please try again later.");
                     }
+                }).always(function () {
+                    ladda.stop();
                 });
             }
 
