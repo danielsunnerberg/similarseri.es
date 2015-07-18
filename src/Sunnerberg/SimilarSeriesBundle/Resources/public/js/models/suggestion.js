@@ -1,7 +1,12 @@
 define(['backbone'], function (Backbone) {
     var Suggestion = Backbone.Model.extend({
+
+        initialize: function (options) {
+            this.id = options.show.tmdbId;
+        },
+
         url: function () {
-            return '/user/suggestions/' + this.id
+            return '/user/shows/' + this.id;
         }
     });
 

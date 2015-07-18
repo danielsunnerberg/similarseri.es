@@ -7,10 +7,9 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
             initialize: function (options) {
                 this.setDefaultSettings();
                 var that = this;
-                options.events.bind('tv_show.added', function() {
+                options.externalEvents.bind('tv_show.added', function() {
                     that.refresh();
                 });
-                Handlebars.registerHelper('generatePosterUrl', this.generatePosterUrl);
 
                 this.template = Handlebars.compile(SuggestionsTemplate);
                 $(window).bind('scroll', function() {
@@ -51,7 +50,7 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
                         $('#user-suggestions-title').text('Suggestions generated for you');
                         that.insertSuggestions(suggestions.models);
                     },
-                    error: function (model, response, options) {
+                    error: function () {
                         that.isLoading = false;
                         $('.tv-show-item').remove();
                         $('#user-suggestions-title').text('An error occured. Please try again later.');
@@ -60,16 +59,33 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
             },
 
             insertSuggestions: function (suggestions) {
-                var renderedSuggestions = [];
+                // @todo The code below is stupid and should be removed ASAP.
+                // Inserting a sub-view's HTML by generating it through a template will forfeit all bound listeners.
+                // Therefore, replacing a placeholder-id with the actual element will save listeners.
+                // Run while you can.
+                var that = this;
+                var views = {};
                 suggestions.forEach(function (suggestion) {
-                    renderedSuggestions.push(
-                        new SuggestionView({ model: suggestion }).render().el.innerHTML
-                    );
+                    var externalEvents = _.extend({}, Backbone.Events);
+                    views[suggestion.get('show').id] = new SuggestionView({model: suggestion, externalEvents: externalEvents});
+                    externalEvents.bind('tv_show.added', function() {
+                        that.refresh();
+                    });
                 });
 
-                var template = this.template({
-                    suggestions: renderedSuggestions
-                });
+                var template = $(this.template({
+                    suggestions: _.keys(views)
+                }));
+
+                for (var id in views) {
+                    if (! views.hasOwnProperty(id)) {
+                        continue;
+                    }
+
+                    var view = views[id];
+                    template.find('#' + id).parent().append(view.render().el);
+                }
+
                 $(this.el).append(template);
             },
 

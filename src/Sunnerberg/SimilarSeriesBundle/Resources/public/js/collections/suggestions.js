@@ -7,7 +7,7 @@ define(['backbone', '../models/suggestion'], function (Backbone, SuggestionModel
             return response.suggestions;
         },
         page: 0,
-        limit: 20,
+        limit: 21,
         model: SuggestionModel
     });
 

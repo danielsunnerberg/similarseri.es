@@ -12,7 +12,7 @@ define(['backbone', 'underscore', 'views/suggestions', 'views/tvShowSearch'], fu
         router.on('route:defaultRoute', function (actions) {
             console.log("No matching route found. Using default.", actions);
             var events = _.extend({}, Backbone.Events);
-            new SuggestionsView({events: events}).render();
+            new SuggestionsView({externalEvents: events}).render();
             new TvShowSearchView({events: events}).render();
         });
 

@@ -446,10 +446,12 @@ class TvShow implements \JsonSerializable
     function jsonSerialize()
     {
         return [
+            'id' => $this->getId(),
             'name' => $this->getName(),
             'airYear' => $this->getAirYear(),
             'overview' => $this->getOverview(),
             'imdbId' => $this->getImdbId(),
+            'tmdbId' => $this->getTmdbId(),
             'posterUrl' => $this->getPosterUrl()
         ];
     }
