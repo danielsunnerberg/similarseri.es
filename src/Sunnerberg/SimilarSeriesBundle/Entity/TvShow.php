@@ -47,7 +47,7 @@ class TvShow implements \JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="overview", type="text")
+     * @ORM\Column(name="overview", type="text", nullable=true)
      */
     private $overview;
 
