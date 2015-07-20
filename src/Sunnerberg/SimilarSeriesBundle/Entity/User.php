@@ -48,6 +48,18 @@ class User implements UserInterface, \Serializable
      * )
      */
     private $tvShows;
+
+    /**
+     * @var array
+     *
+     * @ORM\ManyToMany(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\TvShow")
+     * @ORM\JoinTable(
+     *     name="users_ignored_tv_shows",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="tv_show_id", referencedColumnName="id", unique=true)}
+     * )
+     */
+    private $ignoredTvShows;
     
     /**
      * Get id
@@ -190,5 +202,38 @@ class User implements UserInterface, \Serializable
 
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * Add ignoredTvShows
+     *
+     * @param TvShow $ignoredTvShow
+     * @return User
+     */
+    public function addIgnoredTvShow(TvShow $ignoredTvShow)
+    {
+        $this->ignoredTvShows[] = $ignoredTvShow;
+
+        return $this;
+    }
+
+    /**
+     * Remove ignoredTvShows
+     *
+     * @param TvShow $ignoredTvShow
+     */
+    public function removeIgnoredTvShow(TvShow $ignoredTvShow)
+    {
+        $this->ignoredTvShows->removeElement($ignoredTvShow);
+    }
+
+    /**
+     * Get ignoredTvShows
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIgnoredTvShows()
+    {
+        return $this->ignoredTvShows;
     }
 }
