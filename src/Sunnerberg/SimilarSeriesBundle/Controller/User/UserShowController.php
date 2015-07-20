@@ -3,10 +3,8 @@
 namespace Sunnerberg\SimilarSeriesBundle\Controller\User;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sunnerberg\SimilarSeriesBundle\Entity\TvShow;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Tmdb\Model\Tv;
 
 class UserShowController extends Controller {
 
