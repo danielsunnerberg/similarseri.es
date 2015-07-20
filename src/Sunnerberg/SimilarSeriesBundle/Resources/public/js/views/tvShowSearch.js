@@ -63,7 +63,7 @@ define(
 
                     $.ajax({
                         url: '/user/shows/' + item.tmdbId,
-                        type: 'PUT',
+                        type: 'POST',
                         success: function () {
                             that.events.trigger('tv_show.added');
                         }

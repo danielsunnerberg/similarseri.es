@@ -2,11 +2,9 @@
 
 namespace Sunnerberg\SimilarSeriesBundle\Helper;
 
-
 use Tmdb\Repository\ConfigurationRepository;
 
 class TmdbPosterHelper {
-
 
     private $tmdbConfigRepo;
 

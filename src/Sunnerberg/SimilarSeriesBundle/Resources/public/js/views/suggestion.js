@@ -2,7 +2,8 @@ define(['jquery', 'backbone', 'underscore', 'handlebars', 'ladda', 'text!templat
     function ($, Backbone, _, Handlebars, Ladda, SuggestionTemplate) {
         var SuggestionView = Backbone.View.extend({
             events: {
-                'click .actions .tv-show-seen': 'alreadySeen'
+                'click .actions .tv-show-seen': 'alreadySeen',
+                'click .actions .tv-show-ignore': 'ignore'
             },
             template: Handlebars.compile(SuggestionTemplate),
 
@@ -16,20 +17,32 @@ define(['jquery', 'backbone', 'underscore', 'handlebars', 'ladda', 'text!templat
                 return this;
             },
 
-            alreadySeen: function (e) {
+            responseHandler: function (eventAlias) {
                 var that = this;
-
-                var ladda = Ladda.create(e.currentTarget);
-                ladda.start();
-
-                this.model.save(null, {
+                return {
                     success: function () {
-                        that.externalEvents.trigger('tv_show.added');
+                        that.externalEvents.trigger(eventAlias);
                     },
                     error: function () {
                         alert("An error occurred. Please try again later.");
                     }
-                }).always(function () {
+                }
+            },
+
+            alreadySeen: function (e) {
+                var ladda = Ladda.create(e.currentTarget);
+                ladda.start();
+
+                this.model.save(null, this.responseHandler('tv_show.added')).always(function () {
+                    ladda.stop();
+                });
+            },
+
+            ignore: function (e) {
+                var ladda = Ladda.create(e.currentTarget);
+                ladda.start();
+
+                this.model.ignore(null, this.responseHandler('tv_show.added')).always(function () {
                     ladda.stop();
                 });
             }

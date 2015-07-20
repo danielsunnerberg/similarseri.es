@@ -20,11 +20,17 @@ class SuggestionsController extends Controller {
         $similarShows = [];
         $ignoreIds = [];
         foreach ($userShows as $userShow) {
+            // We dont want to suggest a show that the user already has seen
             $ignoreIds[] = $userShow->getId();
+
             $similarShows[] = [
                 'show' => $userShow,
                 'similar' => $userShow->getSimilarTvShows()
             ];
+        }
+
+        foreach ($user->getIgnoredTvShows() as $ignoredShow) {
+            $ignoreIds[] = $ignoredShow->getId();
         }
 
         $tmdbPosterHelper = $this->get('sunnerberg_similar_series.helper.tmdb_poster_helper');

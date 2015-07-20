@@ -28,7 +28,7 @@ class SuggestionsScorer {
 
     /**
      * @param array $similarShows
-     * @param array $ignoreIds Ids of shows which will be excluded from any suggestions
+     * @param array $ignoreIds Ids of already watched shows, which will not be included as suggestions
      */
     function __construct(array $similarShows, array $ignoreIds)
     {

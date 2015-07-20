@@ -7,6 +7,11 @@ define(['backbone'], function (Backbone) {
 
         url: function () {
             return '/user/shows/' + this.id;
+        },
+
+        ignore: function (attributes, options) {
+            options = _.defaults((options || {}), {url: "/user/ignored_shows/" + this.id});
+            return Backbone.Model.prototype.save.call(this, attributes, options);
         }
     });
 
