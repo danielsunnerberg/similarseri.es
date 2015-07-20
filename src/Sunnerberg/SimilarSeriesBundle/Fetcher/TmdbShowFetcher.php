@@ -66,13 +66,42 @@ class TmdbShowFetcher extends TvShowFetcher {
         $tvShow->addSimilarTvShows($this->getSimilarShows($tmdbShow));
     }
 
+    private function extractSimilarShowIds (Tv $tmdbShow)
+    {
+        $similarIds = [];
+        foreach ($tmdbShow->getSimilar() as $similarShow) {
+            $similarIds[] = $similarShow->getId();
+        }
+
+        $totalPages = $tmdbShow->getSimilar()->getTotalPages();
+        if ($totalPages === 1) {
+            return $similarIds;
+        }
+
+        $api = $this->tmdbTvRepository->getApi();
+
+        $currentPage = 2; // We've already processed page one above
+        for (; $currentPage <= $totalPages; $currentPage++) {
+            $similar = $api->getSimilar($tmdbShow->getId(), array('page' => $currentPage));
+            foreach ($similar['results'] as $tvShow) {
+                $similarIds[] = $tvShow['id'];
+            }
+        }
+
+        return $similarIds;
+    }
+
     private function getSimilarShows(Tv $tmdbShow)
     {
+        // Since we can't retrieve all needed information about the related shows from the origin-show (it isn't
+        // included nor supported through the API), we have to make one request per related show instead of one per
+        // page.
+
         $similar = [];
-        foreach ($tmdbShow->getSimilar() as $_similarShow) {
-            $similarShow = $this->tvShowRepository->getTvShow($_similarShow);
+        foreach ($this->extractSimilarShowIds($tmdbShow) as $id) {
+            $similarShow = $this->tvShowRepository->getByTmdbId($id);
             if (! $similarShow) {
-                $similarShow = $this->fetch($_similarShow->getId(), false);
+                $similarShow = $this->fetch($id, false);
             }
             $similar[] = $similarShow;
         }
