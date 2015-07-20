@@ -26,7 +26,7 @@ define(['jquery', 'backbone', 'underscore', 'handlebars', 'ladda', 'text!templat
                     success: function () {
                         that.externalEvents.trigger('tv_show.added');
                     },
-                    error : function () {
+                    error: function () {
                         alert("An error occurred. Please try again later.");
                     }
                 }).always(function () {

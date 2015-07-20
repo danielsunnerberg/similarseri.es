@@ -1,6 +1,6 @@
 define(
-    ['jquery', 'bloodhound', 'handlebars', 'backbone', 'text!templates/tvShowTypeahead.html', 'typeahead'],
-    function($, Bloodhound, Handlebars, Backbone, TvShowTypeaheadTemplate) {
+    ['jquery', 'bloodhound', 'handlebars', 'backbone', 'ladda', 'text!templates/tvShowTypeahead.html', 'typeahead'],
+    function($, Bloodhound, Handlebars, Backbone, Ladda, TvShowTypeaheadTemplate) {
 
         return Backbone.View.extend({
             el: '#show-search',
@@ -43,14 +43,34 @@ define(
                     }
                 );
 
-                element.on('typeahead:selected', function(evt, item) {
-                    // @todo Use a more backbone-like way
+                element.on('typeahead:selected', function (evt, item) {
+                    var input = $(evt.currentTarget);
+                    input.typeahead('val', '');
+                    input.focus();
+
+                    // @todo Use a more backbone-like way + template
+                    var queueItem = $(
+                        '<li class="list-group-item ladda-button" data-style="expand-left" data-size="xs" data-spinner-color="#000">' +
+                            '<span class="ladda-label">'+ item.name +' ('+ item.airYear +')</span>' +
+                        '</li>'
+                    );
+                    queueItem.hide();
+                    $('.tv-show-add-queue').append(queueItem);
+                    queueItem.fadeIn('fast');
+
+                    var queueItemLoader = Ladda.create(queueItem[0]);
+                    queueItemLoader.start();
+
                     $.ajax({
                         url: '/user/shows/' + item.tmdbId,
                         type: 'PUT',
-                        success: function() {
+                        success: function () {
                             that.events.trigger('tv_show.added');
                         }
+                    }).always(function () {
+                        queueItem.fadeOut('fast', function () {
+                            queueItemLoader.stop();
+                        });
                     });
                 });
             }

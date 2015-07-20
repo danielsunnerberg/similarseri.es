@@ -33,8 +33,12 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
 
             refresh: function() {
                 this.setDefaultSettings();
-                $(this.el).empty();
-                this.render();
+                var container = $(this.el);
+                var that = this;
+                container.children().fadeOut('fast').promise().done(function () {
+                    container.empty();
+                    that.render()
+                });
             },
 
             loadResults: function () {
