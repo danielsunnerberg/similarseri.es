@@ -1,3 +1,5 @@
 app:
     resource: "@SunnerbergSimilarSeriesBundle/Controller/"
     type:     annotation
+logout:
+    path: /logout

@@ -30,6 +30,7 @@ class LoginController extends Controller {
      */
     public function loginCheckAction()
     {
+        $this->redirectToRoute('start');
     }
 
 }
