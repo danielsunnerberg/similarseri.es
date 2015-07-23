@@ -1,3 +1,6 @@
+@import '../paths';
+@import '@{vendors-base}/bootstrap/less/variables';
+
 .tv-show-item {
   border: 1px solid #ddd;
   margin: 0 15px 20px 15px;
@@ -7,7 +10,9 @@
   padding: 15px;
 
   h3 {
-    margin-top: 0;
+    @media(min-width:@screen-lg-min) {
+      margin-top: 0;
+    }
     word-wrap: break-word;
   }
 
@@ -17,9 +22,26 @@
 
   .actions {
     position: absolute;
-    right: 15px;
-    bottom:15px;
     margin: 0;
+    @media(min-width:@screen-lg-min) {
+      bottom: 15px;
+      right: 15px;
+    }
+
+    @media(max-width:@screen-lg-min) {
+      bottom:0;
+      display: table;
+      .btn-group {
+        display: table-cell;
+        float: none;
+        width: 1%;
+
+        .btn {
+          width: 100%;
+          box-shadow: 0;
+        }
+      }
+    }
 
     button {
       padding: 6px 12px;
@@ -31,7 +53,7 @@
   }
 }
 
-@media(min-width:768px){
+@media(min-width:768px) {
   .row-eq-height {
     display: -webkit-box;
     display: -webkit-flex;

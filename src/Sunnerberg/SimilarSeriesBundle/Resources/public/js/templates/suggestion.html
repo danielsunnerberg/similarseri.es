@@ -1,4 +1,4 @@
-<div class="tv-show-item col-sm-4">
+<div class="tv-show-item col-sm-4 material-light-blue">
     <div class="row">
         <div class="col-lg-6">
             <img class="poster responsive-image" src="{{ show.posterUrl }}" alt="Poster image for {{ show.name }}" />
@@ -7,14 +7,18 @@
             <h3>{{ show.name }} <small>({{ show.airYear }})</small></h3>
             <p>{{ truncate show.overview 110 }}</p>
         </div>
-    </div>
 
-    <div class="btn-group actions">
-        <button title="Ignore" type="button" class="btn btn-default tv-show-ignore ladda-button" data-style="slide-right" data-size="xs" data-spinner-color="#000">
-            <i class="mdi-action-thumb-down mdi-material-red"></i>
-        </button>
-        <button type="button" class="btn btn-default tv-show-seen ladda-button" data-style="slide-right" data-size="xs" data-spinner-color="#000">
-            <i class="mdi-action-thumb-up mdi-material-green"></i>
-        </button>
+        <div class="btn-group actions">
+            <div class="btn-group" role="group">
+                <button title="Ignore" type="button" class="btn btn-default tv-show-ignore ladda-button" data-style="slide-right" data-size="xs" data-spinner-color="#000">
+                    <i class="mdi-action-thumb-down mdi-material-red"></i>
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default tv-show-seen ladda-button" data-style="slide-right" data-size="xs" data-spinner-color="#000">
+                    <i class="mdi-action-thumb-up mdi-material-green"></i>
+                </button>
+            </div>
+        </div>
     </div>
 </div>

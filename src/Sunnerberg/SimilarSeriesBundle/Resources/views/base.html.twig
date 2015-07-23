@@ -7,13 +7,14 @@
     <meta name="description" content="">
     <title>Similarseri.es</title>
     <link rel="icon" href="{{ asset('/favicon.ico') }}">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     {% block stylesheets %}
-        {% stylesheets filter='cssrewrite'
+        {% stylesheets filter='cssrewrite,less'
+            'assets/vendor/bootstrap/less/bootstrap.less'
             'assets/vendor/ladda-bootstrap/dist/ladda-themeless.min.css'
             'assets/vendor/bootstrap-material-design/dist/css/material-fullpalette.min.css'
             'assets/vendor/bootstrap-material-design/dist/css/ripples.min.css'
         %}
+
             <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
     {% endblock %}
@@ -25,7 +26,7 @@
 
 <body>
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-material-light-blue-700">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
