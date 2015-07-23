@@ -51,13 +51,11 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
                 this.suggestionsCollection.fetch({
                     success: function (suggestions) {
                         that.isLoading = false;
-                        $('#user-suggestions-title').text('Suggestions generated for you');
                         that.insertSuggestions(suggestions.models);
                     },
                     error: function () {
                         that.isLoading = false;
-                        $('.tv-show-item').remove();
-                        $('#user-suggestions-title').text('An error occurred. Please try again later.');
+                        $(that.el).html('An error occured. Please try again later.');
                     }
                 })
             },
