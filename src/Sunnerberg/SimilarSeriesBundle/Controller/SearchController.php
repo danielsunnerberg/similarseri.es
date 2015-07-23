@@ -23,6 +23,9 @@ class SearchController extends Controller {
 
         $matchingShows = [];
         foreach ($response as $show) {
+            if ($show->getPosterPath() === null) {
+                continue;
+            }
             $matchingShows[] = [
                 'tmdbId' => $show->getId(),
                 'name' => $show->getName(),
