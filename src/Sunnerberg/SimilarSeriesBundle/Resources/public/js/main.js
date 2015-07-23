@@ -3,6 +3,7 @@ var config = {
     shim : {
         'bootstrap' : { 'deps' : ['jquery'] },
         'ladda' : { 'deps' : ['spin'] },
+        'arrive' : { 'deps' : ['jquery'] },
         'bootstrap-material-design': { 'deps': ['jquery'] },
         'ripples': { 'deps': ['jquery'] }
     },
@@ -17,6 +18,7 @@ var config = {
         'text': '/assets/vendor/requirejs-text/text',
         'spin': '/assets/vendor/ladda-bootstrap/dist/spin.min',
         'ladda': '/assets/vendor/ladda-bootstrap/dist/ladda.min',
+        'arrive': '/assets/vendor/arrive/minified/arrive.min',
         'bootstrap-material-design': '/assets/vendor/bootstrap-material-design/dist/js/material.min',
         'ripples': '/assets/vendor/bootstrap-material-design/dist/js/ripples.min'
     }
