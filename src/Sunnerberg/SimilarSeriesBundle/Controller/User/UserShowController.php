@@ -58,7 +58,7 @@ class UserShowController extends Controller {
      */
     private function getLoggedInUser()
     {
-        return $user = $this->get('security.token_storage')->getToken()->getUser();
+        return $this->get('security.token_storage')->getToken()->getUser();
     }
 
 }
