@@ -43,6 +43,10 @@ define(
                     }
                 );
 
+                element.on('typeahead:beforeclose', function(e) {
+                    e.preventDefault();
+                });
+
                 element.on('typeahead:selected', function (evt, item) {
                     var input = $(evt.currentTarget);
                     input.typeahead('val', '');
