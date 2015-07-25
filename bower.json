@@ -18,7 +18,7 @@
     "requirejs": "~2.1.18",
     "jquery": "~2.1.4",
     "handlebars": "~3.0.3",
-    "typeahead.js": "~0.11.1",
+    "typeahead.js": "Yobikap/typeahead.js#9a34390e23850ffdc336cdff3dca2600e5e1338b",
     "backbone": "~1.2.1",
     "underscore": "~1.8.3",
     "requirejs-text": "~2.0.14",
