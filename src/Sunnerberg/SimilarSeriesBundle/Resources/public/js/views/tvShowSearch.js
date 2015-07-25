@@ -1,6 +1,6 @@
 define(
-    ['jquery', 'bloodhound', 'handlebars', 'backbone', 'ladda', 'text!templates/tvShowTypeahead.html', 'text!templates/queueItem.html', 'typeahead'],
-    function($, Bloodhound, Handlebars, Backbone, Ladda, TvShowTypeaheadTemplate, QueueItemTemplate) {
+    ['jquery', 'bloodhound', 'handlebars', 'backbone', 'ladda', 'models/suggestion', 'text!templates/tvShowTypeahead.html', 'text!templates/queueItem.html', 'typeahead'],
+    function($, Bloodhound, Handlebars, Backbone, Ladda, SuggestionModel, TvShowTypeaheadTemplate, QueueItemTemplate) {
 
         return Backbone.View.extend({
             el: '#show-search',
@@ -44,30 +44,31 @@ define(
                     }
                 );
 
-                element.on('typeahead:selected', function (evt, item) {
-                    var input = $(evt.currentTarget);
-                    input.typeahead('val', '');
-                    input.focus();
+                element.on('typeahead:selected', this.addSelectedShow.bind(this));
+            },
 
-                    // @todo Use a more backbone-like way + template
-                    var queueItem = $(that.queueItemTemplate(item));
-                    queueItem.hide();
-                    $('.tv-show-add-queue').append(queueItem);
-                    queueItem.fadeIn('fast');
+            addSelectedShow: function (evt, item) {
+                var input = $(evt.currentTarget);
+                input.typeahead('val', '');
+                input.focus();
 
-                    var queueItemLoader = Ladda.create(queueItem[0]);
-                    queueItemLoader.start();
+                var queueItem = $(this.queueItemTemplate(item));
+                queueItem.hide();
+                $('.tv-show-add-queue').append(queueItem);
+                queueItem.fadeIn('fast');
 
-                    $.ajax({
-                        url: '/user/shows/' + item.tmdbId,
-                        type: 'POST',
-                        success: function () {
-                            that.events.trigger('tv_show.added');
-                        }
-                    }).always(function () {
-                        queueItem.fadeOut('fast', function () {
-                            queueItemLoader.stop();
-                        });
+                var queueItemLoader = Ladda.create(queueItem[0]);
+                queueItemLoader.start();
+
+                var that = this;
+                var show = new SuggestionModel();
+                show.save({id: item.tmdbId}, {
+                    success: function () {
+                        that.events.trigger('tv_show.added');
+                    }
+                }).always(function () {
+                    queueItem.fadeOut('fast', function () {
+                        queueItemLoader.stop();
                     });
                 });
             }

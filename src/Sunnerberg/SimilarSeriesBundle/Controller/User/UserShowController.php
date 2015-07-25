@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class UserShowController extends Controller {
 
     /**
-     * @Route("/user/shows/{tmdbId}", name="user_add_show", methods={"post"})
+     * @Route("/user/shows/{tmdbId}", name="user_add_show", methods={"post", "put"})
      */
     public function addShowAction($tmdbId)
     {

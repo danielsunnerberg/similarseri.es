@@ -2,7 +2,9 @@ define(['backbone'], function (Backbone) {
     var Suggestion = Backbone.Model.extend({
 
         initialize: function (options) {
-            this.id = options.show.tmdbId;
+            if (options && options.show) {
+                this.id = options.show.tmdbId;
+            }
         },
 
         url: function () {
