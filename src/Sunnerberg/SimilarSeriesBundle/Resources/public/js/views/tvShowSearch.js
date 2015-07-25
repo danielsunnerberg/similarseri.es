@@ -1,6 +1,6 @@
 define(
-    ['jquery', 'bloodhound', 'handlebars', 'backbone', 'ladda', 'text!templates/tvShowTypeahead.html', 'typeahead'],
-    function($, Bloodhound, Handlebars, Backbone, Ladda, TvShowTypeaheadTemplate) {
+    ['jquery', 'bloodhound', 'handlebars', 'backbone', 'ladda', 'text!templates/tvShowTypeahead.html', 'text!templates/queueItem.html', 'typeahead'],
+    function($, Bloodhound, Handlebars, Backbone, Ladda, TvShowTypeaheadTemplate, QueueItemTemplate) {
 
         return Backbone.View.extend({
             el: '#show-search',
@@ -8,6 +8,7 @@ define(
             initialize: function (options) {
                 this.events = options.events;
                 this.suggestionTemplate = Handlebars.compile(TvShowTypeaheadTemplate);
+                this.queueItemTemplate = Handlebars.compile(QueueItemTemplate);
                 this.source = new Bloodhound({
                     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
                     queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -43,21 +44,13 @@ define(
                     }
                 );
 
-                element.on('typeahead:beforeclose', function(e) {
-                    e.preventDefault();
-                });
-
                 element.on('typeahead:selected', function (evt, item) {
                     var input = $(evt.currentTarget);
                     input.typeahead('val', '');
                     input.focus();
 
                     // @todo Use a more backbone-like way + template
-                    var queueItem = $(
-                        '<li class="list-group-item ladda-button" data-style="expand-left" data-size="xs" data-spinner-color="#000">' +
-                            '<span class="ladda-label">'+ item.name +' ('+ item.airYear +')</span>' +
-                        '</li>'
-                    );
+                    var queueItem = $(that.queueItemTemplate(item));
                     queueItem.hide();
                     $('.tv-show-add-queue').append(queueItem);
                     queueItem.fadeIn('fast');
