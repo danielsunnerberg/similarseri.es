@@ -14,7 +14,7 @@ class SuggestionsController extends Controller {
      */
     public function suggestionsAction($offset = 0, $limit = 20)
     {
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $this->getUser();
         $userShows = $user->getTvShows();
 
         $similarShows = [];

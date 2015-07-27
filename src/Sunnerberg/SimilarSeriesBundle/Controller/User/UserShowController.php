@@ -24,7 +24,7 @@ class UserShowController extends Controller {
         }
         $this->getDoctrine()->getManager()->persist($tvShow);
 
-        $user = $this->getLoggedInUser();
+        $user = $this->getUser();
         if (! $user->hasTvShow($tvShow)) {
             $user->addTvShow($tvShow);
             $doctrine->getManager()->persist($user);
@@ -45,20 +45,12 @@ class UserShowController extends Controller {
             return new JsonResponse(array('success' => false), 404);
         }
 
-        $user = $this->getLoggedInUser();
+        $user = $this->getUser();
         $user->addIgnoredTvShow($tvShow);
         $doctrine->getManager()->persist($user);
         $doctrine->getManager()->flush();
 
         return new JsonResponse(array('success' => true));
-    }
-
-    /**
-     * @return mixed the currently logged in user
-     */
-    private function getLoggedInUser()
-    {
-        return $this->get('security.token_storage')->getToken()->getUser();
     }
 
 }
