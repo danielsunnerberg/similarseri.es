@@ -4,14 +4,12 @@ services:
         arguments: ["@tmdb.configuration_repository"]
     sunnerberg_similar_series.repository.tv_show:
         class: Sunnerberg\SimilarSeriesBundle\Entity\TvShowRepository
-        factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository
+        factory: [@doctrine.orm.entity_manager, getRepository]
         arguments:
             - Sunnerberg\SimilarSeriesBundle\Entity\TvShow
     sunnerberg_similar_series.repository.genre:
         class: Sunnerberg\SimilarSeriesBundle\Entity\GenreRepository
-        factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository
+        factory: [@doctrine.orm.entity_manager, getRepository]
         arguments:
             - Sunnerberg\SimilarSeriesBundle\Entity\Genre
     sunnerberg_similar_series.fetcher.tmdb_show_fetcher:
