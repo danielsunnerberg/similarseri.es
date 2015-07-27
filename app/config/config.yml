@@ -44,10 +44,12 @@ assetic:
     bundles:        [ SunnerbergSimilarSeriesBundle ]
     #java: /usr/bin/java
     filters:
-        cssrewrite: ~
-        less:
-            node: /usr/bin/node
-            node_paths: [/usr/local/lib/node_modules]
+        cssrewrite:
+            apply_to: "\.less$"
+        lessphp:
+            apply_to: "\.less$"
+            paths:
+                - "%kernel.root_dir%/../web"
 
 # Doctrine Configuration
 doctrine:
