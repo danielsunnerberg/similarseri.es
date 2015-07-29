@@ -33,7 +33,7 @@ class LoginController extends Controller {
      */
     public function loginCheckAction()
     {
-        $this->redirectToRoute('start');
+        return $this->redirectToRoute('find');
     }
 
     /**
@@ -47,7 +47,7 @@ class LoginController extends Controller {
         // A password is not needed, as no one can login to the account later, since it is marked as locked
         $anonymousUser->setPassword('');
 
-        $entityManager = $this->getDoctrine()->getEntityManager();
+        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($anonymousUser);
         $entityManager->flush();
 
@@ -59,7 +59,7 @@ class LoginController extends Controller {
         );
         $this->get('security.token_storage')->setToken($token);
 
-        return $this->redirectToRoute('start');
+        return $this->redirectToRoute('find');
     }
 
     private function generateRandomUsername()

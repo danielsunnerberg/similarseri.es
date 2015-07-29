@@ -4,17 +4,16 @@ namespace Sunnerberg\SimilarSeriesBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
-class DefaultController extends Controller
+class FindController extends Controller
 {
 
     /**
-     * @Route("/", name="start", methods={"get"})
+     * @Route("/find", name="find", methods={"get"})
      */
     public function indexAction()
     {
-        return new JsonResponse('WIP');
+        return $this->render('SunnerbergSimilarSeriesBundle:Default:index.html.twig');
     }
 
 }
