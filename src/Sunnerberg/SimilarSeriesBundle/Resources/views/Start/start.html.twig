@@ -3,10 +3,10 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets
-        '@SunnerbergSimilarSeriesBundle/Resources/public/css/typeahead.css'
-        '@SunnerbergSimilarSeriesBundle/Resources/public/css/Default/suggestions.less'
+    '@SunnerbergSimilarSeriesBundle/Resources/public/css/typeahead.css'
+    '@SunnerbergSimilarSeriesBundle/Resources/public/css/Default/suggestions.less'
     %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
+    <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
 
@@ -23,4 +23,3 @@
     <div id="suggestions">
     </div>
 {% endblock %}
-
