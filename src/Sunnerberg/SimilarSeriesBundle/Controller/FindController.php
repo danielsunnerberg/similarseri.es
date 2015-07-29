@@ -13,7 +13,7 @@ class FindController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('SunnerbergSimilarSeriesBundle:Default:index.html.twig');
+        return $this->render('SunnerbergSimilarSeriesBundle:Find:find.html.twig');
     }
 
 }

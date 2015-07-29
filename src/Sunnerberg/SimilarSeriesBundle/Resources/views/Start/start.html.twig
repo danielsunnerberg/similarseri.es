@@ -2,24 +2,30 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets
-    '@SunnerbergSimilarSeriesBundle/Resources/public/css/typeahead.css'
-    '@SunnerbergSimilarSeriesBundle/Resources/public/css/Default/suggestions.less'
-    %}
+    {% stylesheets '@SunnerbergSimilarSeriesBundle/Resources/public/css/Start/start.less' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
 
 {% block body %}
-    <div class="panel panel-default">
-        <div class="panel-heading">Add TV-shows that you've enjoyed to get personalised suggestions</div>
-        <div class="panel-body panel-default">
-            <input id="show-search" class="typeahead" type="text" placeholder="Find shows">
+
+    <div id="actionContainer">
+        <a class="btn btn-material-green-600" role="button" href="{{ path('anonymous_login') }}">
+            Continue anonymously
+        </a>
+        <a class="btn btn-material-blue-600" role="button" data-toggle="collapse" href="#loginCollapse" aria-expanded="false" aria-controls="loginCollapse">
+            Login
+        </a>
+        <a class="btn btn-material-deep-orange-600" role="button" data-toggle="collapse" href="#registerCollapse" aria-expanded="false" aria-controls="registerCollapse">
+            Register
+        </a>
+
+        <div class="collapse" id="loginCollapse">
+            {{ include('@SunnerbergSimilarSeries/Login/login.html.twig', { error: false, last_username: false, last_password: false }) }}
         </div>
-        <ul class="list-group tv-show-add-queue">
-        </ul>
+        <div class="collapse" id="registerCollapse">
+            {{ include('@SunnerbergSimilarSeries/Login/login.html.twig', { error: false, last_username: false, last_password: false }) }}
+        </div>
     </div>
 
-    <div id="suggestions">
-    </div>
 {% endblock %}

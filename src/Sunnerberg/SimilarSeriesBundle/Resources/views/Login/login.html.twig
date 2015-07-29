@@ -1,13 +1,32 @@
+{% block stylesheets %}
+    {% stylesheets '@SunnerbergSimilarSeriesBundle/Resources/public/css/Login/login.less' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% if error %}
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 
-<form action="{{ path('login_check') }}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+<div id="login-panel" class="panel panel-default">
+    <div class="panel-body">
+        <form action="{{ path('login_check') }}" method="post">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon" id="username-icon"><i class="mdi-social-person"></i></span></span>
+                    <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Username" aria-describedby="username-icon" />
+                </div>
+            </div>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password" />
+            <div class="form-group">
+                <div class="input-group">
+                    {#<i class="mdi-action-favorite mdi-material-pink" style="font-size: 40pt;"></i>#}
+                    <span class="input-group-addon" id="password-icon"><i class="mdi-action-lock"></i></span>
+                    <input class="form-control" type="password" id="password" name="_password" placeholder="Password" aria-describedby="password-icon" />
+                </div>
+            </div>
 
-    <button type="submit">Login</button>
-</form>
+            <button class="btn btn-material-light-blue-700" type="submit">Login</button>
+        </form>
+    </div>
+</div>
