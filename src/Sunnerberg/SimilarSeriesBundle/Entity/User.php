@@ -44,7 +44,7 @@ class User implements UserInterface, \Serializable, AdvancedUserInterface, Equat
      *
      * @ORM\Column(name="is_locked", type="smallint", )
      */
-    private $isLocked;
+    private $locked;
 
 
     /**
@@ -109,7 +109,7 @@ class User implements UserInterface, \Serializable, AdvancedUserInterface, Equat
     public function __construct()
     {
         $this->tvShows = new ArrayCollection();
-        $this->isLocked = false;
+        $this->locked = false;
     }
 
     /**
@@ -261,7 +261,7 @@ class User implements UserInterface, \Serializable, AdvancedUserInterface, Equat
      */
     public function isAccountNonLocked()
     {
-        return ! $this->isLocked;
+        return ! $this->locked;
     }
 
     /**
@@ -281,11 +281,15 @@ class User implements UserInterface, \Serializable, AdvancedUserInterface, Equat
     }
 
     /**
-     * {@inheritdoc}
+     * Whether the account can be logged in to or not by users.
+     * Doesn't apply to programmatic login.
+     *
+     * @param $locked
+     * @return $this
      */
-    public function setIsLocked($isLocked)
+    public function setLocked($locked)
     {
-        $this->isLocked = $isLocked;
+        $this->locked = $locked;
 
         return $this;
     }
