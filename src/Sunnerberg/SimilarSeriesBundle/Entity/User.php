@@ -4,6 +4,8 @@ namespace Sunnerberg\SimilarSeriesBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -12,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="users")
  * @ORM\Entity()
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, \Serializable, AdvancedUserInterface, EquatableInterface
 {
     /**
      * @var integer
@@ -26,7 +28,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=40, unique=true)
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
      */
     private $username;
 
@@ -36,6 +38,14 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_locked", type="smallint", )
+     */
+    private $isLocked;
+
 
     /**
      * @var array
@@ -60,7 +70,7 @@ class User implements UserInterface, \Serializable
      * )
      */
     private $ignoredTvShows;
-    
+
     /**
      * Get id
      *
@@ -99,6 +109,7 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->tvShows = new ArrayCollection();
+        $this->isLocked = false;
     }
 
     /**
@@ -235,5 +246,67 @@ class User implements UserInterface, \Serializable
     public function getIgnoredTvShows()
     {
         return $this->ignoredTvShows;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isAccountNonLocked()
+    {
+        return ! $this->isLocked;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEnabled()
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setIsLocked($isLocked)
+    {
+        $this->isLocked = $isLocked;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEqualTo(UserInterface $user)
+    {
+        if (! $user instanceof User) {
+            return false;
+        }
+
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+
+        return true;
     }
 }
