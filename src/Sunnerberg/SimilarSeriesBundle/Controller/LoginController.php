@@ -36,7 +36,7 @@ class LoginController extends Controller {
     }
 
     /**
-     * @Route("/login/anonymous", name="anonymous_login", methods="get")
+     * @Route("/login/anonymous", name="anonymous_login", methods="post")
      */
     public function anonymousLoginAction()
     {

@@ -10,9 +10,10 @@
 {% block body %}
 
     <div id="actionContainer">
-        <a class="btn btn-material-green-600" role="button" href="{{ path('anonymous_login') }}">
-            Continue anonymously
-        </a>
+
+        <form method="post" action="{{ path('anonymous_login') }}">
+            <button type="submit" class="btn btn-material-green-600">Continue anonymously</button>
+        </form>
         <a class="btn btn-material-blue-600" role="button" data-toggle="collapse" href="#loginCollapse" aria-expanded="false" aria-controls="loginCollapse">
             Login
         </a>
