@@ -9,23 +9,23 @@
 
 {% block body %}
 
-    <div id="actionContainer">
+    <div class="row">
+        <div id="call-to-action" class="col-sm-6">
+            <h1>Find series that you enjoy.</h1>
+            <p>By analyzing what shows you've previously enjoyed, we predict what shows you'd like to watch next. Completely free.</p>
 
-        <form method="post" action="{{ path('anonymous_login') }}">
-            <button type="submit" class="btn btn-material-green-600">Continue anonymously</button>
-        </form>
-        <a class="btn btn-material-blue-600" role="button" data-toggle="collapse" href="#loginCollapse" aria-expanded="false" aria-controls="loginCollapse">
-            Login
-        </a>
-        <a class="btn btn-material-deep-orange-600" role="button" data-toggle="collapse" href="#registerCollapse" aria-expanded="false" aria-controls="registerCollapse">
-            Register
-        </a>
+            <div class="row">
+                <div class="col-sm-10">
+                    <form method="post" action="{{ path('anonymous_login') }}">
+                        <button id="anonymous-login-button" type="submit" class="btn btn-block btn-material-green-600 input-block-level">Continue anonymously</button>
+                    </form>
+                    <p class="or-label">Or</p>
+                    <a id="login-button" class="btn btn-block btn-material-blue-600" role="button" href="{{ path('login_route') }}">
+                        Login / Register
+                    </a>
+                </div>
+            </div>
 
-        <div class="collapse" id="loginCollapse">
-            {{ include('@SunnerbergSimilarSeries/Login/login.html.twig', { error: false, last_username: false, last_password: false }) }}
-        </div>
-        <div class="collapse" id="registerCollapse">
-            {{ include('@SunnerbergSimilarSeries/Login/login.html.twig', { error: false, last_username: false, last_password: false }) }}
         </div>
     </div>
 
