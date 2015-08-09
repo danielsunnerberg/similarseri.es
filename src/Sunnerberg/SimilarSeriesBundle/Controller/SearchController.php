@@ -3,6 +3,7 @@
 namespace Sunnerberg\SimilarSeriesBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sunnerberg\SimilarSeriesBundle\Helper\TmdbPosterSize;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Tmdb\Model\Search\SearchQuery\TvSearchQuery;
@@ -19,7 +20,7 @@ class SearchController extends Controller {
         $filters->searchType('ngram');
         $response = $searchRepository->searchTv($query, $filters)->getAll();
         $tmdbPosterHelper = $this->get('sunnerberg_similar_series.helper.tmdb_poster_helper');
-        $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(0);
+        $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(TmdbPosterSize::W92);
 
         $matchingShows = [];
         foreach ($response as $show) {

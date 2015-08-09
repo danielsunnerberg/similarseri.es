@@ -4,6 +4,7 @@ namespace Sunnerberg\SimilarSeriesBundle\Controller\User;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sunnerberg\SimilarSeriesBundle\Helper\SuggestionsScorer;
+use Sunnerberg\SimilarSeriesBundle\Helper\TmdbPosterSize;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -34,7 +35,7 @@ class SuggestionsController extends Controller {
         }
 
         $tmdbPosterHelper = $this->get('sunnerberg_similar_series.helper.tmdb_poster_helper');
-        $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(1);
+        $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(TmdbPosterSize::W154);
 
         $suggestionsScorer = new SuggestionsScorer($similarShows, $ignoreIds);
         $suggestions = $suggestionsScorer->getGradedSuggestions($offset, $limit);
