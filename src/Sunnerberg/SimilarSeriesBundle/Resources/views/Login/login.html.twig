@@ -10,7 +10,11 @@
 {% block content %}
 
     {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <div class="alert alert-dismissable alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong><i class="mdi-alert-error align-bottom"></i> {{ error.messageKey|trans(error.messageData, 'security') }}</strong>
+        </div>
+        <div></div>
     {% endif %}
 
     <div id="login-panel" class="panel panel-default">
