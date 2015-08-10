@@ -72,6 +72,15 @@ class User implements UserInterface, \Serializable, AdvancedUserInterface, Equat
     private $ignoredTvShows;
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tvShows = new ArrayCollection();
+        $this->locked = false;
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -103,13 +112,18 @@ class User implements UserInterface, \Serializable, AdvancedUserInterface, Equat
     {
         return $this->username;
     }
+
     /**
-     * Constructor
+     * Get username, or alternative username if the user is anonymously authenticated.
+     *
+     * @return string
      */
-    public function __construct()
+    public function getPrettyUsername()
     {
-        $this->tvShows = new ArrayCollection();
-        $this->locked = false;
+        if (strpos($this->username, 'anonymous_user')  !== false) {
+            return 'Anonymous User';
+        }
+        return $this->username;
     }
 
     /**
