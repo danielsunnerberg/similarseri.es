@@ -14,6 +14,10 @@ class StartController extends Controller
      */
     public function indexAction()
     {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('find');
+        }
+        
         return $this->render('SunnerbergSimilarSeriesBundle:Start:start.html.twig');
     }
 
