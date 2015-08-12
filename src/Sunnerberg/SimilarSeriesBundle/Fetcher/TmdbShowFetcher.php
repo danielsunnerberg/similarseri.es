@@ -14,13 +14,21 @@ use Tmdb\Repository\TvRepository;
  *  - TMDB-id should not be stored directly on the tv_shows table.
  *  - This class should be way more generic. Mainly copy-pasted and extracted from previous class.
  */
+
+/**
+ * @TODO Use found shows directly, and then use RabbitMQ to slowly patch the data...
+ * @TODO Also use lastSync | null
+ *
+ * Class TmdbShowFetcher
+ * @package Sunnerberg\SimilarSeriesBundle\Fetcher
+ */
 class TmdbShowFetcher extends TvShowFetcher {
 
     private $tmdbTvRepository;
     private $tvShowRepository;
     private $genreRepository;
 
-    function __construct(TvRepository $tmdbTvRepository, TvShowRepository $tvShowRepository, GenreRepository $genreRepository)
+    public function __construct(TvRepository $tmdbTvRepository, TvShowRepository $tvShowRepository, GenreRepository $genreRepository)
     {
         $this->tmdbTvRepository = $tmdbTvRepository;
         $this->tvShowRepository = $tvShowRepository;
@@ -41,7 +49,7 @@ class TmdbShowFetcher extends TvShowFetcher {
      * @return TvShow
      * @throws NoResultException
      */
-    function fetch($tmdbId, $processSimilarShows = true)
+    public function fetch($tmdbId, $processSimilarShows = true)
     {
         $tmdbShow = $this->getTmdbShowById($tmdbId);
         if (! $tmdbShow) {

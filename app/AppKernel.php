@@ -18,7 +18,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Sunnerberg\SimilarSeriesBundle\SunnerbergSimilarSeriesBundle(),
             new Tmdb\SymfonyBundle\TmdbSymfonyBundle(),
-            new \Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle()
+            new \Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle(),
+            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

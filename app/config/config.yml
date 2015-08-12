@@ -102,3 +102,31 @@ doctrine_cache:
         tmdb_cache:
             file_system:
                 directory: %kernel.root_dir%/cache/tmdb
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     '%rabbit_mq_host%'
+            port:     5672
+            user:     '%rabbit_mq_user%'
+            password: '%rabbit_mq_password%'
+            vhost:    '/'
+            lazy:     true
+            connection_timeout: 3
+            read_write_timeout: 3
+
+            # requires php-amqplib v2.4.1+ and PHP5.4+
+            keepalive: false
+
+            # requires php-amqplib v2.4.1+
+            heartbeat: 0
+    producers:
+        show_data_fetcher:
+            connection:       default
+            exchange_options: { name: 'show_data_fetcher', type: direct }
+    consumers:
+        show_data_fetcher:
+            connection:       default
+            exchange_options: { name: 'show_data_fetcher', type: direct }
+            queue_options:    { name: 'show_data_fetcher' }
+            callback:         sunnerberg_similar_series.fetcher.tmdb_show_fetcher

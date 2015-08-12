@@ -17,4 +17,10 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            UnsafeTokenPleaseChange
+
+    # TMDB API key, see: https://www.themoviedb.org/documentation/api
     tmdb_api_key:      tmdbapikey
+
+    rabbit_mq_host: localhost
+    rabbit_mq_user: guest
+    rabbit_mq_password: guest
