@@ -24,7 +24,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "php-tmdb/symfony": "~2.0",
         "doctrine/doctrine-cache-bundle": "^1.0",
-        "oyejorge/less.php": "v1.7.0.5"
+        "oyejorge/less.php": "v1.7.0.5",
+        "oldsound/rabbitmq-bundle": "1.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
