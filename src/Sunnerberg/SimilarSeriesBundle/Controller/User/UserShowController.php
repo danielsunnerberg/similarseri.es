@@ -14,11 +14,13 @@ class UserShowController extends Controller {
     public function addShowAction($tmdbId)
     {
         $doctrine = $this->getDoctrine();
-        $tvShow = $doctrine->getRepository('SunnerbergSimilarSeriesBundle:TvShow')->getByTmdbId($tmdbId);
-
         $tmdbShowFetcher = $this->get('sunnerberg_similar_series.fetcher.tmdb_show_fetcher');
+
+        $tvShow = $doctrine->getRepository('SunnerbergSimilarSeriesBundle:TvShow')->getByTmdbId($tmdbId);
         if ($tvShow) {
-            $tmdbShowFetcher->syncSimilarShows($tvShow, $tvShow->getTmdbId());
+            if ($tvShow->getLastSyncDate() === null || $tvShow->getDaysSinceLastSync() > 90) {
+                $tmdbShowFetcher->syncSimilarShows($tvShow);
+            }
         } else {
             $tvShow = $tmdbShowFetcher->fetch($tmdbId);
         }
