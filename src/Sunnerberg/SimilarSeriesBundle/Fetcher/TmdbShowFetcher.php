@@ -10,14 +10,7 @@ use Tmdb\Model\Tv;
 use Tmdb\Repository\TvRepository;
 
 /**
- * @TODO Future improvements:
- *  - TMDB-id should not be stored directly on the tv_shows table.
- *  - This class should be way more generic. Mainly copy-pasted and extracted from previous class.
- */
-
-/**
- * @TODO Use found shows directly, and then use RabbitMQ to slowly patch the data...
- * @TODO Also use lastSync | null
+ * Fetches show data from the TMDB-api.
  *
  * Class TmdbShowFetcher
  * @package Sunnerberg\SimilarSeriesBundle\Fetcher
@@ -43,6 +36,21 @@ class TmdbShowFetcher extends TvShowFetcher {
         return $this->tmdbTvRepository->load($tmdbId);
     }
 
+    private function convertFromTmdbFormat($tmdbShow)
+    {
+        $tvShow = $this->tvShowRepository->createFromTmdbShow($tmdbShow);
+
+        // If we're getting our data from the raw API, it will, annoyingly, come in the form of an array, without
+        // genres.
+        if (is_object($tmdbShow)) {
+            foreach ($tmdbShow->getGenres() as $_genre) {
+                $genre = $this->genreRepository->getOrCreateByName($_genre->getName());
+                $tvShow->addGenre($genre);
+            }
+        }
+        return $tvShow;
+    }
+
     /**
      * @param $tmdbId
      * @param bool $processSimilarShows
@@ -56,11 +64,7 @@ class TmdbShowFetcher extends TvShowFetcher {
             throw new NoResultException();
         }
 
-        $tvShow = $this->tvShowRepository->createFromTmdbShow($tmdbShow);
-        foreach ($tmdbShow->getGenres() as $_genre) {
-            $genre = $this->genreRepository->getOrCreateByName($_genre->getName());
-            $tvShow->addGenre($genre);
-        }
+        $tvShow = $this->convertFromTmdbFormat($tmdbShow);
 
         if ($processSimilarShows) {
             $this->syncSimilarShows($tvShow, $tmdbShow);
@@ -69,21 +73,25 @@ class TmdbShowFetcher extends TvShowFetcher {
         return $tvShow;
     }
 
-    public function syncSimilarShows(TvShow $tvShow) {
-        $tmdbShow = $this->getTmdbShowById($tvShow->getTmdbId());
-        $tvShow->addSimilarTvShows($this->getSimilarShows($tmdbShow));
+    public function syncSimilarShows(TvShow $tvShow, Tv $tmdbShow = null)
+    {
+        if (! $tmdbShow) {
+            $tmdbShow = $this->getTmdbShowById($tvShow->getTmdbId());
+        }
+
+        $tvShow->addSimilarTvShows($this->extractSimilarShows($tmdbShow));
     }
 
-    private function extractSimilarShowIds (Tv $tmdbShow)
+    private function extractSimilarShows(Tv $tmdbShow)
     {
-        $similarIds = [];
+        $similarShows = [];
         foreach ($tmdbShow->getSimilar() as $similarShow) {
-            $similarIds[] = $similarShow->getId();
+            $similarShows[] = $this->convertFromTmdbFormat($similarShow);
         }
 
         $totalPages = $tmdbShow->getSimilar()->getTotalPages();
         if ($totalPages === 1) {
-            return $similarIds;
+            return $similarShows;
         }
 
         $api = $this->tmdbTvRepository->getApi();
@@ -92,28 +100,11 @@ class TmdbShowFetcher extends TvShowFetcher {
         for (; $currentPage <= $totalPages; $currentPage++) {
             $similar = $api->getSimilar($tmdbShow->getId(), array('page' => $currentPage));
             foreach ($similar['results'] as $tvShow) {
-                $similarIds[] = $tvShow['id'];
+                $similarShows[] = $this->convertFromTmdbFormat($tvShow);
             }
         }
 
-        return $similarIds;
+        return $similarShows;
     }
 
-    private function getSimilarShows(Tv $tmdbShow)
-    {
-        // Since we can't retrieve all needed information about the related shows from the origin-show (it isn't
-        // included nor supported through the API), we have to make one request per related show instead of one per
-        // page.
-
-        $similar = [];
-        foreach ($this->extractSimilarShowIds($tmdbShow) as $id) {
-            $similarShow = $this->tvShowRepository->getByTmdbId($id);
-            if (! $similarShow) {
-                $similarShow = $this->fetch($id, false);
-            }
-            $similar[] = $similarShow;
-        }
-
-        return $similar;
-    }
 }
