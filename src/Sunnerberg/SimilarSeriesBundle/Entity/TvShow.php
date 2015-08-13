@@ -329,6 +329,16 @@ class TvShow implements \JsonSerializable
     }
 
     /**
+     * Set genres
+     *
+     * @param $genres
+     */
+    public function setGenres($genres)
+    {
+        $this->genres = $genres;
+    }
+
+    /**
      * Set tmdbId
      *
      * @param integer $tmdbId

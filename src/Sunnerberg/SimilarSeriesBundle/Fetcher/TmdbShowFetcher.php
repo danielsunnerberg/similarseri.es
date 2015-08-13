@@ -3,6 +3,7 @@
 namespace Sunnerberg\SimilarSeriesBundle\Fetcher;
 
 use Doctrine\ORM\NoResultException;
+use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Sunnerberg\SimilarSeriesBundle\Entity\GenreRepository;
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShow;
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShowRepository;
@@ -20,12 +21,18 @@ class TmdbShowFetcher extends TvShowFetcher {
     private $tmdbTvRepository;
     private $tvShowRepository;
     private $genreRepository;
+    private $queueProducer;
 
-    public function __construct(TvRepository $tmdbTvRepository, TvShowRepository $tvShowRepository, GenreRepository $genreRepository)
-    {
+    public function __construct(
+        TvRepository $tmdbTvRepository,
+        TvShowRepository $tvShowRepository,
+        GenreRepository $genreRepository,
+        ProducerInterface $queueProducer
+    ) {
         $this->tmdbTvRepository = $tmdbTvRepository;
         $this->tvShowRepository = $tvShowRepository;
         $this->genreRepository = $genreRepository;
+        $this->queueProducer = $queueProducer;
     }
 
     /**
@@ -79,7 +86,17 @@ class TmdbShowFetcher extends TvShowFetcher {
             $tmdbShow = $this->getTmdbShowById($tvShow->getTmdbId());
         }
 
-        $tvShow->addSimilarTvShows($this->extractSimilarShows($tmdbShow));
+        $similarTvShows = $this->extractSimilarShows($tmdbShow);
+        $tvShow->addSimilarTvShows($similarTvShows);
+        $this->queueShowPatcher($similarTvShows);
+    }
+
+    private function queueShowPatcher(array $similarTvShows)
+    {
+        foreach ($similarTvShows as $similarTvShow) {
+            $data = ['tmdb_id' => $similarTvShow->getTmdbId()];
+            $this->queueProducer->publish(serialize($data));
+        }
     }
 
     private function extractSimilarShows(Tv $tmdbShow)
