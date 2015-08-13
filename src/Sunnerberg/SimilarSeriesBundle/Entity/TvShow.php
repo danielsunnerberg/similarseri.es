@@ -27,7 +27,7 @@ class TvShow implements \JsonSerializable
     /**
      * @var integer
      *
-     * @ORM\Column(name="tmdbId", type="integer")
+     * @ORM\Column(name="tmdbId", type="integer", unique=true)
      */
     private $tmdbId;
     

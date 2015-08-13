@@ -24,7 +24,6 @@ class UserShowController extends Controller {
         } else {
             $tvShow = $tmdbShowFetcher->fetch($tmdbId);
         }
-        $this->getDoctrine()->getManager()->persist($tvShow);
 
         $user = $this->getUser();
         if (! $user->hasTvShow($tvShow)) {

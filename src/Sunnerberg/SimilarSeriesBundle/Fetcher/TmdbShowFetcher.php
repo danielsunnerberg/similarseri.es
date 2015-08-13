@@ -46,14 +46,9 @@ class TmdbShowFetcher extends TvShowFetcher {
     private function convertFromTmdbFormat($tmdbShow)
     {
         $tvShow = $this->tvShowRepository->createFromTmdbShow($tmdbShow);
-
-        // If we're getting our data from the raw API, it will, annoyingly, come in the form of an array, without
-        // genres.
-        if (is_object($tmdbShow)) {
-            foreach ($tmdbShow->getGenres() as $_genre) {
-                $genre = $this->genreRepository->getOrCreateByName($_genre->getName());
-                $tvShow->addGenre($genre);
-            }
+        foreach ($tmdbShow->getGenres() as $_genre) {
+            $genre = $this->genreRepository->getOrCreateByName($_genre->getName());
+            $tvShow->addGenre($genre);
         }
         return $tvShow;
     }
@@ -87,7 +82,15 @@ class TmdbShowFetcher extends TvShowFetcher {
         }
 
         $similarTvShows = $this->extractSimilarShows($tmdbShow);
-        $tvShow->addSimilarTvShows($similarTvShows);
+        foreach ($similarTvShows as $similarShow) {
+            $convertedShow = $this->tvShowRepository->getByTmdbId($similarShow->getId());
+            if (! $convertedShow) {
+                $convertedShow = $this->convertFromTmdbFormat($similarShow);
+            }
+
+            $tvShow->addSimilarTvShow($convertedShow);
+        }
+
         $this->queueShowPatcher($similarTvShows);
         $tvShow->setLastSyncDate(new \DateTime());
     }
@@ -95,7 +98,7 @@ class TmdbShowFetcher extends TvShowFetcher {
     private function queueShowPatcher(array $similarTvShows)
     {
         foreach ($similarTvShows as $similarTvShow) {
-            $data = ['tmdb_id' => $similarTvShow->getTmdbId()];
+            $data = ['tmdb_id' => $similarTvShow->getId()];
             $this->queueProducer->publish(serialize($data));
         }
     }
@@ -104,7 +107,7 @@ class TmdbShowFetcher extends TvShowFetcher {
     {
         $similarShows = [];
         foreach ($tmdbShow->getSimilar() as $similarShow) {
-            $similarShows[] = $this->convertFromTmdbFormat($similarShow);
+            $similarShows[] = $similarShow;
         }
 
         $totalPages = $tmdbShow->getSimilar()->getTotalPages();
@@ -116,9 +119,11 @@ class TmdbShowFetcher extends TvShowFetcher {
 
         $currentPage = 2; // We've already processed page one above
         for (; $currentPage <= $totalPages; $currentPage++) {
-            $similar = $api->getSimilar($tmdbShow->getId(), array('page' => $currentPage));
-            foreach ($similar['results'] as $tvShow) {
-                $similarShows[] = $this->convertFromTmdbFormat($tvShow);
+            $similar = $this->tmdbTvRepository->getFactory()->createResultCollection(
+                $api->getSimilar($tmdbShow->getId(), array('page' => $currentPage))
+            );
+            foreach ($similar as $tvShow) {
+                $similarShows[] = $tvShow;
             }
         }
 
