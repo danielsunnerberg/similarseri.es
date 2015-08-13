@@ -3,8 +3,6 @@
 namespace Sunnerberg\SimilarSeriesBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Security\Core\Exception\InvalidArgumentException;
-use Symfony\Component\Validator\Constraints\DateTime;
 use Tmdb\Model\Tv;
 
 class TvShowRepository extends EntityRepository

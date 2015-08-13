@@ -3,7 +3,6 @@
 namespace Sunnerberg\SimilarSeriesBundle\Patcher;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Id\AssignedGenerator;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShow;
