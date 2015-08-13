@@ -53,7 +53,6 @@ class ShowPatcher implements ConsumerInterface {
     private function updateShowData(TvShow $existingShow, TvShow $newShowData)
     {
         $existingShow->setImdbId($newShowData->getImdbId());
-        $existingShow->setLastSyncDate(new \DateTime());
         $existingShow->setGenres($newShowData->getGenres());
     }
 

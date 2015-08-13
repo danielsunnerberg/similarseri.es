@@ -89,6 +89,7 @@ class TmdbShowFetcher extends TvShowFetcher {
         $similarTvShows = $this->extractSimilarShows($tmdbShow);
         $tvShow->addSimilarTvShows($similarTvShows);
         $this->queueShowPatcher($similarTvShows);
+        $tvShow->setLastSyncDate(new \DateTime());
     }
 
     private function queueShowPatcher(array $similarTvShows)
