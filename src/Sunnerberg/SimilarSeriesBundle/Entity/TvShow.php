@@ -5,6 +5,7 @@ namespace Sunnerberg\SimilarSeriesBundle\Entity;
 use Date;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * TvShow
@@ -82,9 +83,9 @@ class TvShow implements \JsonSerializable
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="lastSyncDate", type="date")
+     * @ORM\Column(name="lastSyncDate", type="date", nullable=true)
      */
-    private $lastSyncDate;
+    private $lastSyncDate = null;
 
     /**
      * @var array
@@ -253,7 +254,7 @@ class TvShow implements \JsonSerializable
      * @param \DateTime $lastSyncDate
      * @return TvShow
      */
-    public function setLastSyncDate($lastSyncDate)
+    public function setLastSyncDate(\DateTime $lastSyncDate)
     {
         $this->lastSyncDate = $lastSyncDate;
 
@@ -269,12 +270,27 @@ class TvShow implements \JsonSerializable
     {
         return $this->lastSyncDate;
     }
+
+    /**
+     * Get days since last sync date
+     *
+     * @return int
+     */
+    public function getDaysSinceLastSync()
+    {
+        if ($this->lastSyncDate === null) {
+            return null;
+        }
+
+        return $this->lastSyncDate->diff(new \DateTime())->days;
+    }
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->lastSyncDate = new \DateTime();
+        $this->lastSyncDate = null;
         $this->genres = new ArrayCollection();
         $this->similarTvShows = new ArrayCollection();
     }
@@ -393,7 +409,7 @@ class TvShow implements \JsonSerializable
      * @param \DateTime $airDate
      * @return TvShow
      */
-    public function setAirDate($airDate)
+    public function setAirDate(\DateTime $airDate)
     {
         $this->airDate = $airDate;
 
