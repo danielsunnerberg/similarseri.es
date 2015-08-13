@@ -4,7 +4,12 @@
             <img class="poster responsive-image" src="{{ show.posterUrl }}" alt="Poster image for {{ show.name }}" />
         </div>
         <div class="details col-lg-6">
-            <h3>{{ show.name }} <small>({{ show.airYear }})</small></h3>
+            <h3>
+                {{ show.name }}
+                {{#if show.airYear }}
+                    <small>({{ show.airYear }})</small>
+                {{/if}}
+            </h3>
             <p>{{ truncate show.overview 110 }}</p>
         </div>
 

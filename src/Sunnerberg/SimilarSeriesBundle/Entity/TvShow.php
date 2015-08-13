@@ -41,7 +41,7 @@ class TvShow implements \JsonSerializable
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="airDate", type="datetime")
+     * @ORM\Column(name="airDate", type="datetime", nullable=true)
      */
     private $airDate;
 
@@ -433,6 +433,9 @@ class TvShow implements \JsonSerializable
      */
     public function getAirYear()
     {
+        if ($this->airDate === null) {
+            return null;
+        }
         return $this->airDate->format('Y');
     }
 
