@@ -54,7 +54,7 @@ class User implements UserInterface, \Serializable, AdvancedUserInterface, Equat
      * @ORM\JoinTable(
      *     name="users_tv_shows",
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="tv_show_id", referencedColumnName="id", unique=true)}
+     *     inverseJoinColumns={@ORM\JoinColumn(name="tv_show_id", referencedColumnName="id")}
      * )
      */
     private $tvShows;
@@ -66,7 +66,7 @@ class User implements UserInterface, \Serializable, AdvancedUserInterface, Equat
      * @ORM\JoinTable(
      *     name="users_ignored_tv_shows",
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="tv_show_id", referencedColumnName="id", unique=true)}
+     *     inverseJoinColumns={@ORM\JoinColumn(name="tv_show_id", referencedColumnName="id")}
      * )
      */
     private $ignoredTvShows;
