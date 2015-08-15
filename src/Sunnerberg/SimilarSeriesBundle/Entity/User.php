@@ -50,7 +50,7 @@ class User implements UserInterface, \Serializable, AdvancedUserInterface, Equat
     /**
      * @var array
      *
-     * @ORM\ManyToMany(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\TvShow")
+     * @ORM\ManyToMany(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\TvShow", cascade={"persist"})
      * @ORM\JoinTable(
      *     name="users_tv_shows",
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
@@ -62,7 +62,7 @@ class User implements UserInterface, \Serializable, AdvancedUserInterface, Equat
     /**
      * @var array
      *
-     * @ORM\ManyToMany(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\TvShow")
+     * @ORM\ManyToMany(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\TvShow", cascade={"persist"})
      * @ORM\JoinTable(
      *     name="users_ignored_tv_shows",
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
