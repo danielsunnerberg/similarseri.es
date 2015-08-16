@@ -124,9 +124,17 @@ old_sound_rabbit_mq:
         show_patcher:
             connection:       default
             exchange_options: { name: 'show_patcher', type: direct }
+        show_fetcher:
+            connection:       default
+            exchange_options: { name: 'show_fetcher', type: direct }
     consumers:
         show_patcher:
             connection:       default
             exchange_options: { name: 'show_patcher', type: direct }
             queue_options:    { name: 'show_patcher' }
             callback:         sunnerberg_similar_series.patcher.show_patcher
+        show_fetcher:
+            connection:       default
+            exchange_options: { name: 'show_fetcher', type: direct }
+            queue_options:    { name: 'show_fetcher' }
+            callback:         sunnerberg_similar_series.fetcher.show_fetcher_consumer
