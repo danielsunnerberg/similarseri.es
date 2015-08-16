@@ -16,7 +16,7 @@ use Tmdb\Repository\TvRepository;
  * Class TmdbShowFetcher
  * @package Sunnerberg\SimilarSeriesBundle\Fetcher
  */
-class TmdbShowFetcher extends TvShowFetcher {
+class TmdbShowFetcher implements TvShowFetcher {
 
     private $tmdbTvRepository;
     private $tvShowRepository;
@@ -120,7 +120,7 @@ class TmdbShowFetcher extends TvShowFetcher {
         $currentPage = 2; // We've already processed page one above
         for (; $currentPage <= $totalPages; $currentPage++) {
             $similar = $this->tmdbTvRepository->getFactory()->createResultCollection(
-                $api->getSimilar($tmdbShow->getId(), array('page' => $currentPage))
+                $api->getSimilar($tmdbShow->getId(), ['page' => $currentPage])
             );
             foreach ($similar as $tvShow) {
                 $similarShows[] = $tvShow;
