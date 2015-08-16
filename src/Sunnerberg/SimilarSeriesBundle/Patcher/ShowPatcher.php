@@ -26,18 +26,18 @@ class ShowPatcher implements ConsumerInterface {
      * @var TvShowFetcher
      */
     private $showFetcher;
-    private $tvShowRepository;
+    private $showRepository;
     private $entityManager;
     private $logger;
 
     public function __construct(
         TvShowFetcher $showFetcher,
-        TvShowRepository $tvShowRepository,
+        TvShowRepository $showRepository,
         EntityManager $entityManager,
         Logger $logger
     ) {
         $this->showFetcher = $showFetcher;
-        $this->tvShowRepository = $tvShowRepository;
+        $this->showRepository = $showRepository;
         $this->entityManager = $entityManager;
         $this->logger = $logger;
     }
@@ -64,7 +64,7 @@ class ShowPatcher implements ConsumerInterface {
         }
         $tmdbId = $data['tmdb_id'];
 
-        $show = $this->tvShowRepository->getByTmdbId($tmdbId);
+        $show = $this->showRepository->getByTmdbId($tmdbId);
         if (! $show) {
             $this->logger->error(sprintf('Found no show to patch with tmdb id: %d', $tmdbId));
             return;
