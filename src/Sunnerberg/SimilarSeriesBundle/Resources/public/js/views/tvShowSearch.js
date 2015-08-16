@@ -45,6 +45,15 @@ define(
                 );
 
                 element.on('typeahead:selected', this.addSelectedShow.bind(this));
+
+                var requestLoader = Ladda.create($('#search-loader')[0]);
+                element.on('typeahead:asyncrequest', function () {
+                    requestLoader.start();
+                });
+
+                element.on('typeahead:asynccancel typeahead:asyncreceive', function () {
+                    requestLoader.stop();
+                });
             },
 
             addSelectedShow: function (evt, item) {
