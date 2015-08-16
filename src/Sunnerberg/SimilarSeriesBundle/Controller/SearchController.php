@@ -15,6 +15,13 @@ class SearchController extends Controller {
      */
     public function searchAction($query)
     {
+        $cache = $this->get('cache');
+        $queryCacheId = sprintf('similarseries.search.%s', $query);
+        $cachedSearch = $cache->fetch($queryCacheId);
+        if ($cachedSearch) {
+            return new JsonResponse($cachedSearch);
+        }
+
         $searchRepository = $this->get('tmdb.search_repository');
         $filters = new TvSearchQuery();
         $filters->searchType('ngram');
@@ -34,6 +41,8 @@ class SearchController extends Controller {
                 'posterUrl' => $posterBaseUrl . $show->getPosterPath(),
             ];
         }
+
+        $cache->save($queryCacheId, $matchingShows, 60 * 60 * 24 * 30);
 
         return new JsonResponse($matchingShows);
     }
