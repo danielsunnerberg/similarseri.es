@@ -25,7 +25,17 @@ class SearchController extends Controller {
         $searchRepository = $this->get('tmdb.search_repository');
         $filters = new TvSearchQuery();
         $filters->searchType('ngram');
-        $response = $searchRepository->searchTv($query, $filters)->getAll();
+        $shows = $this->formatSearchResponse(
+            $searchRepository->searchTv($query, $filters)->getAll()
+        );
+
+        $cache->save($queryCacheId, $shows, 60 * 60 * 24 * 30);
+
+        return new JsonResponse($shows);
+    }
+
+    private function formatSearchResponse($response)
+    {
         $tmdbPosterHelper = $this->get('sunnerberg_similar_series.helper.tmdb_poster_helper');
         $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(TmdbPosterSize::W92);
 
@@ -41,10 +51,7 @@ class SearchController extends Controller {
                 'posterUrl' => $posterBaseUrl . $show->getPosterPath(),
             ];
         }
-
-        $cache->save($queryCacheId, $matchingShows, 60 * 60 * 24 * 30);
-
-        return new JsonResponse($matchingShows);
+        return $matchingShows;
     }
 
 }
