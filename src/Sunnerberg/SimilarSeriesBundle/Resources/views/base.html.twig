@@ -9,7 +9,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#000">
 
-    <title>Find series that you will like - Similarseri.es</title>
+    <title>
+        {% block title %}
+            Find series that you will like
+        {% endblock %}
+        - Similarseri.es
+    </title>
     <link rel="icon" href="{{ asset('/favicon.ico') }}">
     {% block stylesheets %}
         {% stylesheets filter='cssrewrite'
