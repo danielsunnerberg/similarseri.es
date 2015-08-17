@@ -22,7 +22,7 @@ class ShowFetcherConsumer implements ConsumerInterface {
     private $logger;
 
     function __construct(
-        TvShowFetcher $showFetcher,
+        TvShowFetcherInterface $showFetcher,
         TvShowRepository $showRepository,
         EntityManager $entityManager,
         Logger $logger

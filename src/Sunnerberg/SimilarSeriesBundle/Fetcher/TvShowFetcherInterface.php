@@ -4,7 +4,7 @@ namespace Sunnerberg\SimilarSeriesBundle\Fetcher;
 
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShow;
 
-interface TvShowFetcher {
+interface TvShowFetcherInterface {
 
     /**
      * @param $serviceId

@@ -7,7 +7,7 @@ use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShow;
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShowRepository;
-use Sunnerberg\SimilarSeriesBundle\Fetcher\TvShowFetcher;
+use Sunnerberg\SimilarSeriesBundle\Fetcher\TvShowFetcherInterface;
 use Symfony\Bridge\Monolog\Logger;
 
 /**
@@ -17,21 +17,18 @@ use Symfony\Bridge\Monolog\Logger;
  * TMDB-API). Hence, we must fetch the extra data, such as external IDs, images etc, in separate requests. This
  * is very time/request consuming, which is why the user cannot wait for it, and it has to be queued for later.
  *
- * Class TmdbShowFetcher
+ * Class TmdbShowFetcherInterface
  * @package Sunnerberg\SimilarSeriesBundle\Patcher
  */
 class ShowPatcher implements ConsumerInterface {
 
-    /**
-     * @var TvShowFetcher
-     */
     private $showFetcher;
     private $showRepository;
     private $entityManager;
     private $logger;
 
     public function __construct(
-        TvShowFetcher $showFetcher,
+        TvShowFetcherInterface $showFetcher,
         TvShowRepository $showRepository,
         EntityManager $entityManager,
         Logger $logger

@@ -13,10 +13,10 @@ use Tmdb\Repository\TvRepository;
 /**
  * Fetches show data from the TMDB-api.
  *
- * Class TmdbShowFetcher
+ * Class TmdbShowFetcherInterface
  * @package Sunnerberg\SimilarSeriesBundle\Fetcher
  */
-class TmdbShowFetcher implements TvShowFetcher {
+class TmdbShowFetcherInterface implements TvShowFetcherInterface {
 
     private $tmdbTvRepository;
     private $tvShowRepository;
