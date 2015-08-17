@@ -4,6 +4,7 @@ namespace Sunnerberg\SimilarSeriesBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sunnerberg\SimilarSeriesBundle\Entity\User;
+use Sunnerberg\SimilarSeriesBundle\Helper\UserAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
@@ -50,13 +51,8 @@ class LoginController extends Controller {
         $entityManager->persist($anonymousUser);
         $entityManager->flush();
 
-        $token = new UsernamePasswordToken(
-            $anonymousUser,
-            $anonymousUser->getPassword(),
-            'main',
-            $anonymousUser->getRoles()
-        );
-        $this->get('security.token_storage')->setToken($token);
+        $userAuthenticator = new UserAuthenticator($this->get('security.token_storage'));
+        $userAuthenticator->authenticate($anonymousUser);
 
         return $this->redirectToRoute('find');
     }

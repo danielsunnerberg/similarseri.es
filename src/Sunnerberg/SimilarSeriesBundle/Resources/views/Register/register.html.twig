@@ -1,0 +1,65 @@
+{% extends '@SunnerbergSimilarSeries/base.html.twig' %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets '@SunnerbergSimilarSeriesBundle/Resources/public/css/Login/login.less' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+
+
+    {% if not form.vars.valid %}
+        <div class="alert alert-dismissable alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong><i class="mdi-alert-error align-bottom"></i> The following errors occured:</strong>
+            {{ form_errors(form) }}
+        </div>
+    {% endif %}
+
+    <div id="login-panel" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Register</h3>
+        </div>
+        <div class="panel-body">
+            {{ form_start(form) }}
+
+            {% set username_has_errors_class = form_errors(form.username) ? 'has-error' : '' %}
+            <div class="form-group {{ username_has_errors_class }}">
+                <div class="input-group">
+                    <span class="input-group-addon" id="username-icon"><i class="mdi-social-person"></i></span></span>
+                    {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if form_errors(form.username) %}
+                    <span class="help-block">{{ form_errors(form.username) }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon" id="password-icon"><i class="mdi-action-lock"></i></span>
+                    {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon" id="password-icon"><i class="mdi-action-lock"></i></span>
+                    {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+
+            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-material-light-blue-700'}}) }}
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+    <p class="text-center">Already have an account? <a href="{{ path('login_route') }}">Login here.</a></p>
+
+
+{% endblock %}

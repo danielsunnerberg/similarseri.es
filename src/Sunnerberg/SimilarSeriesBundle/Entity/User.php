@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * User
@@ -29,6 +31,12 @@ class User implements UserInterface, \Serializable, AdvancedUserInterface, Equat
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "Your username must be at least {{ limit }} characters long",
+     *      maxMessage = "Your username cannot be longer than {{ limit }} characters"
+     * )
      */
     private $username;
 
@@ -36,6 +44,12 @@ class User implements UserInterface, \Serializable, AdvancedUserInterface, Equat
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255)
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 255,
+     *      minMessage = "Your password must be at least {{ limit }} characters long",
+     *      maxMessage = "Your password cannot be longer than {{ limit }} characters"
+     * )
      */
     private $password;
 

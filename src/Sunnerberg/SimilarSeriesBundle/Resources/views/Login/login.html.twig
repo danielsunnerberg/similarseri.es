@@ -18,10 +18,12 @@
             <button type="button" class="close" data-dismiss="alert">×</button>
             <strong><i class="mdi-alert-error align-bottom"></i> {{ error.messageKey|trans(error.messageData, 'security') }}</strong>
         </div>
-        <div></div>
     {% endif %}
 
     <div id="login-panel" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Login</h3>
+        </div>
         <div class="panel-body">
             <form action="{{ path('login_check') }}" method="post">
                 <div class="form-group">
@@ -33,7 +35,6 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        {#<i class="mdi-action-favorite mdi-material-pink" style="font-size: 40pt;"></i>#}
                         <span class="input-group-addon" id="password-icon"><i class="mdi-action-lock"></i></span>
                         <input class="form-control" type="password" id="password" name="_password" placeholder="Password" aria-describedby="password-icon" />
                     </div>
@@ -43,5 +44,6 @@
             </form>
         </div>
     </div>
+    <p class="text-center">Don't have an account? <a href="{{ path('register_route') }}">Sign up.</a></p>
 
 {% endblock %}
