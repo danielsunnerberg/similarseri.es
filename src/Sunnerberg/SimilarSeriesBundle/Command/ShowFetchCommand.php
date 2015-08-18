@@ -22,7 +22,7 @@ class ShowFetchCommand extends ContainerAwareCommand {
     protected function configure()
     {
         $this
-            ->setName('show:fetch')
+            ->setName('similarseries:show:fetch')
             ->setDescription('Queues a list of shows to be added to the database')
             ->addArgument(
                 'source',
