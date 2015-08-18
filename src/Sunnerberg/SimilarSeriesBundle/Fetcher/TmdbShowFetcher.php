@@ -16,7 +16,7 @@ use Tmdb\Repository\TvRepository;
  * Class TmdbShowFetcherInterface
  * @package Sunnerberg\SimilarSeriesBundle\Fetcher
  */
-class TmdbShowFetcherInterface implements TvShowFetcherInterface {
+class TmdbShowFetcher implements TvShowFetcherInterface {
 
     private $tmdbTvRepository;
     private $tvShowRepository;
