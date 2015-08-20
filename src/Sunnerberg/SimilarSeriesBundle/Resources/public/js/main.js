@@ -10,7 +10,7 @@ var config = {
     paths: {
         'jquery' : '/assets/vendor/jquery/dist/jquery.min',
         'bootstrap' : '/assets/vendor/bootstrap/dist/js/bootstrap.min',
-        'typeahead': '/assets/vendor/typeahead.js/dist/typeahead.jquery',
+        'typeahead': '/assets/vendor/typeahead.js/dist/typeahead.jquery.min',
         'bloodhound': '/assets/vendor/typeahead.js/dist/bloodhound.min',
         'handlebars': '/assets/vendor/handlebars/handlebars.amd.min',
         'underscore': '/assets/vendor/underscore/underscore-min',
