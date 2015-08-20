@@ -8,7 +8,7 @@ var config = {
         'ripples': { 'deps': ['jquery'] }
     },
     paths: {
-        'jquery' : '/assets/vendor/jquery/dist/jquery',
+        'jquery' : '/assets/vendor/jquery/dist/jquery.min',
         'bootstrap' : '/assets/vendor/bootstrap/dist/js/bootstrap.min',
         'typeahead': '/assets/vendor/typeahead.js/dist/typeahead.jquery',
         'bloodhound': '/assets/vendor/typeahead.js/dist/bloodhound.min',
