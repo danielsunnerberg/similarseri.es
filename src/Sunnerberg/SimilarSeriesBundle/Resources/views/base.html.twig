@@ -72,6 +72,11 @@
         {% block javascripts %}
             <script src="{{ asset('assets/vendor/requirejs/require.js') }}" data-main="{{ asset('bundles/sunnerbergsimilarseries/js/main.js') }}"></script>
         {% endblock %}
+
+        {% block google_analytics %}
+            {% include '@SunnerbergSimilarSeries/Helper/google_analytics.html.twig' %}
+        {% endblock %}
+
     {% endblock %}
 </body>
 </html>

@@ -24,3 +24,6 @@ parameters:
     rabbit_mq_host: localhost
     rabbit_mq_user: guest
     rabbit_mq_password: guest
+
+    # Tracking ID for Google Analytics. If null, tracking will be disabled
+    google.analytics.id: ~
