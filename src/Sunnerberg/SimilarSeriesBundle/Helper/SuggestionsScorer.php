@@ -12,9 +12,16 @@ class SuggestionsScorer {
     const VOTE_AVERAGE_FACTOR = 1.5;
 
     /**
+     * Shows which has already been watched.
      * @var array
      */
-    private $similarShows;
+    private $shows;
+
+    /**
+     * Shows which will NOT be included in any suggestions.
+     * @var
+     */
+    private $ignoreShows;
 
     /**
      * @var array
@@ -22,26 +29,21 @@ class SuggestionsScorer {
     private $gradedShows = [];
 
     /**
-     * @var
+     * @param array $shows shows which has already been watched -- will not be included in any suggestions
+     * @param array $ignoreShows shows which should not be included in any suggestions
      */
-    private $ignoreIds;
-
-    /**
-     * @param array $similarShows
-     * @param array $ignoreIds Ids of already watched shows, which will not be included as suggestions
-     */
-    function __construct(array $similarShows, array $ignoreIds)
+    function __construct(array $shows, array $ignoreShows)
     {
-        $this->similarShows = $similarShows;
-        $this->ignoreIds = $ignoreIds;
+        $this->shows = $shows;
+        $this->ignoreShows = $ignoreShows;
         $this->grade();
     }
 
     private function grade()
     {
-        foreach ($this->similarShows as $item) {
-            $baseShow = $item['show'];
-            foreach ($item['similar'] as $similarShow) {
+        foreach ($this->shows as $baseShow) {
+            foreach ($baseShow->getSimilarTvShows() as $similarShow) {
+                $this->ignoreShows[] = $baseShow;
                 $this->processSimilarShow($baseShow, $similarShow);
             }
         }
@@ -51,11 +53,11 @@ class SuggestionsScorer {
 
     private function processSimilarShow(TvShow $baseShow, TvShow $similarShow)
     {
-        $similarShowId = $similarShow->getId();
-        if (in_array($similarShowId, $this->ignoreIds)) {
+        if (in_array($similarShow, $this->ignoreShows)) {
             return;
         }
 
+        $similarShowId = $similarShow->getId();
         if (array_key_exists($similarShowId, $this->gradedShows)) {
             $suggestion = $this->gradedShows[$similarShowId];
         } else {

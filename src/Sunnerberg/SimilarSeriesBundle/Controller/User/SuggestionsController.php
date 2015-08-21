@@ -16,37 +16,23 @@ class SuggestionsController extends Controller {
     public function suggestionsAction($offset = 0, $limit = 20)
     {
         $user = $this->getUser();
-        $userShows = $user->getTvShows();
-
-        $similarShows = [];
-        $ignoreIds = [];
-        foreach ($userShows as $userShow) {
-            // We dont want to suggest a show that the user already has seen
-            $ignoreIds[] = $userShow->getId();
-
-            $similarShows[] = [
-                'show' => $userShow,
-                'similar' => $userShow->getSimilarTvShows()
-            ];
-        }
-
-        foreach ($user->getIgnoredTvShows() as $ignoredShow) {
-            $ignoreIds[] = $ignoredShow->getId();
-        }
 
         $tmdbPosterHelper = $this->get('sunnerberg_similar_series.helper.tmdb_poster_helper');
         $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(TmdbPosterSize::W154);
 
-        $suggestionsScorer = new SuggestionsScorer($similarShows, $ignoreIds);
+        $suggestionsScorer = new SuggestionsScorer(
+            $user->getTvShows()->toArray(),
+            $user->getIgnoredTvShows()->toArray()
+        );
         $suggestions = $suggestionsScorer->getGradedSuggestions($offset, $limit);
         foreach ($suggestions as $suggestion) {
             $suggestion->getShow()->injectPosterBaseUrl($posterBaseUrl);
         }
 
-        return new JsonResponse(array(
+        return new JsonResponse([
             'suggestions' => $suggestions,
             'hasMoreSuggestions' => $suggestionsScorer->hasMoreSuggestions($offset, $limit)
-        ));
+        ]);
     }
 
 }
