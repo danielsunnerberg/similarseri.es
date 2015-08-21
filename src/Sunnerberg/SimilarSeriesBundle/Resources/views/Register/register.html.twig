@@ -33,7 +33,7 @@
             <div class="form-group {{ username_has_errors_class }}">
                 <div class="input-group">
                     <span class="input-group-addon" id="username-icon"><i class="mdi-social-person"></i></span></span>
-                    {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_widget(form.username, {'attr': {'class': 'form-control', 'autofocus': 'autofocus'}}) }}
                 </div>
                 {% if form_errors(form.username) %}
                     <span class="help-block">{{ form_errors(form.username) }}</span>
