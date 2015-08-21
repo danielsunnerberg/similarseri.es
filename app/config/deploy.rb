@@ -1,5 +1,5 @@
 set :application, "similarseri.es"
-set :domain,      "188.166.88.57"
+set :domain,      "similarseri.es"
 set :deploy_to,   "/var/www/#{application}"
 set :app_path,    "app"
 
