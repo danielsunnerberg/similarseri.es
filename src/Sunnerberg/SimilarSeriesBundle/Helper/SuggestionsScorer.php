@@ -35,7 +35,7 @@ class SuggestionsScorer {
     function __construct(array $shows, array $ignoreShows)
     {
         $this->shows = $shows;
-        $this->ignoreShows = $ignoreShows;
+        $this->ignoreShows = array_merge($ignoreShows, $shows);
         $this->grade();
     }
 
@@ -43,7 +43,6 @@ class SuggestionsScorer {
     {
         foreach ($this->shows as $baseShow) {
             foreach ($baseShow->getSimilarTvShows() as $similarShow) {
-                $this->ignoreShows[] = $baseShow;
                 $this->processSimilarShow($baseShow, $similarShow);
             }
         }
