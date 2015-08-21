@@ -46,7 +46,7 @@ class SuggestionsController extends Controller {
         ]);
     }
 
-    public function suggestPopularShows()
+    private function suggestPopularShows()
     {
         $showRepository = $this->getDoctrine()->getRepository('SunnerbergSimilarSeriesBundle:TvShow');
         $shows = $showRepository->findBy([], ['popularity' => 'DESC'], 21);
