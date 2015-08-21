@@ -54,6 +54,8 @@ define(
                 element.on('typeahead:asynccancel typeahead:asyncreceive', function () {
                     requestLoader.stop();
                 });
+
+                element.focus();
             },
 
             addSelectedShow: function (evt, item) {
