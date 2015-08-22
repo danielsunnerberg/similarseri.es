@@ -111,6 +111,16 @@ class TvShow implements \JsonSerializable
     private $similarTvShows;
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->lastSyncDate = null;
+        $this->genres = new ArrayCollection();
+        $this->similarTvShows = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -282,16 +292,6 @@ class TvShow implements \JsonSerializable
         }
 
         return $this->lastSyncDate->diff(new \DateTime())->days;
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->lastSyncDate = null;
-        $this->genres = new ArrayCollection();
-        $this->similarTvShows = new ArrayCollection();
     }
 
     /**
