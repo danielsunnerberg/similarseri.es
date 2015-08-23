@@ -6,6 +6,7 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq php-apc -y # php5-apcu is a valid replacement, but doesn't exist on Ubuntu 12.04, which Travis-CI runs
 before_script:
+  - sudo service apache2 restart
   - cp app/config/parameters.yml.dist app/config/parameters.yml
   - composer install
 script: phpunit -c app/
