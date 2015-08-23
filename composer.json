@@ -11,7 +11,7 @@
     },
     "require": {
         "php": ">=5.3.9",
-        "ext-apcu": "~4.0",
+        "ext-apc": "~4.0",
         "symfony/symfony": "2.7.*",
         "doctrine/orm": "~2.2,>=2.2.3,<2.5",
         "doctrine/dbal": "<2.5",
