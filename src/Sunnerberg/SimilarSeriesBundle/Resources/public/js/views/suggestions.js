@@ -52,7 +52,7 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
                     success: function (suggestions) {
                         that.isLoading = false;
                         that.insertSuggestions(suggestions.models);
-                        if (that.suggestionsCollection.fallbackUsed) {
+                        if (that.suggestionsCollection.fallbackUsed && $(that.el).has('.alert').length === 0) {
                             that.displayFallbackNotice();
                         }
                     },
@@ -65,7 +65,7 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
 
             displayFallbackNotice: function () {
                 require(['text!templates/alertTemplate.html'], function (alertTemplate) {
-                    var alertTemplate = Handlebars.compile(alertTemplate);
+                    alertTemplate = Handlebars.compile(alertTemplate);
                     $(this.el).prepend(alertTemplate({type: 'info', message: '<i class="mdi-action-info align-bottom"></i> <b>You have not added any shows.</b> Until you do, you can find shows our users have enjoyed below as inspiration.'}));
                 }.bind(this));
             },
