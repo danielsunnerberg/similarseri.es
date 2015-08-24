@@ -13,16 +13,23 @@
     // For performance reasons, we can't use background-position to animate the Y-axis. Instead, use translate and
     //make the image repeat 200% of its size, which makes it possible to move it -100% without loosing the background.
     height: @background-height * 2;
-    background: url("/bundles/sunnerbergsimilarseries/images/tv-show-wall.jpg") repeat 0 0;
-
     animation: animated-background 50s linear infinite;
+    -webkit-animation: animated-background 50s linear infinite;
+    background: url("/bundles/sunnerbergsimilarseries/images/tv-show-wall.jpg") repeat 0 0;
 
     // Force the browser to use the GPU
     transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    will-change: transform;
   }
 
   @keyframes animated-background {
     0% { transform: translateY(0) }
     100% { transform: translateY(-@background-height) }
+  }
+
+  @-webkit-keyframes animated-background {
+    0% { -webkit-transform: translateY(0) }
+    100% { -webkit-transform: translateY(-@background-height) }
   }
 }
