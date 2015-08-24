@@ -19,7 +19,6 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
 
             setDefaultSettings: function () {
                 this.isLoading = false;
-                this.hasMoreSuggestions = true;
                 this.suggestionsCollection = new SuggestionsCollection();
             },
 
@@ -42,7 +41,7 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
             },
 
             loadResults: function () {
-                if (! this.hasMoreSuggestions) {
+                if (! this.suggestionsCollection.hasMoreSuggestions) {
                     return;
                 }
 

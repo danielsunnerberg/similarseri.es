@@ -5,6 +5,7 @@ define(['backbone', '../models/suggestion'], function (Backbone, SuggestionModel
         model: SuggestionModel,
         popularFallback: true,
         fallbackUsed: null,
+        hasMoreSuggestions: true,
 
         url: function () {
             return '/user/suggestions/' + this.page * this.limit + '/' + this.limit + '/' + this.popularFallback;
@@ -12,6 +13,7 @@ define(['backbone', '../models/suggestion'], function (Backbone, SuggestionModel
 
         parse: function (response) {
             this.fallbackUsed = response.fallbackUsed;
+            this.hasMoreSuggestions = response.hasMoreSuggestions;
             return response.suggestions;
         }
 
