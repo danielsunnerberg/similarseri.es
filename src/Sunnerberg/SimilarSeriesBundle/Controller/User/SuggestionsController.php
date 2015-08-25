@@ -21,7 +21,7 @@ class SuggestionsController extends Controller {
     public function suggestionsAction($offset = 0, $limit = 20, $popularFallback = false)
     {
         $tmdbPosterHelper = $this->get('sunnerberg_similar_series.helper.tmdb_poster_helper');
-        $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(TmdbPosterSize::W154);
+        $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(TmdbPosterSize::W342);
 
         $user = $this->getUser();
         $suggestionsScorer = new SuggestionsScorer(

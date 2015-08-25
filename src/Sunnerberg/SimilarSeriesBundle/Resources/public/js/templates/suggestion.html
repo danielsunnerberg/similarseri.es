@@ -1,19 +1,19 @@
-<div class="tv-show-item col-sm-4 material-light-blue">
+<div class="tv-show-item col-sm-4 material-light-blue" style="background-image: url('{{ show.posterUrl }}');">
+    <div class="dim"></div>
     <div class="row">
-        <div class="col-lg-6">
-            <img class="poster responsive-image" src="{{ show.posterUrl }}" alt="Poster image for {{ show.name }}" />
-        </div>
-        <div class="details col-lg-6">
+        <div class="title">
             <h3>
                 {{ show.name }}
                 {{#if show.airYear }}
-                    <small>({{ show.airYear }})</small>
+                <small>({{ show.airYear }})</small>
                 {{/if}}
             </h3>
-            <p>{{ truncate show.overview 110 }}</p>
+        </div>
+        <div class="details">
+            <p>{{ truncate show.overview 180 }}</p>
         </div>
 
-        <div class="btn-group actions">
+        <div class="form-group btn-group-justified actions">
             <div class="btn-group" role="group">
                 <button title="Ignore" type="button" class="btn btn-default tv-show-ignore ladda-button" data-style="slide-right" data-size="xs" data-spinner-color="#000">
                     <i class="mdi-action-thumb-down mdi-material-red"></i>
@@ -25,5 +25,6 @@
                 </button>
             </div>
         </div>
+
     </div>
 </div>

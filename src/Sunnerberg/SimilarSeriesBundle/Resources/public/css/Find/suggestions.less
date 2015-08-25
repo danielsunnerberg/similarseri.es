@@ -1,49 +1,70 @@
 @import 'assets/vendor/bootstrap/less/variables';
 
 .tv-show-item {
-  border: 1px solid #ddd;
   margin: 0 15px 20px 15px;
-  background: #fff;
   border-radius: 4px;
-  box-shadow: 0 1px 1px rgba(0,0,0,.05);
-  padding: 15px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+  padding: 0 15px 35px;
+  color: white;
+  background-size: cover;
+  z-index: 1;
+  background-position-y: -10px;
 
-  h3 {
-    @media(min-width:@screen-lg-min) {
+  .dim {
+    border-radius: inherit;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    background: rgba(0, 0, 0, .6);
+  }
+
+  .title {
+    background: rgba(0, 0, 0, .5);
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 4px 4px 0 0;
+
+    h3 {
+      padding: 15px;
       margin-top: 0;
+      word-wrap: break-word;
+
+      small {
+        vertical-align: middle;
+      }
     }
-    word-wrap: break-word;
   }
 
   .details {
-    padding-bottom: 35px;
+    padding: 15px 15px 35px 15px;
   }
 
   .actions {
     position: absolute;
+    bottom: 0;
     margin: 0;
+    background: white;
+    border-radius: 0 0 2px 2px;
+    display: block;
+
+    .btn-group {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    .btn-group:first-of-type {
+      border-bottom-right-radius: 0;
+    }
+
+    .btn-group:last-of-type {
+      border-bottom-left-radius: 0;
+    }
 
     .btn-group:first-child {
       border-right: 1px solid #ddd;
-    }
-    @media(min-width:@screen-lg-min) {
-      bottom: 15px;
-      right: 15px;
-    }
-
-    @media(max-width:@screen-lg-min) {
-      bottom:0;
-      display: table;
-      .btn-group {
-        display: table-cell;
-        float: none;
-        width: 1%;
-
-        .btn {
-          width: 100%;
-          box-shadow: 0;
-        }
-      }
     }
 
     button {
