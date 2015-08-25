@@ -23,14 +23,15 @@ class TmdbPosterHelper {
      */
     public function getPosterBaseUrl($size)
     {
-        $cachedBaseUrl = $this->cache->fetch('tmdb.config.poster_base_url');
+        $cacheId = sprintf('tmdb.config.poster_base_url.%d', $size);
+        $cachedBaseUrl = $this->cache->fetch($cacheId);
         if ($cachedBaseUrl) {
             return $cachedBaseUrl;
         }
 
         $imageConfig = $this->tmdbConfigRepo->load()->getImages();
         $baseUrl = $imageConfig['secure_base_url'] . $imageConfig['poster_sizes'][$size];
-        $this->cache->save('tmdb.config.poster_base_url', $baseUrl, 60 * 60 * 24 * 14);
+        $this->cache->save($cacheId, $baseUrl, 60 * 60 * 24 * 14);
 
         return $baseUrl;
     }
