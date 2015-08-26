@@ -7,7 +7,15 @@
     <meta name="description" content="By analyzing what shows you've previously enjoyed, we predict what shows you'd like to watch next">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#000">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-title" content="Similarseri.es">
+    <meta name="application-name" content="Similarseri.es">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="theme-color" content="#000000">
+
+    {% block icons %}
+        {% include '@SunnerbergSimilarSeries/Helper/icons.html.twig' %}
+    {% endblock %}
 
     <title>
         {% block title %}
