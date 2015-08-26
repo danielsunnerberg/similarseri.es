@@ -1,4 +1,4 @@
-[similarseri.es](http://similarseri.es)
+[similarseri.es](http://similarseri.es) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/8cd9d924-910b-4292-b8fd-cdf977371cd2/big.png)](https://insight.sensiolabs.com/projects/8cd9d924-910b-4292-b8fd-cdf977371cd2) [![Build Status](https://travis-ci.org/danielsunnerberg/similarseri.es.svg?branch=master)](https://travis-ci.org/danielsunnerberg/similarseri.es)
 ==============
 
 Predicts what the user would like to watch next by analyzing previously watched shows.
