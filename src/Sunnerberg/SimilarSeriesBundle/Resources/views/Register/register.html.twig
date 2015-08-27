@@ -6,7 +6,9 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets '@SunnerbergSimilarSeriesBundle/Resources/public/css/Login/login.less' %}
+    {% stylesheets filter='?uglifycss'
+        '@SunnerbergSimilarSeriesBundle/Resources/public/css/Login/login.less'
+    %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}

@@ -2,7 +2,9 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets '@SunnerbergSimilarSeriesBundle/Resources/public/css/Start/start.less' %}
+    {% stylesheets filter='?uglifycss'
+        '@SunnerbergSimilarSeriesBundle/Resources/public/css/Start/start.less'
+    %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}

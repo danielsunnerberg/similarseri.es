@@ -53,9 +53,6 @@ assetic:
             apply_to: "\.less$"
             paths:
                 - "%kernel.root_dir%/../web"
-    workers:
-        cache_busting:
-            enabled: true
 
 # Doctrine Configuration
 doctrine:

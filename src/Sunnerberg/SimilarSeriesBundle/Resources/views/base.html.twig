@@ -23,9 +23,8 @@
         {% endblock %}
         - Similarseri.es
     </title>
-    <link rel="icon" href="{{ asset('/favicon.ico') }}">
     {% block stylesheets %}
-        {% stylesheets filter='cssrewrite'
+        {% stylesheets filter='cssrewrite,?uglifycss'
             'assets/vendor/bootstrap/less/bootstrap.less'
             'assets/vendor/ladda-bootstrap/dist/ladda-themeless.min.css'
             'assets/vendor/bootstrap-material-design/dist/css/material.min.css'

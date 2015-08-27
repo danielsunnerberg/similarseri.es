@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets
+    {% stylesheets filter='?uglifycss'
         '@SunnerbergSimilarSeriesBundle/Resources/public/css/Tools/typeahead.css'
         '@SunnerbergSimilarSeriesBundle/Resources/public/css/Find/find.less'
         '@SunnerbergSimilarSeriesBundle/Resources/public/css/Find/suggestions.less'
