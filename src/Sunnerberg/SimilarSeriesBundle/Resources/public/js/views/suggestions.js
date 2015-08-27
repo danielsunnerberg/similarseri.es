@@ -94,7 +94,7 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
             },
 
             checkScroll: function () {
-                var triggerPoint = 200;
+                var triggerPoint = 300;
                 var element = $(window);
                 if (! this.isLoading && element.scrollTop() + element.height() + triggerPoint > document.body.scrollHeight) {
                     this.suggestionsCollection.page += 1;
