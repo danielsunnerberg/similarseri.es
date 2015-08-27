@@ -16,6 +16,7 @@ A fully-functional local version can be setup quite easily after cloning this re
 
 ### Typical installation
 ```
+npm install
 composer install
 bower install
 ./app/console assetic:dump
