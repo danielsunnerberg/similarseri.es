@@ -32,11 +32,23 @@ default_run_options[:pty] = true
 # To dump assets, they must first be installed through bower
 before 'symfony:assetic:dump', 'bower:install'
 
+# Some packages may be dependant on NPM-packages
+before 'symfony:composer:install', 'npm:install'
+
 namespace :bower do
     desc 'bower install'
     task :install do
         capifony_pretty_print "--> Installing bower components"
         invoke_command "sh -c 'cd #{latest_release} && bower install'"
+        capifony_puts_ok
+    end
+end
+
+namespace :npm do
+    desc 'npm install'
+    task :install do
+        capifony_pretty_print "--> Installing NPM packages"
+        invoke_command "sh -c 'cd #{latest_release} && npm install'"
         capifony_puts_ok
     end
 end
