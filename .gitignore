@@ -13,3 +13,4 @@
 *.php~
 /web/assets/vendor/
 web/css
+/node_modules/

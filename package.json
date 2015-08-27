@@ -1,0 +1,22 @@
+{
+  "name": "similarseri.es",
+  "version": "0.0.0",
+  "description": "Predicts what the user would like to watch next by analyzing previously watched shows.",
+  "main": "web/app.php",
+  "dependencies": {
+    "uglifycss": "0.0.17"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "phpunit -c app/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danielsunnerberg/similarseri.es.git"
+  },
+  "author": "Daniel Sunnerberg",
+  "license": "-",
+  "bugs": {
+    "url": "https://github.com/danielsunnerberg/similarseri.es/issues"
+  }
+}
