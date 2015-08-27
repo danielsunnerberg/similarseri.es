@@ -1,8 +1,9 @@
-define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handlebars', 'text!templates/suggestions.html', 'views/suggestion','handlebarsHelpers/truncate', 'handlebarsHelpers/groupedEach'],
-    function ($, Backbone, _, SuggestionsCollection, Handlebars, SuggestionsTemplate, SuggestionView) {
+define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handlebars', 'views/suggestion','handlebarsHelpers/truncate', 'handlebarsHelpers/groupedEach'],
+    function ($, Backbone, _, SuggestionsCollection, Handlebars, SuggestionView) {
         var SuggestionsView = Backbone.View.extend({
             el: '#suggestions',
             suggestionViews: [],
+            ITEMS_PER_ROW: 3,
 
             initialize: function (options) {
                 this.setDefaultSettings();
@@ -11,7 +12,6 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
                     that.refresh();
                 });
 
-                this.template = Handlebars.compile(SuggestionsTemplate);
                 $(window).bind('scroll', function() {
                     that.checkScroll();
                 });
@@ -69,35 +69,28 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
                 }.bind(this));
             },
 
+            createSuggestionGroup: function () {
+                var group = $('<div class="row row-eq-height"></div>');
+                $(this.el).append(group);
+                return group;
+            },
+
             insertSuggestions: function (suggestions) {
-                // @todo The code below is stupid and should be removed ASAP.
-                // Inserting a sub-view's HTML by generating it through a template will forfeit all bound listeners.
-                // Therefore, replacing a placeholder-id with the actual element will save listeners.
-                // Run while you can.
-                var that = this;
-                var views = {};
-                suggestions.forEach(function (suggestion) {
-                    var externalEvents = _.extend({}, Backbone.Events);
-                    views[suggestion.get('show').id] = new SuggestionView({model: suggestion, externalEvents: externalEvents});
-                    externalEvents.bind('tv_show.added', function() {
-                        that.refresh();
-                    });
-                });
+                var externalEvents = _.extend({}, Backbone.Events);
+                externalEvents.bind('tv_show.added', function() {
+                    this.refresh();
+                }.bind(this));
 
-                var template = $(this.template({
-                    suggestions: _.keys(views)
-                }));
+                var group;
+                for (var i = 0; i < suggestions.length; i++) {
+                    var view = new SuggestionView({model: suggestions[i], externalEvents: externalEvents}).render().el;
 
-                for (var id in views) {
-                    if (! views.hasOwnProperty(id)) {
-                        continue;
+                    if (i % this.ITEMS_PER_ROW === 0) {
+                        group = this.createSuggestionGroup();
                     }
 
-                    var view = views[id];
-                    template.find('#' + id).parent().append(view.render().el);
+                    group.append(view);
                 }
-
-                $(this.el).append(template);
             },
 
             checkScroll: function () {
