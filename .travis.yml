@@ -5,7 +5,7 @@ php:
 sudo: false
 before_install:
   - pear config-set preferred_state beta
-  - pecl install apcu
+  - yes '' | pecl install apcu
 before_script:
   - cp app/config/parameters.yml.dist app/config/parameters.yml
   - composer install
