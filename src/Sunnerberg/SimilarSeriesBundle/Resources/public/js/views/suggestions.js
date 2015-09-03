@@ -63,7 +63,7 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
             },
 
             displayFallbackNotice: function () {
-                require(['text!templates/alertTemplate.html'], function (alertTemplate) {
+                require(['text!templates/alert.html'], function (alertTemplate) {
                     alertTemplate = Handlebars.compile(alertTemplate);
                     $(this.el).prepend(alertTemplate({type: 'info', message: '<i class="mdi-action-info align-bottom"></i> <b>You have not added any shows.</b> Until you do, you can find shows our users have enjoyed below as inspiration.'}));
                 }.bind(this));
