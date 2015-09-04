@@ -1,5 +1,5 @@
-define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handlebars', 'views/suggestion','handlebarsHelpers/truncate', 'handlebarsHelpers/groupedEach'],
-    function ($, Backbone, _, SuggestionsCollection, Handlebars, SuggestionView) {
+define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handlebars', 'views/suggestion', 'views/loadingIndicator', 'handlebarsHelpers/truncate', 'handlebarsHelpers/groupedEach'],
+    function ($, Backbone, _, SuggestionsCollection, Handlebars, SuggestionView, LoadingIndicator) {
         var SuggestionsView = Backbone.View.extend({
             el: '#suggestions',
             suggestionViews: [],
@@ -8,6 +8,7 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
             initialize: function (options) {
                 this.setDefaultSettings();
                 var that = this;
+
                 options.externalEvents.bind('tv_show.added', function() {
                     that.refresh();
                 });
@@ -45,6 +46,9 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
                     return;
                 }
 
+                var loadingIndicator = new LoadingIndicator({ el: this.el });
+                loadingIndicator.show();
+
                 var that = this;
                 this.isLoading = true;
                 this.suggestionsCollection.fetch({
@@ -58,6 +62,9 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
                     error: function () {
                         that.isLoading = false;
                         $(that.el).html('An error occured. Please try again later.');
+                    },
+                    complete: function () {
+                        loadingIndicator.remove();
                     }
                 });
             },
@@ -105,4 +112,5 @@ define(['jquery', 'backbone', 'underscore', 'collections/suggestions', 'handleba
         });
 
         return SuggestionsView;
-    });
+    }
+);
