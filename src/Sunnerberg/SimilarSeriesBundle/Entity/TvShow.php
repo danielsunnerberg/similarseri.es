@@ -26,7 +26,7 @@ class TvShow implements \JsonSerializable
     /**
      * @var integer
      *
-     * @ORM\Column(name="tmdbId", type="integer", unique=true)
+     * @ORM\Column(name="tmdb_id", type="integer", unique=true)
      */
     private $tmdbId;
     
@@ -40,7 +40,7 @@ class TvShow implements \JsonSerializable
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="airDate", type="datetime", nullable=true)
+     * @ORM\Column(name="air_date", type="datetime", nullable=true)
      */
     private $airDate;
 
@@ -61,35 +61,35 @@ class TvShow implements \JsonSerializable
     /**
      * @var float
      *
-     * @ORM\Column(name="voteAverage", type="float")
+     * @ORM\Column(name="vote_average", type="float")
      */
     private $voteAverage;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="voteCount", type="integer")
+     * @ORM\Column(name="vote_count", type="integer")
      */
     private $voteCount;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="imdbId", type="string", length=255, nullable=true)
+     * @ORM\Column(name="imdb_id", type="string", length=255, nullable=true)
      */
     private $imdbId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="posterUrl", type="string", length=255, nullable=true)
+     * @ORM\Column(name="poster_url", type="string", length=255, nullable=true)
      */
     private $posterUrl;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="lastSyncDate", type="date", nullable=true)
+     * @ORM\Column(name="last_sync_date", type="date", nullable=true)
      */
     private $lastSyncDate = null;
 
