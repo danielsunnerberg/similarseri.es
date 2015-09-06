@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * MediaObject
  *
  * @ORM\Table(name="media_objects")
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class MediaObject implements \JsonSerializable
 {
@@ -35,10 +35,7 @@ class MediaObject implements \JsonSerializable
 
     public function __construct($path)
     {
-        if ($path === null || empty($path)) {
-            throw new \InvalidArgumentException('The path to the resource may not be empty or null.');
-        }
-        $this->path = $path;
+        $this->setPath($path);
     }
 
     /**
@@ -59,6 +56,9 @@ class MediaObject implements \JsonSerializable
      */
     public function setPath($path)
     {
+        if ($path === null || empty($path) || ! is_string($path)) {
+            throw new \InvalidArgumentException('The path to the resource may not be empty or null.');
+        }
         $this->path = $path;
 
         return $this;

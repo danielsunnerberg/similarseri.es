@@ -3,7 +3,6 @@
 namespace Sunnerberg\SimilarSeriesBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Proxies\__CG__\Sunnerberg\SimilarSeriesBundle\Entity\MediaObject;
 use Tmdb\Model\Tv;
 
 class TvShowRepository extends EntityRepository

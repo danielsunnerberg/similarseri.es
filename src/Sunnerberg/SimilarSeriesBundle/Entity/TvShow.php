@@ -2,7 +2,6 @@
 
 namespace Sunnerberg\SimilarSeriesBundle\Entity;
 
-use Date;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -83,7 +82,7 @@ class TvShow implements \JsonSerializable
     /**
      * @var MediaObject
      *
-     * @ORM\OneToOne(targetEntity="MediaObject", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\MediaObject", cascade={"persist"})
      * @ORM\JoinColumn(name="poster_media_object_id", referencedColumnName="id")
      */
     private $posterImage;
@@ -257,10 +256,10 @@ class TvShow implements \JsonSerializable
     /**
      * Set poster image
      *
-     * @param string $posterImage
+     * @param MediaObject $posterImage
      * @return TvShow
      */
-    public function setPosterImage($posterImage)
+    public function setPosterImage(MediaObject $posterImage)
     {
         $this->posterImage = $posterImage;
 
@@ -270,7 +269,7 @@ class TvShow implements \JsonSerializable
     /**
      * Get poster image
      *
-     * @return string 
+     * @return MediaObject
      */
     public function getPosterImage()
     {

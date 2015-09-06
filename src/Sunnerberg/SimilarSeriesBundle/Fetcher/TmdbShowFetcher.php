@@ -7,6 +7,7 @@ use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Sunnerberg\SimilarSeriesBundle\Entity\GenreRepository;
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShow;
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShowRepository;
+use Sunnerberg\SimilarSeriesBundle\Helper\TmdbShowValidator;
 use Tmdb\Model\Tv;
 use Tmdb\Repository\TvRepository;
 
@@ -22,6 +23,7 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
     private $tvShowRepository;
     private $genreRepository;
     private $queueProducer;
+    private $qualityValidator;
 
     public function __construct(
         TvRepository $tmdbTvRepository,
@@ -33,6 +35,7 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
         $this->tvShowRepository = $tvShowRepository;
         $this->genreRepository = $genreRepository;
         $this->queueProducer = $queueProducer;
+        $this->qualityValidator = new TmdbShowValidator();
     }
 
     /**
@@ -62,7 +65,7 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
     public function fetch($tmdbId, $processSimilarShows = true)
     {
         $tmdbShow = $this->getTmdbShowById($tmdbId);
-        if (! $tmdbShow) {
+        if (! $tmdbShow || ! $this->qualityValidator->isValid($tmdbShow)) {
             throw new NoResultException();
         }
 
@@ -83,8 +86,7 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
 
         $similarTvShows = $this->extractSimilarShows($tmdbShow);
         foreach ($similarTvShows as $similarShow) {
-            var_dump($similarShow->getPosterPath());
-            if (! $similarShow->getPosterPath()) {
+            if (! $this->qualityValidator->isValid($similarShow)) {
                 continue;
             }
             $convertedShow = $this->tvShowRepository->getByTmdbId($similarShow->getId());

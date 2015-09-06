@@ -4,6 +4,7 @@ namespace Sunnerberg\SimilarSeriesBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sunnerberg\SimilarSeriesBundle\Helper\TmdbPosterSize;
+use Sunnerberg\SimilarSeriesBundle\Helper\TmdbShowValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Tmdb\Model\Search\SearchQuery\TvSearchQuery;
@@ -40,15 +41,18 @@ class SearchController extends Controller {
         $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(TmdbPosterSize::W92);
 
         $matchingShows = [];
+        $qualityValidator = new TmdbShowValidator();
         foreach ($response as $show) {
-            if ($show->getPosterPath() === null) {
+
+            if (! $qualityValidator->isValid($show)) {
                 continue;
             }
+
             $matchingShows[] = [
                 'tmdbId' => $show->getId(),
                 'name' => $show->getName(),
                 'airYear' => $show->getFirstAirDate()->format('Y'),
-                'posterUrl' => $posterBaseUrl . $show->getPosterImage()->getPath(),
+                'posterUrl' => $posterBaseUrl . $show->getPosterPath(),
             ];
         }
         return $matchingShows;
