@@ -37,6 +37,7 @@ class TvShowRepository extends EntityRepository
         $tvShow->setName($tmdbShow->getName());
         $tvShow->setPopularity($tmdbShow->getPopularity());
         $tvShow->setVoteAverage($tmdbShow->getVoteAverage());
+        $tvShow->setVoteCount($tmdbShow->getVoteCount());
         if ($tmdbShow->getExternalIds()) {
             $tvShow->setImdbId($tmdbShow->getExternalIds()->getImdbId());
         }

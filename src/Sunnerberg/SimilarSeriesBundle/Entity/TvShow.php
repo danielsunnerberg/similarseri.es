@@ -66,6 +66,13 @@ class TvShow implements \JsonSerializable
     private $voteAverage;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="voteCount", type="integer")
+     */
+    private $voteCount;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="imdbId", type="string", length=255, nullable=true)
@@ -192,11 +199,34 @@ class TvShow implements \JsonSerializable
     /**
      * Get voteAverage
      *
-     * @return float 
+     * @return float
      */
     public function getVoteAverage()
     {
         return $this->voteAverage;
+    }
+
+    /**
+     * Set voteCount
+     *
+     * @param integer $voteCount
+     * @return TvShow
+     */
+    public function setVoteCount($voteCount)
+    {
+        $this->voteCount = $voteCount;
+
+        return $this;
+    }
+
+    /**
+     * Get voteCount
+     *
+     * @return integer
+     */
+    public function getVoteCount()
+    {
+        return $this->voteCount;
     }
 
     /**
