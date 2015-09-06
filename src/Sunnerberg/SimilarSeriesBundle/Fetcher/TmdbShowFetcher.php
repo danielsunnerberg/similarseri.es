@@ -83,6 +83,10 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
 
         $similarTvShows = $this->extractSimilarShows($tmdbShow);
         foreach ($similarTvShows as $similarShow) {
+            var_dump($similarShow->getPosterPath());
+            if (! $similarShow->getPosterPath()) {
+                continue;
+            }
             $convertedShow = $this->tvShowRepository->getByTmdbId($similarShow->getId());
             if (! $convertedShow) {
                 $convertedShow = $this->convertFromTmdbFormat($similarShow);

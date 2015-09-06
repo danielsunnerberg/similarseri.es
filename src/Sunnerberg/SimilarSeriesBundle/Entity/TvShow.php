@@ -79,12 +79,14 @@ class TvShow implements \JsonSerializable
      */
     private $imdbId;
 
+
     /**
-     * @var string
+     * @var MediaObject
      *
-     * @ORM\Column(name="poster_url", type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity="MediaObject", cascade={"persist"})
+     * @ORM\JoinColumn(name="poster_media_object_id", referencedColumnName="id")
      */
-    private $posterUrl;
+    private $posterImage;
 
     /**
      * @var \DateTime
@@ -253,38 +255,26 @@ class TvShow implements \JsonSerializable
     }
 
     /**
-     * Set posterUrl
+     * Set poster image
      *
-     * @param string $posterUrl
+     * @param string $posterImage
      * @return TvShow
      */
-    public function setPosterUrl($posterUrl)
+    public function setPosterImage($posterImage)
     {
-        $this->posterUrl = $posterUrl;
+        $this->posterImage = $posterImage;
 
         return $this;
     }
 
     /**
-     * Get posterUrl
+     * Get poster image
      *
      * @return string 
      */
-    public function getPosterUrl()
+    public function getPosterImage()
     {
-        return $this->posterUrl;
-    }
-
-    /**
-     * Sets the base URL for the poster.
-     *
-     * @param $baseUrl
-     * @return $this
-     */
-    public function injectPosterBaseUrl($baseUrl)
-    {
-        $this->posterUrl = $baseUrl . $this->posterUrl;
-        return $this;
+        return $this->posterImage;
     }
 
     /**
@@ -510,7 +500,7 @@ class TvShow implements \JsonSerializable
             'overview' => $this->getOverview(),
             'imdbId' => $this->getImdbId(),
             'tmdbId' => $this->getTmdbId(),
-            'posterUrl' => $this->getPosterUrl()
+            'posterImage' => $this->getPosterImage()
         ];
     }
 }

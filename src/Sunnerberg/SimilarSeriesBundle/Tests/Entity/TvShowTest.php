@@ -4,7 +4,7 @@ namespace Sunnerberg\SimilarSeriesBundle\Tests\Entity;
 
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShow;
 
-class DefaultControllerTest extends \PHPUnit_Framework_TestCase
+class TvShowTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -17,17 +17,9 @@ class DefaultControllerTest extends \PHPUnit_Framework_TestCase
         $this->show = new TvShow();
     }
 
-    public function testPosterUrl()
+    public function testPosterImage()
     {
-        $this->assertNull($this->show->getPosterUrl());
-
-        $relativePath = 'foo/bar.baz';
-        $this->show->setPosterUrl($relativePath);
-        $this->assertEquals($relativePath, $this->show->getPosterUrl());
-
-        $absoluteBase = "http://domain.com/";
-        $this->show->injectPosterBaseUrl($absoluteBase);
-        $this->assertEquals($absoluteBase . $relativePath, $this->show->getPosterUrl());
+        $this->assertNull($this->show->getPosterImage());
     }
 
     public function testSyncDate()

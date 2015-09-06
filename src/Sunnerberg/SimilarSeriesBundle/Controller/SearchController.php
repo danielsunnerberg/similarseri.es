@@ -48,7 +48,7 @@ class SearchController extends Controller {
                 'tmdbId' => $show->getId(),
                 'name' => $show->getName(),
                 'airYear' => $show->getFirstAirDate()->format('Y'),
-                'posterUrl' => $posterBaseUrl . $show->getPosterPath(),
+                'posterUrl' => $posterBaseUrl . $show->getPosterImage()->getPath(),
             ];
         }
         return $matchingShows;

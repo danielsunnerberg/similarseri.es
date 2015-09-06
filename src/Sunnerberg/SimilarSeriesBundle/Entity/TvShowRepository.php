@@ -3,6 +3,7 @@
 namespace Sunnerberg\SimilarSeriesBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Proxies\__CG__\Sunnerberg\SimilarSeriesBundle\Entity\MediaObject;
 use Tmdb\Model\Tv;
 
 class TvShowRepository extends EntityRepository
@@ -41,9 +42,11 @@ class TvShowRepository extends EntityRepository
         if ($tmdbShow->getExternalIds()) {
             $tvShow->setImdbId($tmdbShow->getExternalIds()->getImdbId());
         }
-        $tvShow->setPosterUrl($tmdbShow->getPosterPath());
         $tvShow->setAirDate($tmdbShow->getFirstAirDate());
         $tvShow->setOverview($tmdbShow->getOverview());
+
+        $posterPath = $tmdbShow->getPosterPath();
+        $tvShow->setPosterImage(new MediaObject($posterPath));
 
         return $tvShow;
     }

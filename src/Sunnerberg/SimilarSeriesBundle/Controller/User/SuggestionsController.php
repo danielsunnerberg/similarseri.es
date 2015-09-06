@@ -36,7 +36,7 @@ class SuggestionsController extends Controller {
             $fallbackUsed = true;
         }
         foreach ($suggestions as $suggestion) {
-            $suggestion->getShow()->injectPosterBaseUrl($posterBaseUrl);
+            $suggestion->getShow()->getPosterImage()->setBaseUrl($posterBaseUrl);
         }
 
         return new JsonResponse([
