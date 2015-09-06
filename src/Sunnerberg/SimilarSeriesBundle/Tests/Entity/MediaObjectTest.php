@@ -17,6 +17,13 @@ class MediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->mediaObject = new MediaObject('foo.png');
     }
 
+    public function testConstructor()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        new MediaObject('');
+        new MediaObject(null);
+    }
+
     public function testPath()
     {
         $this->assertEquals('foo.png', $this->mediaObject->getPath());

@@ -35,6 +35,9 @@ class MediaObject implements \JsonSerializable
 
     public function __construct($path)
     {
+        if ($path === null || empty($path)) {
+            throw new \InvalidArgumentException('The path to the resource may not be empty or null.');
+        }
         $this->path = $path;
     }
 
