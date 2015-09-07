@@ -25,7 +25,8 @@
         "php-tmdb/symfony": "~2.0",
         "doctrine/doctrine-cache-bundle": "^1.0",
         "oyejorge/less.php": "v1.7.0.5",
-        "oldsound/rabbitmq-bundle": "1.*"
+        "oldsound/rabbitmq-bundle": "1.*",
+        "stof/doctrine-extensions-bundle": "^1.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

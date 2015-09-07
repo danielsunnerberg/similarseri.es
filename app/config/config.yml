@@ -142,3 +142,10 @@ old_sound_rabbit_mq:
             exchange_options: { name: 'show_fetcher', type: direct }
             queue_options:    { name: 'show_fetcher' }
             callback:         sunnerberg_similar_series.fetcher.show_fetcher_consumer
+
+stof_doctrine_extensions:
+    default_locale: en
+    translation_fallback: true
+    orm:
+        default:
+            sluggable: true

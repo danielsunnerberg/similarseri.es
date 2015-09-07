@@ -19,7 +19,8 @@ class AppKernel extends Kernel
             new Sunnerberg\SimilarSeriesBundle\SunnerbergSimilarSeriesBundle(),
             new Tmdb\SymfonyBundle\TmdbSymfonyBundle(),
             new \Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle(),
-            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle()
+            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
