@@ -4,6 +4,7 @@ namespace Sunnerberg\SimilarSeriesBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * TvShow
@@ -35,6 +36,12 @@ class TvShow implements \JsonSerializable
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @Gedmo\Slug(fields={"name", "id"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
     /**
      * @var \DateTime
@@ -154,11 +161,21 @@ class TvShow implements \JsonSerializable
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
