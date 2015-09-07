@@ -95,6 +95,14 @@ class TvShow implements \JsonSerializable
     private $posterImage;
 
     /**
+     * @var MediaObject
+     *
+     * @ORM\OneToOne(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\MediaObject", cascade={"persist"})
+     * @ORM\JoinColumn(name="backdrop_media_object_id", referencedColumnName="id")
+     */
+    private $backdropImage;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="last_sync_date", type="date", nullable=true)
@@ -291,6 +299,29 @@ class TvShow implements \JsonSerializable
     public function getPosterImage()
     {
         return $this->posterImage;
+    }
+
+    /**
+     * Set backdrop image
+     *
+     * @param MediaObject $backdropImage
+     * @return TvShow
+     */
+    public function setBackdropImage(MediaObject $backdropImage)
+    {
+        $this->backdropImage = $backdropImage;
+
+        return $this;
+    }
+
+    /**
+     * Get backdrop image
+     *
+     * @return MediaObject
+     */
+    public function getBackdropImage()
+    {
+        return $this->backdropImage;
     }
 
     /**

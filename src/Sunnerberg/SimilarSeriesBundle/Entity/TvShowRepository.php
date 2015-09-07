@@ -47,6 +47,11 @@ class TvShowRepository extends EntityRepository
         $posterPath = $tmdbShow->getPosterPath();
         $tvShow->setPosterImage(new MediaObject($posterPath));
 
+        $backdropPath = $tmdbShow->getBackdropPath();
+        if ($backdropPath) {
+            $tvShow->setBackdropImage(new MediaObject($backdropPath));
+        }
+
         return $tvShow;
     }
 
