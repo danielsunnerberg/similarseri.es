@@ -77,9 +77,11 @@
             </div>
         </nav>
 
+        {% block contentContainer %}
         <div class="container page">
             {% block content %}{% endblock %}
         </div>
+        {% endblock %}
 
         {% block javascripts %}
             <script src="{{ asset('assets/vendor/requirejs/require.js') }}" data-main="{{ asset('bundles/sunnerbergsimilarseries/js/main.js') }}"></script>

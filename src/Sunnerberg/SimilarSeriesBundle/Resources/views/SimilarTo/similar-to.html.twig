@@ -1,0 +1,35 @@
+{% extends '@SunnerbergSimilarSeries/base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='?uglifycss'
+        '@SunnerbergSimilarSeriesBundle/Resources/public/css/SimilarTo/similar-to.less'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block contentContainer %}
+    <div class="backdrop-container container-fluid" style="background-image: url('{{ show.backdropImage.url }}');"></div>
+    <div class="details-container container">
+        <div class="row">
+            <div class="col-xs-3">
+                <img class="img-responsive shadow-z-2" src="{{ show.posterImage.url }}" alt="Poster image for {{ show.name }}" />
+            </div>
+            <div class="col-xs-9">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>{{ show.name }}</h1>
+                        <h5>{{ show.voteAverage }} / 10 | {{ show.airYear }}</h5>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 overview">
+                        {{ show.overview }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

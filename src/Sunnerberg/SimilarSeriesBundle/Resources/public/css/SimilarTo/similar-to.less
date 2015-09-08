@@ -1,0 +1,30 @@
+@backdrop-height: 400px;
+
+.backdrop-container {
+  min-height: @backdrop-height;
+  background-size: cover;
+  position: relative;
+  padding: 0;
+}
+
+.backdrop-container::before {
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.details-container {
+  margin-top: -125px;
+  color: #000;
+  h1 {
+    color: rgba(255, 255, 255, 0.95);
+  }
+  h5 {
+    color: #ccc;
+  }
+  .overview {
+    margin-top: 40px;
+  }
+}
