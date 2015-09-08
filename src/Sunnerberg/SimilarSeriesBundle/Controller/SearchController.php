@@ -3,7 +3,7 @@
 namespace Sunnerberg\SimilarSeriesBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sunnerberg\SimilarSeriesBundle\Helper\TmdbPosterSize;
+use Sunnerberg\SimilarSeriesBundle\Helper\Image\TmdbPosterSize;
 use Sunnerberg\SimilarSeriesBundle\Helper\TmdbShowValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -37,8 +37,8 @@ class SearchController extends Controller {
 
     private function formatSearchResponse($response)
     {
-        $tmdbPosterHelper = $this->get('sunnerberg_similar_series.helper.tmdb_poster_helper');
-        $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(TmdbPosterSize::W92);
+        $tmdbImageHelper = $this->get('sunnerberg_similar_series.helper.tmdb_image_helper');
+        $posterBaseUrl = $tmdbImageHelper->getImageBaseUrl(TmdbPosterSize::W92);
 
         $matchingShows = [];
         $qualityValidator = new TmdbShowValidator();

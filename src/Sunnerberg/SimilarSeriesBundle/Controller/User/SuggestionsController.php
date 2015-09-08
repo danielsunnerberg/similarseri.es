@@ -5,7 +5,7 @@ namespace Sunnerberg\SimilarSeriesBundle\Controller\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sunnerberg\SimilarSeriesBundle\Entity\Suggestion;
 use Sunnerberg\SimilarSeriesBundle\Helper\SuggestionsScorer;
-use Sunnerberg\SimilarSeriesBundle\Helper\TmdbPosterSize;
+use Sunnerberg\SimilarSeriesBundle\Helper\Image\TmdbPosterSize;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -20,8 +20,8 @@ class SuggestionsController extends Controller {
      */
     public function suggestionsAction($offset = 0, $limit = 20, $popularFallback = false)
     {
-        $tmdbPosterHelper = $this->get('sunnerberg_similar_series.helper.tmdb_poster_helper');
-        $posterBaseUrl = $tmdbPosterHelper->getPosterBaseUrl(TmdbPosterSize::W342);
+        $tmdbImageHelper = $this->get('sunnerberg_similar_series.helper.tmdb_image_helper');
+        $posterBaseUrl = $tmdbImageHelper->getImageBaseUrl(TmdbPosterSize::W342);
 
         $user = $this->getUser();
         $suggestionsScorer = new SuggestionsScorer(

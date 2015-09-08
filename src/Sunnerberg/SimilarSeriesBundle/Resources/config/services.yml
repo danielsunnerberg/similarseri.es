@@ -1,6 +1,6 @@
 services:
-    sunnerberg_similar_series.helper.tmdb_poster_helper:
-        class: Sunnerberg\SimilarSeriesBundle\Helper\TmdbPosterHelper
+    sunnerberg_similar_series.helper.tmdb_image_helper:
+        class: Sunnerberg\SimilarSeriesBundle\Helper\Image\TmdbImageHelper
         arguments:
             - @tmdb.configuration_repository
             - @cache
