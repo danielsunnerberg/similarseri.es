@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sunnerberg\SimilarSeriesBundle\Entity\User;
 use Sunnerberg\SimilarSeriesBundle\Helper\UserAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class RegisterController extends Controller {
@@ -27,10 +28,11 @@ class RegisterController extends Controller {
             $entityManager->persist($newUser);
             $entityManager->flush();
 
-            $userAuthenticator = new UserAuthenticator($this->get('security.token_storage'));
-            $userAuthenticator->authenticate($newUser);
+            $userAuthenticator = $this->get('sunnerberg_similar_series.helper.user_authenticator');
+            $response = new RedirectResponse($this->generateUrl('find'));
+            $userAuthenticator->authenticate($newUser, $request, $response);
 
-            return $this->redirectToRoute('find');
+            return $response;
         }
 
         return $this->render(

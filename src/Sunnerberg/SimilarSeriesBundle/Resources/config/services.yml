@@ -42,3 +42,8 @@ services:
         public: false
         tags:
           - { name: twig.extension }
+    sunnerberg_similar_series.helper.user_authenticator:
+        class: Sunnerberg\SimilarSeriesBundle\Helper\UserAuthenticator
+        arguments:
+            managerRegistry: @doctrine
+            key: %secret%

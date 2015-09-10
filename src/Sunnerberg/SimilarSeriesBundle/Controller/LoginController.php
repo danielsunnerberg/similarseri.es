@@ -6,6 +6,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sunnerberg\SimilarSeriesBundle\Entity\User;
 use Sunnerberg\SimilarSeriesBundle\Helper\UserAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class LoginController extends Controller {
 
@@ -38,11 +40,11 @@ class LoginController extends Controller {
     /**
      * @Route("/login/anonymous", name="anonymous_login", methods="post")
      */
-    public function anonymousLoginAction()
+    public function anonymousLoginAction(Request $request)
     {
         $anonymousUser = new User();
         $anonymousUser->setUsername($this->generateRandomUsername());
-        $anonymousUser->setLocked(true);
+        $anonymousUser->setLocked(false);
         // A password is not needed, as no one can login to the account later, since it is marked as locked
         $anonymousUser->setPassword('');
 
@@ -50,10 +52,11 @@ class LoginController extends Controller {
         $entityManager->persist($anonymousUser);
         $entityManager->flush();
 
-        $userAuthenticator = new UserAuthenticator($this->get('security.token_storage'));
-        $userAuthenticator->authenticate($anonymousUser);
+        $userAuthenticator = $this->get('sunnerberg_similar_series.helper.user_authenticator');
+        $response = new RedirectResponse($this->generateUrl('find'));
+        $userAuthenticator->authenticate($anonymousUser, $request, $response);
 
-        return $this->redirectToRoute('find');
+        return $response;
     }
 
     private function generateRandomUsername()
