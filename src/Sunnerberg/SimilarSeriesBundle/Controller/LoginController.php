@@ -4,6 +4,7 @@ namespace Sunnerberg\SimilarSeriesBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sunnerberg\SimilarSeriesBundle\Entity\User;
+use Sunnerberg\SimilarSeriesBundle\Helper\RandomGenerator;
 use Sunnerberg\SimilarSeriesBundle\Helper\UserAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -43,10 +44,8 @@ class LoginController extends Controller {
     public function anonymousLoginAction(Request $request)
     {
         $anonymousUser = new User();
-        $anonymousUser->setUsername($this->generateRandomUsername());
-        $anonymousUser->setLocked(false);
-        // A password is not needed, as no one can login to the account later, since it is marked as locked
-        $anonymousUser->setPassword('');
+        $anonymousUser->setUsername(RandomGenerator::generateRandomUsername());
+        $anonymousUser->setPassword(RandomGenerator::generateRandomString(64));
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($anonymousUser);
@@ -57,11 +56,6 @@ class LoginController extends Controller {
         $userAuthenticator->authenticate($anonymousUser, $request, $response);
 
         return $response;
-    }
-
-    private function generateRandomUsername()
-    {
-        return 'anonymous_user-' . bin2hex(openssl_random_pseudo_bytes(32));
     }
 
 }
