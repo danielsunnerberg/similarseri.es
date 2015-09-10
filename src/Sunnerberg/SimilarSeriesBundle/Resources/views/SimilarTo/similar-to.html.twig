@@ -21,6 +21,10 @@
                     <div class="col-lg-12">
                         <h1>{{ show.name }}</h1>
                         <h5>{{ show.voteAverage }} / 10 | {{ show.airYear }}</h5>
+                        {% for genre in show.genres %}
+                            <span class="label label-primary">{{ genre.name }}</span>
+                        {% endfor %}
+
 
                     </div>
                 </div>
