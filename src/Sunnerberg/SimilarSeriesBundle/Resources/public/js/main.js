@@ -1,5 +1,4 @@
 var config = {
-    urlArgs: "bust=" + (new Date()).getTime(),
     shim : {
         'bootstrap' : { 'deps' : ['jquery'] },
         'ladda' : { 'deps' : ['spin'] },
