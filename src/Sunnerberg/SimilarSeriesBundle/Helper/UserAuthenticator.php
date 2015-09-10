@@ -7,7 +7,6 @@ use Sunnerberg\SimilarSeriesBundle\Entity\User;
 use Symfony\Bridge\Doctrine\Security\User\EntityUserProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\RememberMe\TokenBasedRememberMeServices;
 

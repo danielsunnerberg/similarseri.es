@@ -5,7 +5,6 @@ namespace Sunnerberg\SimilarSeriesBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sunnerberg\SimilarSeriesBundle\Entity\User;
 use Sunnerberg\SimilarSeriesBundle\Helper\RandomGenerator;
-use Sunnerberg\SimilarSeriesBundle\Helper\UserAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
