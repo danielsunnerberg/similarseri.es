@@ -31,7 +31,8 @@ class RatingExtension extends \Twig_Extension
         }
 
         $output = '';
-        for ($i = 1; $i <= ceil($rating); $i++) {
+        $ratingElementsNeeded = ceil($rating);
+        for ($i = 1; $i <= $ratingElementsNeeded; $i++) {
             if ($i > $rating) {
                 $fillPercentage = 100 - ($i - $rating) * 100;
             } else {
