@@ -37,3 +37,8 @@ services:
             showRepository: @sunnerberg_similar_series.repository.tv_show
             entityManager: @doctrine.orm.entity_manager
             logger: @logger
+    sunnerberg_similar_series.twig.rating_extension:
+        class: Sunnerberg\SimilarSeriesBundle\Twig\RatingExtension
+        public: false
+        tags:
+          - { name: twig.extension }
