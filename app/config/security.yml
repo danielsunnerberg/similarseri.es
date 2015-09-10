@@ -19,10 +19,14 @@ security:
                 default_target_path: find
                 login_path: /login
                 check_path: /login/check
+                remember_me: true
             logout:
                 path: /logout
                 target: /
+            remember_me:
+                key: "%secret%"
+                always_remember_me: true
 
     access_control:
-        - { path: ^/user, roles: ROLE_USER }
-        - { path: ^/find, roles: ROLE_USER }
+        - { path: ^/user, roles: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/find, roles: IS_AUTHENTICATED_REMEMBERED }
