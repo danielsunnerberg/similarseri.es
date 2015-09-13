@@ -109,18 +109,16 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
             }
 
             $tvShow->addSimilarTvShow($convertedShow);
+            $this->queueShowPatching($similarShow);
         }
 
-        $this->queueShowPatcher($similarTvShows);
         $tvShow->setLastSyncDate(new \DateTime());
     }
 
-    private function queueShowPatcher(array $similarTvShows)
+    private function queueShowPatching(Tv $similarShow)
     {
-        foreach ($similarTvShows as $similarTvShow) {
-            $data = ['tmdb_id' => $similarTvShow->getId()];
-            $this->queueProducer->publish(serialize($data));
-        }
+        $data = ['tmdb_id' => $similarShow->getId()];
+        $this->queueProducer->publish(serialize($data));
     }
 
     private function extractSimilarShows(Tv $tmdbShow)
