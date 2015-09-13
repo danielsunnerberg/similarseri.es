@@ -440,6 +440,16 @@ class TvShow implements \JsonSerializable
     }
 
     /**
+     * Set authors
+     *
+     * @param $authors
+     */
+    public function setAuthors($authors)
+    {
+        $this->authors = $authors;
+    }
+
+    /**
      * Set tmdbId
      *
      * @param integer $tmdbId
@@ -585,4 +595,5 @@ class TvShow implements \JsonSerializable
             'posterImage' => $this->getPosterImage()
         ];
     }
+
 }
