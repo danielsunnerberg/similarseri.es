@@ -50,6 +50,7 @@ class ShowPatcher implements ConsumerInterface {
     {
         $existingShow->setImdbId($newShowData->getImdbId());
         $existingShow->setGenres($newShowData->getGenres());
+        $existingShow->setAuthors($newShowData->getAuthors());
     }
 
     public function execute(AMQPMessage $message)
