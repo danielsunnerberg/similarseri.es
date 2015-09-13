@@ -10,7 +10,6 @@ use Sunnerberg\SimilarSeriesBundle\Entity\Person;
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShow;
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShowRepository;
 use Sunnerberg\SimilarSeriesBundle\Helper\TmdbShowValidator;
-use Tmdb\Model\Credits\Media;
 use Tmdb\Model\Tv;
 use Tmdb\Repository\TvRepository;
 
