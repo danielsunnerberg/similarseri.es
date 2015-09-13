@@ -124,6 +124,18 @@ class TvShow implements \JsonSerializable
     /**
      * @var array
      *
+     * @ORM\ManyToMany(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\Person", cascade={"persist"})
+     * @ORM\JoinTable(
+     *     name="tv_shows_authors",
+     *     joinColumns={@ORM\JoinColumn(name="tv_show_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
+     * )
+     */
+    private $authors;
+
+    /**
+     * @var array
+     *
      * @ORM\ManyToMany(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\TvShow", cascade={"persist"})
      * @ORM\JoinTable(
      *      name="similar_tv_shows",
@@ -402,6 +414,29 @@ class TvShow implements \JsonSerializable
     public function setGenres($genres)
     {
         $this->genres = $genres;
+    }
+
+    /**
+     * Add author
+     *
+     * @param Person $author
+     * @return TvShow
+     */
+    public function addAuthor(Person $author)
+    {
+        $this->authors[] = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get genres
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAuthors()
+    {
+        return $this->authors;
     }
 
     /**

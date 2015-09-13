@@ -5,9 +5,12 @@ namespace Sunnerberg\SimilarSeriesBundle\Fetcher;
 use Doctrine\ORM\NoResultException;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Sunnerberg\SimilarSeriesBundle\Entity\GenreRepository;
+use Sunnerberg\SimilarSeriesBundle\Entity\MediaObject;
+use Sunnerberg\SimilarSeriesBundle\Entity\Person;
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShow;
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShowRepository;
 use Sunnerberg\SimilarSeriesBundle\Helper\TmdbShowValidator;
+use Tmdb\Model\Credits\Media;
 use Tmdb\Model\Tv;
 use Tmdb\Repository\TvRepository;
 
@@ -53,6 +56,17 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
             $genre = $this->genreRepository->getOrCreateByName($_genre->getName());
             $tvShow->addGenre($genre);
         }
+
+        foreach ($tmdbShow->getCreatedBy() as $tmdbAuthor) {
+            $author = new Person($tmdbAuthor->getName());
+            $profilePath = $tmdbAuthor->getProfilePath();
+            if ($profilePath) {
+                $image = new MediaObject($profilePath);
+                $author->setImage($image);
+            }
+            $tvShow->addAuthor($author);
+        }
+
         return $tvShow;
     }
 
