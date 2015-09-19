@@ -24,9 +24,9 @@ class Actor extends Person
     /**
      * @var string
      *
-     * @ORM\Column(name="role", type="string", length=255)
+     * @ORM\Column(name="character", type="string", length=255)
      */
-    private $role;
+    private $character;
 
 
     public function __construct($name)
@@ -45,25 +45,25 @@ class Actor extends Person
     }
 
     /**
-     * Set role
+     * Set character
      *
-     * @param string $role
+     * @param string $character
      * @return Actor
      */
-    public function setRole($role)
+    public function setCharacter($character)
     {
-        $this->role = $role;
+        $this->character = $character;
 
         return $this;
     }
 
     /**
-     * Get role
+     * Get character
      *
      * @return string
      */
-    public function getRole()
+    public function getCharacter()
     {
-        return $this->role;
+        return $this->character;
     }
 }
