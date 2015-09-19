@@ -39,20 +39,6 @@ class ShowPatcher implements ConsumerInterface {
         $this->logger = $logger;
     }
 
-    /**
-     * If we just persist the $newShowData-model, we'll get doubles. It is possible to set the id for a model when using
-     * AUTO-strategy for the id field, but that requires some hacks.
-     *
-     * @param TvShow $existingShow
-     * @param TvShow $newShowData
-     */
-    private function updateShowData(TvShow $existingShow, TvShow $newShowData)
-    {
-        $existingShow->setImdbId($newShowData->getImdbId());
-        $existingShow->setGenres($newShowData->getGenres());
-        $existingShow->setAuthors($newShowData->getAuthors());
-    }
-
     public function execute(AMQPMessage $message)
     {
         $data = unserialize($message->body);
@@ -68,8 +54,7 @@ class ShowPatcher implements ConsumerInterface {
             return;
         }
 
-        $newShowData = $this->showFetcher->fetch($tmdbId, false);
-        $this->updateShowData($show, $newShowData);
+        $this->showFetcher->fetch($tmdbId, $fetchSimilar = false, $show);
         $this->entityManager->flush();
 
         $this->logger->info(sprintf('Patched and persisted show with id: %d, tmdb_id: %d', $show->getId(), $tmdbId));

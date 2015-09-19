@@ -48,9 +48,9 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
         return $this->tmdbTvRepository->load($tmdbId);
     }
 
-    private function convertFromTmdbFormat($tmdbShow)
+    private function convertFromTmdbFormat($tmdbShow, TvShow $writeTo = null)
     {
-        $tvShow = $this->tvShowRepository->createFromTmdbShow($tmdbShow);
+        $tvShow = $this->tvShowRepository->createFromTmdbShow($tmdbShow, $writeTo);
         foreach ($tmdbShow->getGenres() as $_genre) {
             $genre = $this->genreRepository->getOrCreateByName($_genre->getName());
             $tvShow->addGenre($genre);
@@ -69,20 +69,14 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
         return $tvShow;
     }
 
-    /**
-     * @param $tmdbId
-     * @param bool $processSimilarShows
-     * @return TvShow
-     * @throws NoResultException
-     */
-    public function fetch($tmdbId, $processSimilarShows = true)
+    public function fetch($tmdbId, $processSimilarShows = true, TvShow $writeTo = null)
     {
         $tmdbShow = $this->getTmdbShowById($tmdbId);
         if (! $tmdbShow || ! $this->qualityValidator->isValid($tmdbShow)) {
             throw new NoResultException();
         }
 
-        $tvShow = $this->convertFromTmdbFormat($tmdbShow);
+        $tvShow = $this->convertFromTmdbFormat($tmdbShow, $writeTo);
 
         if ($processSimilarShows) {
             $this->syncSimilarShows($tvShow, $tmdbShow);

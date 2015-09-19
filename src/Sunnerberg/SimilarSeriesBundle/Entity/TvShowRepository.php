@@ -28,11 +28,16 @@ class TvShowRepository extends EntityRepository
 
     /**
      * @param $tmdbShow Tv
+     * @param TvShow $writeTo If provided, existing show who will get the data written to it
      * @return TvShow
      */
-    public function createFromTmdbShow(Tv $tmdbShow)
+    public function createFromTmdbShow(Tv $tmdbShow, TvShow $writeTo = null)
     {
-        $tvShow = new TvShow();
+        if ($writeTo === null) {
+            $tvShow = new TvShow();
+        } else {
+            $tvShow = $writeTo;
+        }
         $tvShow->setTmdbId($tmdbShow->getId());
         $tvShow->setName($tmdbShow->getName());
         $tvShow->setPopularity($tmdbShow->getPopularity());
