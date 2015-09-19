@@ -28,6 +28,13 @@ class Actor extends Person
      */
     private $character;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="order", type="integer", length=255)
+     */
+    private $order;
+
 
     public function __construct($name)
     {
@@ -65,5 +72,28 @@ class Actor extends Person
     public function getCharacter()
     {
         return $this->character;
+    }
+
+    /**
+     * Set order
+     *
+     * @param integer $order
+     * @return Actor
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return integer 
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 }
