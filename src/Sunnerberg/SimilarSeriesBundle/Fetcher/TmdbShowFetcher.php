@@ -51,21 +51,8 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
     private function convertFromTmdbFormat($tmdbShow, TvShow $writeTo = null)
     {
         $tvShow = $this->tvShowRepository->createFromTmdbShow($tmdbShow, $writeTo);
-        foreach ($tmdbShow->getGenres() as $_genre) {
-            $genre = $this->genreRepository->getOrCreateByName($_genre->getName());
-            $tvShow->addGenre($genre);
-        }
-
-        foreach ($tmdbShow->getCreatedBy() as $tmdbAuthor) {
-            $author = new Person($tmdbAuthor->getName());
-            $profilePath = $tmdbAuthor->getProfilePath();
-            if ($profilePath) {
-                $image = new MediaObject($profilePath);
-                $author->setImage($image);
-            }
-            $tvShow->addAuthor($author);
-        }
-
+        $this->syncGenres($tmdbShow, $tvShow);
+        $this->syncAuthors($tmdbShow, $tvShow);
         return $tvShow;
     }
 
@@ -139,6 +126,27 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
         }
 
         return $similarShows;
+    }
+
+    private function syncGenres(Tv $tmdbShow, TvShow $tvShow)
+    {
+        foreach ($tmdbShow->getGenres() as $_genre) {
+            $genre = $this->genreRepository->getOrCreateByName($_genre->getName());
+            $tvShow->addGenre($genre);
+        }
+    }
+
+    private function syncAuthors(Tv $tmdbShow, TvShow $tvShow)
+    {
+        foreach ($tmdbShow->getCreatedBy() as $tmdbAuthor) {
+            $author = new Person($tmdbAuthor->getName());
+            $profilePath = $tmdbAuthor->getProfilePath();
+            if ($profilePath) {
+                $image = new MediaObject($profilePath);
+                $author->setImage($image);
+            }
+            $tvShow->addAuthor($author);
+        }
     }
 
 }
