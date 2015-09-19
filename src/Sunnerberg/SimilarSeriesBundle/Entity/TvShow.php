@@ -452,13 +452,16 @@ class TvShow implements \JsonSerializable
     }
 
     /**
-     * Set authors
+     * Add actor
      *
-     * @param $authors
+     * @param Actor $actor
+     * @return TvShow
      */
-    public function setAuthors($authors)
+    public function addActor(Actor $actor)
     {
-        $this->authors = $authors;
+        $this->actors[] = $actor;
+
+        return $this;
     }
 
     /**
@@ -471,15 +474,6 @@ class TvShow implements \JsonSerializable
         return $this->actors;
     }
 
-    /**
-     * Set actors
-     *
-     * @param $actors
-     */
-    public function setActors($actors)
-    {
-        $this->actors = $actors;
-    }
 
     /**
      * Set tmdbId
