@@ -136,6 +136,18 @@ class TvShow implements \JsonSerializable
     /**
      * @var array
      *
+     * @ORM\ManyToMany(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\Actor", cascade={"persist"})
+     * @ORM\JoinTable(
+     *     name="tv_shows_actors",
+     *     joinColumns={@ORM\JoinColumn(name="tv_show_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="id")}
+     * )
+     */
+    private $actors;
+
+    /**
+     * @var array
+     *
      * @ORM\ManyToMany(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\TvShow", cascade={"persist"})
      * @ORM\JoinTable(
      *      name="similar_tv_shows",
@@ -447,6 +459,26 @@ class TvShow implements \JsonSerializable
     public function setAuthors($authors)
     {
         $this->authors = $authors;
+    }
+
+    /**
+     * Get actors
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getActors()
+    {
+        return $this->actors;
+    }
+
+    /**
+     * Set actors
+     *
+     * @param $actors
+     */
+    public function setActors($actors)
+    {
+        $this->actors = $actors;
     }
 
     /**
