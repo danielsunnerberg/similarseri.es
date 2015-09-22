@@ -54,11 +54,15 @@ class Actor extends Person
     /**
      * Set character
      *
-     * @param string $character
+     * @param string $character, not empty
      * @return Actor
      */
     public function setCharacter($character)
     {
+        if (!is_string($character) || empty($character)) {
+            return false;
+        }
+
         $this->character = $character;
 
         return $this;
