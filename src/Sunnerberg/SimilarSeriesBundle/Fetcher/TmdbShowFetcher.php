@@ -4,12 +4,14 @@ namespace Sunnerberg\SimilarSeriesBundle\Fetcher;
 
 use Doctrine\ORM\NoResultException;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
+use Sunnerberg\SimilarSeriesBundle\Entity\Actor;
 use Sunnerberg\SimilarSeriesBundle\Entity\GenreRepository;
 use Sunnerberg\SimilarSeriesBundle\Entity\MediaObject;
 use Sunnerberg\SimilarSeriesBundle\Entity\Person;
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShow;
 use Sunnerberg\SimilarSeriesBundle\Entity\TvShowRepository;
 use Sunnerberg\SimilarSeriesBundle\Helper\TmdbShowValidator;
+use Tmdb\Model\Person\CastMember;
 use Tmdb\Model\Tv;
 use Tmdb\Repository\TvRepository;
 
@@ -48,11 +50,18 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
         return $this->tmdbTvRepository->load($tmdbId);
     }
 
-    private function convertFromTmdbFormat($tmdbShow, TvShow $writeTo = null)
+    private function convertFromTmdbFormat(Tv $tmdbShow, TvShow $writeTo = null)
     {
         $tvShow = $this->tvShowRepository->createFromTmdbShow($tmdbShow, $writeTo);
-        $this->syncGenres($tmdbShow, $tvShow);
-        $this->syncAuthors($tmdbShow, $tvShow);
+        if ($tmdbShow->getGenres()) {
+            $this->syncGenres($tmdbShow, $tvShow);
+        }
+        if ($tmdbShow->getCreatedBy()) {
+            $this->syncAuthors($tmdbShow, $tvShow);
+        }
+        if ($tmdbShow->getCredits() && $tmdbShow->getCredits()->getCast()) {
+            $this->syncActors($tmdbShow, $tvShow);
+        }
         return $tvShow;
     }
 
@@ -130,8 +139,8 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
 
     private function syncGenres(Tv $tmdbShow, TvShow $tvShow)
     {
-        foreach ($tmdbShow->getGenres() as $_genre) {
-            $genre = $this->genreRepository->getOrCreateByName($_genre->getName());
+        foreach ($tmdbShow->getGenres() as $tmdbGenre) {
+            $genre = $this->genreRepository->getOrCreateByName($tmdbGenre->getName());
             $tvShow->addGenre($genre);
         }
     }
@@ -140,12 +149,28 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
     {
         foreach ($tmdbShow->getCreatedBy() as $tmdbAuthor) {
             $author = new Person($tmdbAuthor->getName());
-            $profilePath = $tmdbAuthor->getProfilePath();
-            if ($profilePath) {
-                $image = new MediaObject($profilePath);
-                $author->setImage($image);
-            }
+            $this->syncPersonImage($tmdbAuthor, $author);
             $tvShow->addAuthor($author);
+        }
+    }
+
+    private function syncActors(Tv $tmdbShow, TvShow $tvShow)
+    {
+        foreach ($tmdbShow->getCredits()->getCast()->getCast() as $tmdbActor) {
+            $actor = new Actor($tmdbActor->getName());
+            $actor->setCharacter($tmdbActor->getCharacter());
+            $actor->setOrder($tmdbActor->getOrder());
+            $this->syncPersonImage($tmdbActor, $actor);
+            $tvShow->addActor($actor);
+        }
+    }
+
+    private function syncPersonImage(CastMember $tmdbAuthor, Person $person)
+    {
+        $profilePath = $tmdbAuthor->getProfilePath();
+        if ($profilePath) {
+            $image = new MediaObject($profilePath);
+            $person->setImage($image);
         }
     }
 
