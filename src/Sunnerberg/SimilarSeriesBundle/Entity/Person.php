@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="persons")
  * @ORM\Entity()
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discriminator", type="string")
  */
 class Person
 {
@@ -19,22 +21,21 @@ class Person
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var MediaObject
      *
      * @ORM\OneToOne(targetEntity="Sunnerberg\SimilarSeriesBundle\Entity\MediaObject", cascade={"persist"})
-     * @ORM\JoinColumn(name="image_media_object_id", referencedColumnName="id")
      */
-    private $image;
+    protected $image;
 
 
     public function __construct($name)

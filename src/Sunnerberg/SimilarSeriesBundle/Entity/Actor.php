@@ -19,19 +19,19 @@ class Actor extends Person
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="character", type="string", length=255)
+     * @ORM\Column(name="`character`", type="string", length=255)
      */
     private $character;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="order", type="integer", length=255)
+     * @ORM\Column(name="`order`", type="integer", length=255)
      */
     private $order;
 
