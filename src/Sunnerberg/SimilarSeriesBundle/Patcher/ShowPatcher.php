@@ -54,7 +54,7 @@ class ShowPatcher implements ConsumerInterface {
             return;
         }
 
-        $this->showFetcher->fetch($tmdbId, $fetchSimilar = false, $show);
+        $this->showFetcher->fetch($tmdbId, false, $show);
         $this->entityManager->flush();
 
         $this->logger->info(sprintf('Patched and persisted show with id: %d, tmdb_id: %d', $show->getId(), $tmdbId));
