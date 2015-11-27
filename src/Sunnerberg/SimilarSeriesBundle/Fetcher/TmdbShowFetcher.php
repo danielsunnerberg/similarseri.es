@@ -140,6 +140,9 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
     private function syncGenres(Tv $tmdbShow, TvShow $tvShow)
     {
         foreach ($tmdbShow->getGenres() as $tmdbGenre) {
+            if ($tmdbGenre->getName() === null) {
+                continue; // Sometimes, the TMDB-API includes a null-genre
+            }
             $genre = $this->genreRepository->getOrCreateByName($tmdbGenre->getName());
             $tvShow->addGenre($genre);
         }
