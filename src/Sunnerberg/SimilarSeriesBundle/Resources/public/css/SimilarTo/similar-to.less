@@ -1,3 +1,5 @@
+@import 'assets/vendor/bootstrap/less/variables';
+
 @backdrop-height: 400px;
 
 .backdrop-container {
@@ -19,6 +21,12 @@
   margin-top: -125px;
   color: #000;
 
+  @media(max-width:@screen-sm-min) {
+    margin-top: 0;
+    position: absolute;
+    top: 8rem;
+  }
+
   h1 {
     color: rgba(255, 255, 255, 0.95);
     small {
@@ -34,8 +42,20 @@
     color: yellow;
   }
 
+  .similar-row {
+    margin-top: 25px;
+    margin-left: -20px;
+    margin-bottom: 30px;
+  }
+
   .label-genre {
     background: #2196F3;
+  }
+
+  .tv-show-item {
+    height:230px;
+    margin:0;
+    border: 10px solid #eee /* Faking a padding, but also includes background image */
   }
 
 }

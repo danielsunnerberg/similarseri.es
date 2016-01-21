@@ -5,6 +5,7 @@
     {% stylesheets filter='?uglifycss'
     '@SunnerbergSimilarSeriesBundle/Resources/public/css/Twig/rating-extension.less'
     '@SunnerbergSimilarSeriesBundle/Resources/public/css/SimilarTo/similar-to.less'
+    '@SunnerbergSimilarSeriesBundle/Resources/public/css/Find/suggestions.less'
     %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
@@ -14,12 +15,12 @@
     <div class="backdrop-container container-fluid" style="background-image: url('{{ show.backdropImage.url }}');"></div>
     <div class="details-container container">
         <div class="row">
-            <div class="col-xs-3">
+            <div class="col-sm-3">
                 <img class="img-responsive shadow-z-2" src="{{ show.posterImage.url }}" alt="Poster image for {{ show.name }}" />
             </div>
-            <div class="col-xs-9">
+            <div class="col-sm-9">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-sm-12">
                         <h1>
                             {{ show.name }}
                             <small class="align-middle"> ({{ show.airYear }})</small>
@@ -28,7 +29,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-sm-12">
                         {% for genre in show.genres %}
                             <span class="label label-genre">{{ genre.name }}</span>
                         {% endfor %}
@@ -37,6 +38,26 @@
                 <div class="row">
                     <div class="col-lg-12 overview">
                         {{ show.overview }}
+                    </div>
+                </div>
+
+                <div class="row similar-row">
+                    <div class="col-sm-12">
+                        {% for similarShow in show.similarTvShows|slice(0,8) %}
+                            <a href="{{ path('similar_to_route', {slug: similarShow.slug}) }}">
+                                <div class="tv-show-item col-sm-3 material-light-blue" style="background-image: url('{{ similarShow.posterImage.url }}');">
+                                    <div class="dim"></div>
+                                    <div class="row">
+                                        <div class="title">
+                                            <h3>
+                                                {{ similarShow.name }}
+                                                <small>({{ similarShow.airYear }})</small>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
