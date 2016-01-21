@@ -94,7 +94,7 @@ class MediaObject implements \JsonSerializable
      */
     public function getUrl()
     {
-        if (empty($this->baseUrl)) {
+        if (empty($this->baseUrl) || empty($this->path)) {
             return null;
         }
 
