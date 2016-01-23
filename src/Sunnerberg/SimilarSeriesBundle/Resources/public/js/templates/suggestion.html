@@ -3,9 +3,11 @@
     <div class="row">
         <div class="title">
             <h3>
-                {{ show.name }}
+                <a href="to/{{ show.slug }}">
+                    {{ show.name }}
+                </a>
                 {{#if show.airYear }}
-                <small>({{ show.airYear }})</small>
+                    <small>({{ show.airYear }})</small>
                 {{/if}}
             </h3>
         </div>
