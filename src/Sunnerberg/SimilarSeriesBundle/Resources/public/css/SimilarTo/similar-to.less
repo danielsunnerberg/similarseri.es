@@ -44,18 +44,31 @@
 
   .similar-row {
     margin-top: 25px;
-    margin-left: -20px;
     margin-bottom: 30px;
   }
 
   .label-genre {
-    background: #2196F3;
+    background: rgba(0, 0, 0, 0.75);
   }
 
   .tv-show-item {
     height:230px;
-    margin:0;
-    border: 10px solid #eee /* Faking a padding, but also includes background image */
+    margin: 0 0 0 -10px;
+    border: 10px solid #eee; /* Faking a padding, but also includes background image */
+
+    .dim {
+      transition: background-color 200ms linear;
+    }
+
+    &:hover {
+      .dim {
+        background: rgba(0, 0, 0, 0);
+      }
+    }
+  }
+
+  .top-details {
+    height: 115px;
   }
 
 }

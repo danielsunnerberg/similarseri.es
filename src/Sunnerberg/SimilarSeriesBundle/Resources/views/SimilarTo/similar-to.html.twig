@@ -19,20 +19,22 @@
                 <img class="img-responsive shadow-z-2" src="{{ show.posterImage.url }}" alt="Poster image for {{ show.name }}" />
             </div>
             <div class="col-sm-9">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h1>
-                            {{ show.name }}
-                            <small class="align-middle"> ({{ show.airYear }})</small>
-                        </h1>
-                        {{ show.voteAverage|rating }}
+                <div class="top-details">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1>
+                                {{ show.name }}
+                                <small class="align-middle"> ({{ show.airYear }})</small>
+                            </h1>
+                            {{ show.voteAverage|rating }}
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        {% for genre in show.genres %}
-                            <span class="label label-genre">{{ genre.name }}</span>
-                        {% endfor %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {% for genre in show.genres %}
+                                <span class="label label-genre">{{ genre.name }}</span>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -41,8 +43,10 @@
                     </div>
                 </div>
 
+                {% if show.similarTvShows is not empty %}
                 <div class="row similar-row">
                     <div class="col-sm-12">
+                        <h3>Similar series to {{ show.name }}</h3>
                         {% for similarShow in show.similarTvShows|slice(0,8) %}
                             <a href="{{ path('similar_to_route', {slug: similarShow.slug}) }}">
                                 <div class="tv-show-item col-sm-3 material-light-blue" style="background-image: url('{{ similarShow.posterImage.url }}');">
@@ -60,6 +64,7 @@
                         {% endfor %}
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
