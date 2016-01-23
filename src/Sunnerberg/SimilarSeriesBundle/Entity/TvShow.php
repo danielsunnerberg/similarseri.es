@@ -618,7 +618,8 @@ class TvShow implements \JsonSerializable
             'overview' => $this->getOverview(),
             'imdbId' => $this->getImdbId(),
             'tmdbId' => $this->getTmdbId(),
-            'posterImage' => $this->getPosterImage()
+            'posterImage' => $this->getPosterImage(),
+            'slug' => $this->getSlug()
         ];
     }
 
