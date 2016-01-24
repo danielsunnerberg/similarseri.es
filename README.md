@@ -22,6 +22,7 @@ bower install
 ./app/console assetic:dump
 ./app/console doctrine:database:create
 ./app/console doctrine:schema:update --force
+./app/console rabbitmq:setup-fabric # Create all needed RabbitMQ-qeues
 ```
 
 *(Excluding operations such as setting cache permissions and other [Symfony generic tasks](http://symfony.com/doc/current/book/installation.html))*
