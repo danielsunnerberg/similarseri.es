@@ -108,7 +108,7 @@ class ShowFetchCommand extends ContainerAwareCommand {
             $this->fetcherQueue->publish(serialize(['tmdb_id' => $show->getId()]));
         }
 
-        $output->write(sprintf('%d shows are now queued to be fetched.', count($shows)));
+        $output->write(sprintf("%d shows are now queued to be fetched.\n", count($shows)));
     }
 
 }
