@@ -3,6 +3,7 @@
 namespace Sunnerberg\SimilarSeriesBundle\Fetcher;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\NoResultException;
 use Monolog\Logger;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -35,7 +36,7 @@ class ShowFetcherConsumer implements ConsumerInterface {
 
     /**
      * @param AMQPMessage $message
-     * @return mixed false to reject and requeue, any other value to aknowledge
+     * @return mixed false to reject and requeue, any other value to acknowledge
      */
     public function execute(AMQPMessage $message)
     {
@@ -54,7 +55,15 @@ class ShowFetcherConsumer implements ConsumerInterface {
             return true;
         }
 
-        $show = $this->showFetcher->fetch($tmdbId);
+        try {
+            $show = $this->showFetcher->fetch($tmdbId);
+        } catch(NoResultException $e) {
+            $this->logger->error(
+                'Either no show with the specified id, or the data was invalid.',
+                $data
+            );
+            return null;
+        }
         $this->entityManager->persist($show);
         $this->entityManager->flush();
         $this->logger->info(sprintf('Show with tmdb-id: %d was successfully fetched.', $tmdbId));
