@@ -1,5 +1,5 @@
 set :application, "similarseri.es"
-set :domain,      "similarseri.es"
+set :domain,      "188.166.88.57"
 set :deploy_to,   "/var/www/#{application}"
 set :app_path,    "app"
 
@@ -20,7 +20,7 @@ set  :keep_releases,  3
 set :use_composer, true
 
 set :shared_files,        ["app/config/parameters.yml"]
-set :shared_children,     [app_path + "/logs", web_path + "/uploads", "vendor", app_path + "/sessions"]
+set :shared_children,     [app_path + "/logs", web_path + "/uploads", app_path + "/sessions"]
 set :writable_dirs,       ["app/cache", "app/logs", "app/sessions"]
 set :webserver_user,      "www-data"
 set :permission_method,   :acl
