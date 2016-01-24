@@ -393,8 +393,12 @@ class TvShow implements \JsonSerializable
      */
     public function addGenre(Genre $genre)
     {
-        $this->genres[] = $genre;
+        if ($this->genres->contains($genre)) {
+            return;
+        }
 
+        $this->genres[] = $genre;
+        
         return $this;
     }
 
