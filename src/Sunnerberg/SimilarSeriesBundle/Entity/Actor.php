@@ -24,7 +24,7 @@ class Actor extends Person
     /**
      * @var string
      *
-     * @ORM\Column(name="`character`", type="string", length=255)
+     * @ORM\Column(name="`character`", type="string", length=255, nullable=true)
      */
     private $character;
 
