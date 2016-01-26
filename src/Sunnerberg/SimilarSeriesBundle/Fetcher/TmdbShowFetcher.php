@@ -125,7 +125,7 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
         $api = $this->tmdbTvRepository->getApi();
 
         $currentPage = 2; // We've already processed page one above
-        for (; $currentPage <= $totalPages; $currentPage++) {
+        for (; $currentPage <= $totalPages && $currentPage <= 10; $currentPage++) {
             $similar = $this->tmdbTvRepository->getFactory()->createResultCollection(
                 $api->getSimilar($tmdbShow->getId(), ['page' => $currentPage])
             );
