@@ -98,6 +98,7 @@ class TmdbShowFetcher implements TvShowFetcherInterface {
             }
 
             $tvShow->addSimilarTvShow($convertedShow);
+            $convertedShow->addSimilarTvShow($tvShow);
             $this->queueShowPatching($similarShow);
         }
 
